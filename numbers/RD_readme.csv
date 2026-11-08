@@ -28,4 +28,17 @@ fc_cov_min,74.37539024368795,74,%,numbers/FC_regression_scores.csv
 fc_cov_max,79.67270453701103,80,%,numbers/FC_regression_scores.csv
 day_storm_pct,20.379839298758217,20.4,%,numbers/FC_daily_scores.csv
 day_test,0.0,2023-01-01 to 2026-09-30,dates,"numbers/FC_training.json, FC_daily_climatology.csv"
+trojan_apart,120.0,120,degrees,"2 x the Lagrange angle, numbers/BF06_trojan_swarms.csv"
+hours_per_day,24.0,24,hours,"known science (one turn of Earth, noon to noon)"
+ex_utc_clock,0.0,03:20,time,numbers/BF11_fewer_at_dawn.csv
+ex_off_h,4.0,4,hours,"longitude / 15, numbers/BF11_fewer_at_dawn.csv"
+ex_off_min,4.0,4,minutes,"longitude / 15, numbers/BF11_fewer_at_dawn.csv"
+ex_off_clock,0.0,04:04,time,"longitude / 15, numbers/BF11_fewer_at_dawn.csv"
+ex_local_ampm,0.0,AM,,numbers/BF11_fewer_at_dawn.csv
+sun_radius,695700.0,"695,700",km,"known science (the Sun's radius, IAU nominal value)"
+earth_transit_pct,0.008386315626728506,0.008,%,"(Earth's radius / Sun's radius)^2, numbers/BF00_shared_facts.csv"
+fold_min,53.12125184335573,53,,numbers/BF30_size_rule.csv (smallest of the three ratios)
+fold_max,104.66666666666667,105,,numbers/BF30_size_rule.csv (largest of the three ratios)
+fold_min_round,50.0,50,,"the ratio above, to one significant figure"
+fold_max_round,100.0,100,,"the ratio above, to one significant figure"
 n_guide_diff,12.0,12,,numbers/BF_guide_differences.csv (rows)

@@ -9,7 +9,7 @@ Contents
    0  Abstract
    1  The data
    2  How a number gets from a CSV file to the screen
-   3  The math
+   3  The math explained in very simple English
    4  Results
    5  Forecasts
    6  Figures
@@ -71,160 +71,513 @@ The text is written with placeholders such as `{gap_count}` and the scripts fill
 `notebooks/check_findings_numbers.py` reads `FINDINGS.md` back and stops if it finds a number that is not in
 `numbers/`. This README goes through the same check.
 
-## 3. The math
+## 3. The math explained in very simple English
 
-Everything below is high-school physics or a line of statistics. Each part says which findings use it.
+First, don't worry about all the equations. They are just tools scientists use to understand space.
 
-### 3.1 Kepler's third law and the empty lanes (findings 1 and 5)
+This section explains how we used math to check what is happening with asteroids, planets, stars, the Sun and
+craters. Each part is explained with simple examples, and its title says which findings use it.
 
-For anything going around the Sun, the time for one trip $P$ (in years) and the average distance $a$ (in AU, the
-Earth-Sun distance) obey
+### 3.1 Jupiter's gravity creates empty spaces between asteroids (findings 1 and 5)
 
-$$P^2 = a^3 .$$
+**What is this about?**
 
-So a rock at distance $a$ goes around $(a_J/a)^{3/2}$ times for each trip of Jupiter. When that number is a simple
-fraction $n/m$, Jupiter pulls on the rock at the same point of its path again and again, and over millions of years
-the rock is thrown out. Solving for the distance:
+Asteroids travel around the Sun, just like Earth does. But they don't all travel at the same speed. Some take a
+short time to complete one trip around the Sun. Others take much longer.
 
-$$a_{n:m} = a_J \left(\frac{m}{n}\right)^{2/3} .$$
+There is a rule called Kepler's third law:
 
-With $a_J$ = 5.20 AU (the middle distance of Jupiter's Trojans in our file):
+$$P^2 = a^3$$
 
-| ratio $n:m$ | predicted $a$ (AU) | dip in the data (AU) |
+You don't need to memorize it. It simply tells us:
+
+* $P$ = how long an object takes to go around the Sun (in years).
+* $a$ = how far the object is from the Sun (in AU).
+* The farther away an object is, the longer its trip takes.
+
+Now, what does Jupiter have to do with this? Imagine an asteroid going around the Sun. Every time Jupiter and that
+asteroid meet at the same positions, Jupiter's gravity can pull on the asteroid. If this keeps happening again and
+again, Jupiter can slowly push the asteroid away from that area.
+
+Think of pushing a swing at the same time during every movement. The pushes can make the swing move more and more.
+
+This creates empty spaces where fewer asteroids are found. Scientists call this an orbital resonance.
+
+**What did we find?**
+
+We used Jupiter's distance from the Sun (5.20 AU) to calculate where these empty
+spaces should be. A 3:1 pattern means the asteroid goes around the Sun 3 times while Jupiter goes around once.
+
+| Asteroid orbit pattern | Math prediction | Actual empty space |
 |---|---|---|
-| 3:1 | 2.50 | 2.50 |
-| 5:2 | 2.83 | 2.82 |
-| 7:3 | 2.96 | 2.95 |
-| 2:1 | 3.28 | 3.29 |
+| 3:1 | 2.50 AU | 2.50 AU |
+| 5:2 | 2.83 AU | 2.82 AU |
+| 7:3 | 2.96 AU | 2.95 AU |
+| 2:1 | 3.28 AU | 3.29 AU |
 
-The same rule works the other way past Neptune. Objects that go around twice while Neptune goes around three times
-are never near Neptune when they cross its path, so they are safe there:
+AU means the average distance between Earth and the Sun. Look at the table. The predicted locations and the actual
+empty spaces are almost the same.
 
-$$a = a_N \left(\tfrac{3}{2}\right)^{2/3} = 39.4\ \text{AU},$$
+**What about Neptune?**
 
-with $a_N$ = 30.07 AU. The crowd in the data sits at 39.2 to
-39.7 AU (586 objects, about
-3.6 times the slices beside it).
+Neptune is much farther away from the Sun than Jupiter. Some objects beyond Neptune move in a special pattern:
 
-### 3.2 Size from brightness (findings 2, 3 and 7)
+* Neptune completes 3 trips around the Sun.
+* The other object completes 2 trips.
 
-Most asteroids have no measured size, only an absolute magnitude $H$ (how bright the rock would look from a fixed
-standard distance; bigger $H$ means fainter). With a guess for the albedo $p_V$, the share of sunlight the surface
-reflects:
+This repeating pattern helps protect those objects from getting too close to Neptune. The same math says it happens
+at 39.4 AU from the Sun. We found 586 objects in this area, between
+39.2 and 39.7 AU. There were about
+3.6 times more objects there than in the nearby areas.
 
-$$D = \frac{1329\ \text{km}}{\sqrt{p_V}}\; 10^{-H/5} .$$
+**The main idea:** Jupiter's gravity creates empty spaces between asteroids. Neptune's gravity also helps create
+special areas where objects can stay safely.
 
-With $p_V$ = 0.14 and $H$ = 22 this gives
-141 m. That is the size line in the "potentially hazardous" rule: $H \le$
-22 and a closest orbit distance (MOID) of at most 0.05 AU.
-Of the 2,550 rocks flagged hazardous, 2,517
-(98.7%) pass both lines exactly as written.
+### 3.2 Finding the size of asteroids using brightness (findings 2, 3 and 7)
 
-### 3.3 The spin barrier (finding 3)
+**What is this about?**
 
-A pile of loose rubble held together only by its own gravity comes apart when the outward pull of the spin at its
-equator beats gravity, $\omega^2 R > GM/R^2$. With $M = \tfrac{4}{3}\pi R^3\rho$ and $P = 2\pi/\omega$ the size
-cancels out:
+Most asteroids are too far away for scientists to measure their actual size directly. But scientists can measure
+how bright they look. This gives them a way to estimate their size.
 
-$$P_{\min} = \sqrt{\frac{3\pi}{G\rho}} .$$
+Think about two rocks:
 
-For rock with a density of about $2\ \text{g/cm}^3$ this is between two and three hours. We use the usual line of
-2.2 hours (Pravec and Harris 2000). Only 1,236 of
-33,616 asteroids wider than 300 m spin faster
-(3.7%). Small asteroids are often solid, and 80% of them do.
+* A small, shiny rock can look bright.
+* A large, dark rock can look equally bright.
 
-### 3.4 Jupiter's two swarms (finding 6)
+So brightness alone cannot tell us the exact size. Scientists also need to guess how much sunlight the asteroid's
+surface reflects. This is called albedo.
 
-The Trojans sit near the two points that make an equilateral triangle with the Sun and Jupiter, one ahead of Jupiter
-and one behind it. The place of an asteroid along its path is its mean longitude
+* High albedo = reflects lots of sunlight.
+* Low albedo = reflects little sunlight.
 
-$$L = \Omega + \omega + M \pmod{360^\circ},$$
+They use this formula:
 
-the sum of three angles in the file (`om`, `w`, `ma`). The two peaks in our file are
-120 degrees apart: 10,494 asteroids ahead of Jupiter and
-5,951 behind.
+$$D = \frac{1329}{\sqrt{p_V}} \times 10^{-H/5}$$
 
-### 3.5 Fair share on a sphere (findings 10 and 32)
+You only need to understand these letters:
 
-The part of a sphere's surface between latitudes $\varphi_1$ and $\varphi_2$ is
+* $D$ = estimated asteroid diameter, in kilometres.
+* $H$ = how bright the asteroid is. A bigger number means fainter.
+* $p_V$ = how much sunlight the asteroid reflects.
 
-$$f = \frac{\sin\varphi_2 - \sin\varphi_1}{2} .$$
+**What did we find?**
 
-So the band from the equator to 30 degrees north is a quarter of Earth's surface, and if fireballs fell anywhere at
-random it would get 222 of the 888 with a known
-place. It got 227. On the Moon the same formula turns crater counts into counts
-per area: the band from the equator to 10 degrees north has 11.4 times the area of the
-band around the north pole, and the polar band has 3.0 times as many craters per
-square kilometre.
+We used an average reflectiveness of 0.14. For an asteroid with an $H$ value of
+22, the estimated size is about 141 metres wide.
 
-### 3.6 Local solar time (finding 11)
+This is important because scientists use two rules to identify potentially hazardous asteroids:
 
-The Sun crosses 15 degrees of longitude every hour, so for a fireball at longitude $\lambda$ (east positive)
+1. The asteroid has an $H$ value of 22 or lower.
+2. Its orbit comes within 0.05 AU of Earth's orbit.
 
-$$t_\text{local} = t_\text{UTC} + \frac{\lambda}{15^\circ}\ \text{hours}.$$
+MOID means Minimum Orbit Intersection Distance. In simple words, it tells us how close the asteroid's path can come
+to Earth's path.
 
-An example from the file: 3:20 UTC at
-61.1 degrees east is 07:24 local time.
+Out of 2,550 asteroids marked as potentially hazardous, 2,517 passed
+both rules. That is 98.7%.
 
-### 3.7 Storms and the 27-day echo (findings 12 to 17)
+**The main idea:** Scientists can estimate how big an asteroid is by looking at its brightness and guessing how
+reflective its surface is.
 
-The storm meter is SYM-H, in nanotesla: how far Earth's magnetic field near the equator is pushed down. Following
-Gonzalez et al. (1994), a storm is SYM-H at or below -50 nT and a strong storm at or
-below -100 nT. To see whether the Sun repeats itself, we compare the daily mean wind speed
-$v$ with itself shifted by $\tau$ days:
+### 3.3 Why some asteroids cannot spin too fast (finding 3)
 
-$$r(\tau) = \frac{\sum_t (v_t - \bar v)(v_{t+\tau} - \bar v)}{\sum_t (v_t - \bar v)^2} .$$
+**What is this about?**
 
-$r$ is 1 for a perfect echo and 0 for none. We get $r$ = 0.46 at
-27 days, the time the Sun takes to turn once as seen from Earth, and only
-0.08 at 13 days (Figure 2). The extra storms around March and
-September (finding 15) are the Russell-McPherron effect (Russell and McPherron 1973).
+Imagine a pile of small rocks. There is no glue holding them together. Gravity is the only thing keeping them in one
+pile. Now imagine spinning that pile faster and faster. At some point, the spinning becomes so fast that the rocks
+start flying away.
 
-### 3.8 Stars: true brightness, speed and groups (findings 18 to 22)
+This is similar to what can happen to asteroids. Scientists call this the spin barrier. For an asteroid made of
+loose rock, there is a limit to how fast it can spin before it breaks apart. For a typical rocky asteroid, that limit
+is around 2.2 hours for one full rotation (Pravec and Harris 2000). In other words, a loose
+pile of rock spinning once every 2.2 hours is close to its breaking point.
 
-Gaia gives the apparent brightness $G$ (in magnitudes, so bigger is fainter) and the parallax $\varpi$ in
-milliarcseconds. The true brightness is
+**What did we find?**
 
-$$M_G = G + 5\log_{10}\varpi - 10 .$$
+We looked at 33,616 asteroids wider than 300 metres whose spin has been
+measured. Only 1,236 of them spun faster than this limit. That is just
+3.7%.
 
-We call a star a white dwarf when $M_G$ > 10 + 2.6 times its colour
-(BP-RP) and the colour is below 1.7. The sideways speed, from the proper motion $\mu$
-(arcseconds per year) and the distance $d$ (parsecs), is
+But many small asteroids spin much faster. Of the 655 small ones in our data (narrower than
+150 metres), 524 spin faster than this limit. That is
+80%.
 
-$$v_t = 4.74\,\mu\,d\ \ \text{km/s}.$$
+Why? Because small asteroids can be solid rocks. They are not always just loose piles of stones. Solid rocks can
+hold together better while spinning.
 
-The star groups of finding 21 come from DBSCAN (Ester et al. 1996) run on place and sideways speed together: a star
-is in a group when at least 12 stars are within 3 of it in
-that space. It finds 24 groups. The biggest, 768 stars at
-136 parsecs, is the Pleiades.
+**The main idea:** Big asteroids are often loose piles of rocks, so they cannot spin too fast. Small asteroids can
+sometimes be solid and spin much faster.
 
-### 3.9 Planets (findings 23 to 28)
+### 3.4 Why Jupiter has two groups of asteroids (finding 6)
 
-A transit dims a star by the share of its disc that the planet covers:
+**What is this about?**
 
-$$\frac{\Delta F}{F} = \left(\frac{R_p}{R_\star}\right)^2 .$$
+Jupiter has two large groups of asteroids called Trojan asteroids. One group travels ahead of Jupiter. The other
+group travels behind Jupiter. They stay in special positions because of the gravity of the Sun and Jupiter.
 
-For Earth in front of the Sun that is about $8 \times 10^{-5}$, which is why the planets found this way are mostly big
-or close to their star. The starlight a planet gets, compared with Earth, is $S = L/a^2$ ($L$ in Suns, $a$ in AU). We
-call a planet "just right" when 0.25 $\le S \le$ 1.5 and it
-is less than 1.8 Earths wide. To draw every such planet around one star, we put it
-where it would get the same starlight from the Sun:
+Imagine three people standing at the corners of an equilateral triangle:
 
-$$d = \frac{1}{\sqrt{S}}\ \text{AU}.$$
+* One person represents the Sun.
+* One represents Jupiter.
+* The third represents an asteroid group.
 
-That gives 43 planets. The closest is Proxima Cen b,
-1.30 parsecs away.
+The two asteroid groups sit about 60 degrees ahead of and behind Jupiter. The angle
+between the two groups is 120 degrees.
 
-### 3.10 Crater sizes (finding 30)
+Scientists use something called mean longitude to calculate where an asteroid is along its orbit. The formula is:
 
-If the number of craters at least $D$ wide follows a power law $N(\ge D) \propto D^{-b}$, then going ten times wider
-divides the count by $10^b$, so
+$$L = \Omega + \omega + M$$
 
-$$b = \log_{10} \frac{N(\ge D)}{N(\ge 10D)} .$$
+Don't worry about the three letters. They are simply three angles that help scientists calculate an asteroid's
+position.
 
-From 1 to 10 km we get $b$ = 1.73, from 10 to 100 km 1.89, and from 100 to 1000 km
-2.02 (Figure 3). A steady $b$ near 2 is all that "ten times wider, about 50 to 100 times rarer"
-means.
+**What did we find?**
+
+We found two large groups, with their middles 120 degrees apart:
+
+* 10,494 asteroids ahead of Jupiter.
+* 5,951 asteroids behind Jupiter.
+
+**The main idea:** Jupiter has two large groups of asteroids. One group moves ahead of it, and the other follows
+behind it.
+
+### 3.5 How to fairly compare places on a round planet (findings 10 and 32)
+
+**What is this about?**
+
+Imagine throwing 1,000 balls randomly across the surface of Earth. You might expect some areas to get more balls
+than others. But you cannot fairly compare two areas without looking at their sizes. For example:
+
+* Area A is very large.
+* Area B is very small.
+
+Area A might have more balls simply because it has more space.
+
+Scientists use math to calculate how much of Earth's surface belongs to each band of latitude. A latitude is a line
+that tells us how far north or south a place is from the equator. The formula is:
+
+$$f = \frac{\sin\varphi_2 - \sin\varphi_1}{2}$$
+
+Here $\varphi_1$ and $\varphi_2$ are the latitudes of the two edges of the band. You don't need to understand the
+sine function yet. The formula simply calculates how much of the sphere's surface belongs to a particular band.
+
+**What did we find on Earth?**
+
+The area between the equator and 30 degrees north covers
+25.0% of Earth's surface. There were 888
+fireballs with known locations. If fireballs landed randomly, we would expect about
+222 to land in that area.
+
+What actually happened? 227 fireballs were found there. That is very close to
+the prediction.
+
+**What about the Moon?**
+
+We used the same idea to study craters on the Moon. We found:
+
+* The area between the equator and 10 degrees north is 11.4
+  times larger than the small area around the north pole (80 to
+  90 degrees north).
+* But the north polar area has 3.0 times as many craters per square kilometre.
+
+This means the north polar area has more craters compared with its size.
+
+**The main idea:** When comparing two areas, we must consider how big each area is. More objects do not always mean
+a place is more crowded.
+
+### 3.6 Calculating the local time of a fireball (finding 11)
+
+**What is this about?**
+
+Imagine a fireball falling in another country. The time in that country might be different from the time recorded
+by a computer in the UK or Canada. Scientists often record events using UTC, a worldwide standard time. But they may
+want to know the local time where the fireball happened.
+
+Earth turns around once every 24 hours. It turns 360 degrees
+during that time. So:
+
+$$360 \div 24 = 15$$
+
+Earth turns 15 degrees every hour. That means every
+15 degrees of longitude changes the local time by about one hour. The formula is:
+
+$$t_{\text{local}} = t_{\text{UTC}} + \frac{\lambda}{15}$$
+
+Here:
+
+* $t_{\text{local}}$ = local time.
+* $t_{\text{UTC}}$ = worldwide standard time.
+* $\lambda$ = longitude, which tells us the east-west position (east counts as plus, west as minus).
+
+This local time goes by the Sun: noon is when the Sun is highest in the sky. The clocks in that country can be set
+differently.
+
+**Example from the data**
+
+The Chelyabinsk fireball, the biggest in the file, happened on 2013-02-15 at:
+
+* UTC time: 03:20.
+* Longitude: 61.1 degrees east.
+
+61.1 divided by 15 is about 4 hours
+and 4 minutes. So:
+
+03:20 + 04:04 = 07:24
+
+The local time was 07:24 AM.
+
+**The main idea:** Scientists can calculate the local time of an event using its longitude.
+
+### 3.7 Solar storms and the 27-day repeating pattern (findings 12 to 17)
+
+**What is this about?**
+
+The Sun constantly sends out energy and tiny particles into space. This moving material is called the solar wind.
+Sometimes the solar wind disturbs Earth's magnetic field. This can cause a solar or geomagnetic storm.
+
+Scientists use something called SYM-H to measure how much Earth's magnetic field is disturbed. Think of it as a
+storm meter. It is measured in nanotesla (nT), and we use these lines (Gonzalez et al. 1994):
+
+* -50 nT or lower = storm.
+* -100 nT or lower = strong storm.
+
+The more negative the number becomes, the stronger the disturbance.
+
+**What is the 27-day pattern?**
+
+The Sun rotates. From Earth's point of view, the Sun takes about 27 days to complete
+one rotation. Because of this, some areas of the Sun can send fast solar wind toward Earth again after about
+27 days.
+
+We wanted to see whether the solar wind speed repeats after 27 days. We used a math
+method called correlation. Correlation simply checks whether two things move in a similar pattern. Imagine
+listening to a song and hearing the same part again later. That is similar to what we are checking here.
+
+The correlation result is:
+
+* 1 = perfect match.
+* 0 = no clear match.
+* -1 = opposite pattern.
+
+**What did we find?**
+
+| Time difference | Correlation |
+|---|---|
+| 27 days | 0.46 |
+| 13 days | 0.08 |
+
+The 27-day result is much stronger. This means solar wind speed shows a repeating
+pattern after about 27 days (Figure 2). The 13-day
+result is very weak.
+
+**What about March and September?**
+
+We also found more storms around March and September. This is called the Russell-McPherron effect (Russell and
+McPherron 1973). During these times, Earth's magnetic field and the Sun's magnetic field can line up in a way that
+allows more solar energy to enter Earth's magnetic space. This can make storms more likely.
+
+**The main idea:** The Sun rotates about every 27 days, and this can create
+repeating patterns in solar wind and Earth's magnetic storms.
+
+### 3.8 Understanding stars: brightness, speed and groups (findings 18 to 22)
+
+**What is this about?**
+
+Scientists use a space telescope called Gaia to study stars. Gaia collects information about:
+
+* How bright a star looks.
+* How far away it is.
+* What colour it is.
+* How it moves.
+
+Let's understand these one by one.
+
+**1. How bright is a star?**
+
+A star can look bright because it is close to Earth. But that does not always mean it is naturally bright. Imagine
+two light bulbs: one is close to you, and one is far away. The closer bulb might look brighter, even if both bulbs
+produce the same amount of light.
+
+Scientists calculate how bright a star would look if all stars were placed at the same standard distance. This is
+called absolute magnitude. The formula is:
+
+$$M_G = G + 5\log_{10}\varpi - 10$$
+
+You don't need to understand every part. It uses the star's observed brightness ($G$) and its distance (through the
+parallax $\varpi$, in milliarcseconds) to calculate its true brightness. Remember: a bigger magnitude number means a
+fainter star.
+
+**2. What is a white dwarf?**
+
+A white dwarf is the small, extremely dense leftover core of a star that has reached the end of its normal life.
+Scientists use the star's brightness and colour to identify possible white dwarfs. The rule we used is:
+
+$$M_G \gt 10 + 2.6\,(BP-RP)$$
+
+and the star's colour ($BP-RP$) must be below 1.7. The colour measurement helps
+scientists separate white dwarfs from other types of stars.
+
+**3. How fast is a star moving?**
+
+Stars move through space. From Earth, we can see some stars slowly changing their positions in the sky. This
+movement is called proper motion. Scientists combine how quickly the star appears to move across the sky with how
+far away it is. They can then estimate its sideways speed. The formula is:
+
+$$v_t = 4.74 \times \mu \times d$$
+
+Where:
+
+* $v_t$ = sideways speed, in km/s.
+* $\mu$ = how quickly the star appears to move, in arcseconds per year.
+* $d$ = distance from Earth, in parsecs.
+
+**4. Finding groups of stars**
+
+Imagine 100 people standing in a large park. Some people are standing close together. Others are standing far
+away. A computer method called DBSCAN (Ester et al. 1996) finds groups of stars in a similar way. The computer looks
+at where stars are and how fast they move. In our search, a group needs at least
+12 stars close to each other according to the chosen measurements.
+
+**What did we find?**
+
+We found 24 star groups. The biggest group had:
+
+* 768 stars.
+* A distance of 136 parsecs from Earth.
+* The name Pleiades.
+
+A parsec is a unit used to measure very large distances in space. One parsec is about
+3.26 light-years.
+
+**The main idea:** Scientists can use brightness, colour, distance and movement to understand stars and discover
+groups of stars.
+
+### 3.9 Finding planets around other stars (findings 23 to 28)
+
+**What is this about?**
+
+Scientists want to find planets outside our solar system. These are called exoplanets. One way to find them is to
+watch a star carefully.
+
+Imagine a light bulb shining in a dark room. Now imagine a small ball passing in front of it. The light becomes
+slightly weaker. The same thing happens when a planet passes in front of its star. Scientists call this a transit.
+
+They measure how much the star's light becomes weaker. The formula is:
+
+$$\frac{\Delta F}{F} = \left(\frac{R_p}{R_\star}\right)^2$$
+
+In simple words: the bigger the planet is compared with its star ($R_p$ is the planet's radius and $R_\star$ the
+star's), the more light it blocks.
+
+For Earth passing in front of the Sun, the Sun's light would become weaker by only about
+0.008%. That is a very tiny change! This is why bigger planets are usually easier to find
+using this method.
+
+**What is the habitable zone?**
+
+Scientists also want to find planets that receive a suitable amount of heat and light from their stars. Imagine
+standing outside:
+
+* Too little sunlight might make a place extremely cold.
+* Too much sunlight might make it extremely hot.
+* A suitable amount could allow liquid water to exist.
+
+The amount of light a planet receives depends on how bright its star is and how far away the planet is. The formula
+is:
+
+$$S = \frac{L}{a^2}$$
+
+Here:
+
+* $S$ = amount of light the planet receives compared with Earth.
+* $L$ = brightness of the star compared with the Sun.
+* $a$ = distance between the planet and its star, in AU.
+
+For this work, a planet was called suitable when:
+
+1. It received between 0.25 and 1.5 times Earth's
+   sunlight.
+2. Its size was less than 1.8 times Earth's size.
+
+This is our definition of a potentially suitable planet. It does not mean life has been found there.
+
+**What did we find?**
+
+We found 43 planets that passed these rules. The closest was
+Proxima Cen b, about 1.30 parsecs away.
+
+**The main idea:** Scientists can find planets by watching stars become slightly darker. They can also estimate
+whether a planet receives a suitable amount of sunlight.
+
+### 3.10 Understanding the sizes of craters (finding 30)
+
+**What is this about?**
+
+The Moon has many craters. Some are small. Some are medium-sized. Some are extremely large. We wanted to understand
+how often different crater sizes appear. The basic question was: are large craters as common as small craters?
+
+The answer is no. Small craters are much more common.
+
+We used this formula:
+
+$$N(\geq D) \propto D^{-b}$$
+
+Don't worry about the formula. It simply describes how the number of craters changes as crater size increases
+($N(\geq D)$ is the number of craters at least $D$ wide). We calculated a number called $b$. The value of $b$ helps
+describe how quickly large craters become less common.
+
+**What did we find?**
+
+| Crater size comparison | Result ($b$) |
+|---|---|
+| 1 km to 10 km | 1.73 |
+| 10 km to 100 km | 1.89 |
+| 100 km to 1,000 km | 2.02 |
+
+All three numbers are close to 2.
+
+What does that mean? Imagine we increase crater size by 10 times. The number of craters becomes
+53 to 105 times smaller (Figure 3). For example, in our file:
+
+* 1,296,796 craters are at least 1 km wide.
+* 24,412 are at least 10 km wide.
+* 314 are at least 100 km wide.
+* Only 3 are at least 1,000 km wide.
+
+**The main idea:** Small craters are very common. Craters that are 10 times bigger are roughly
+50 to 100 times less common.
+
+### Summary: what does all this math actually tell us?
+
+Here is the whole thing in simple language:
+
+| Section | What we learned |
+|---|---|
+| 3.1 Jupiter and Neptune | Gravity creates empty spaces and special safe areas for asteroids. |
+| 3.2 Asteroid brightness | We can estimate an asteroid's size using its brightness. |
+| 3.3 Asteroid spinning | Loose asteroids can break apart if they spin too fast. |
+| 3.4 Jupiter's two groups | Jupiter has two large groups of Trojan asteroids. |
+| 3.5 Earth's and Moon's surface | We must compare object counts fairly by considering area size. |
+| 3.6 Local time | We can calculate when a fireball happened using its longitude. |
+| 3.7 Solar storms | Solar wind can show a repeating 27-day pattern. |
+| 3.8 Stars | We can calculate star brightness, speed and groups. |
+| 3.9 Other planets | We can find planets by watching stars become slightly darker. |
+| 3.10 Moon craters | Bigger craters are much less common than smaller ones. |
+
+### One important thing to understand
+
+You do not need to memorize all these formulas. The important thing is to understand why each formula is being
+used. For example:
+
+* Want to know where asteroids should be? Use orbital math.
+* Want to estimate an asteroid's size? Use brightness.
+* Want to know how fast an asteroid can spin? Use gravity and rotation.
+* Want to find groups of stars? Use a computer clustering method.
+* Want to find planets? Look for tiny changes in starlight.
+* Want to compare craters? Compare their sizes and how often they appear.
+
+The math is basically helping scientists turn space observations into numbers they can test and understand.
 
 ## 4. Results
 
