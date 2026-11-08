@@ -1,0 +1,4 @@
+key,value,shown,unit,source
+cell_x,0.05,0.05,,rule we used (square width)
+cell_y,0.2,0.2,,rule we used (square height)
+ten,10.0,10,,each colour step is ten times more

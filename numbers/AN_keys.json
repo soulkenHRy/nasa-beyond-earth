@@ -1,0 +1,204 @@
+{
+ "1": [
+  "Empty lane 2.48 to 2.52: only 8,659 asteroids",
+  "Just inside it, 2.40 to 2.44: 54,292 (6.3 times as many)",
+  "Just outside it, 2.60 to 2.64: 86,354",
+  "Empty lanes at 2.50, 2.82, 2.95 and 3.29. A rock there goes around 3.00, 2.50, 2.34 or 1.99 times for each trip of Jupiter",
+  "1,546,750 asteroids counted, in slices 0.01 wide"
+ ],
+ "2": [
+  "Out of every 100 asteroids in each zone, the shiny ones: 57%, then 37%, then 15%, then only 3%",
+  "Middle shininess: 0.192 in the closest zone, 0.056 in the farthest",
+  "134,725 asteroids with a measured shininess"
+ ],
+ "3": [
+  "Big asteroids: only 1,236 of 33,616 spin faster than once every 2.2 hours (3.7%)",
+  "Small asteroids: 524 of 655 do (80%)",
+  "Record: 2020 HS7, one spin every 3.0 seconds"
+ ],
+ "4": [
+  "2025: 56,928 objects seen for the first time, 3.0 times the 2018 to 2024 average of 19,089",
+  "July 2025 alone: 25,523 (45% of the year)",
+  "New near-Earth rocks: about 609 m wide in 1995, about 29 m in 2026"
+ ],
+ "5": [
+  "Pluto's crowd, 39.2 to 39.7: 586 objects, about 3.6 times the same-size slices beside it",
+  "Main crowd, 42 to 48: 3,777. Beyond 48: only 1,118",
+  "One trip: 248 years for them, 164.8 for Neptune.",
+  "248 ÷ 164.8 = 1.50: they make 2 trips while Neptune makes 3"
+ ],
+ "6": [
+  "16,445 Trojan asteroids share Jupiter's path",
+  "Ahead of Jupiter: 10,494",
+  "Behind Jupiter: 5,951",
+  "10,494 ÷ 5,951 = 1.76: the front swarm is bigger",
+  "The two clumps are 120 degrees apart, and Jupiter sits halfway (balance points 60 degrees ahead and behind)"
+ ],
+ "7": [
+  "Flagged Y: 2,550. Inside the box: 2,517 (98.7%)",
+  "The other 33: brightness numbers 22.01 to 22.57, just past the line",
+  "Flagged N but inside the box: only 17",
+  "Dots: 34,559 near-Earth asteroids (2,550 Y, 32,009 N)"
+ ],
+ "8": [
+  "1900s to 1990s: about 3,323 passes per decade",
+  "2010s: 12,237. 2020s: 18,757. 2030s: only 3,805",
+  "Closer than the Moon: 189 in 2025, 135 in 2026, 0 in 2027, 3 in 2028",
+  "Closest pass of 2025: 2025 UC11, 228 km above the ground"
+ ],
+ "9": [
+  "Small rocks: 691 passes in July, 2,555 in October",
+  "2,555 ÷ 691 = 3.7: October has 3.7 times as many",
+  "All passes: 1,519 in July, 3,866 in October",
+  "Years 2005 to 2025 added together: 30,810 passes",
+  "Why? Probably short, stormy summer nights at the telescopes in the north (not tested with our data)"
+ ],
+ "10": [
+  "888 of the 1,074 fireballs have a known place",
+  "Over the ocean: 647 (73%); the ocean covers about 71% of Earth",
+  "Equator to 30 north: 227 seen, fair share 222",
+  "Biggest: 441 kilotons; next biggest: 49 kilotons. 441 ÷ 49 = 9"
+ ],
+ "11": [
+  "Fewest: 4 to 6 am (dawn), 49 fireballs",
+  "Most: the two hours before midnight, 111",
+  "Even spread: 74 per slot",
+  "Every month: between 81 and 99",
+  "Sun time = world time + longitude ÷ 15 (Chelyabinsk: 3.33 + 4.07 = 7.4, about 07:24)"
+ ],
+ "12": [
+  "Storm days: 11 in 2019, 9 in 2020 then 66 in 2024, 97 in 2025",
+  "Strong-storm days: most in 2024 (21)",
+  "Wind: 378 km every second in 2020, 490 in 2025",
+  "The Sun's cycle: about 11 years"
+ ],
+ "13": [
+  "71 strong storms, lined up on their lowest points (middle values)",
+  "Crowding: 5.1 two days before, 10.0 at 20 hours before",
+  "Push: 1.6, then 5.2 at 8 hours before (3.2 times as hard)",
+  "Bz: -7.1 at 6 hours before, -11.2 at 2 hours before",
+  "Storm meter at the lowest point: -125",
+  "Storm by storm, the lowest point comes about",
+  "10.8 hours after Bz first reaches -10"
+ ],
+ "14": [
+  "Slid by 27 days: match 0.46 (all years), 0.60 in the quiet years 2016 to 2018",
+  "Slid by 13 days: 0.08; by 20 days: 0.04",
+  "Best match between 20 and 35 days: 27",
+  "Example: 2010-04-11: 403 km every second; 27 days later, 2010-05-08: 469"
+ ],
+ "15": [
+  "Most stormy: March 4.5%, April 4.2%; September 3.7%, October 4.0%",
+  "Least: December 1.5%, July 2.0%",
+  "4.5% ÷ 1.5% = 3.0",
+  "Strong storms: 10 in March, 9 in October, 9 in November; 2 in July, 2 in December",
+  "1,761,696 readings, all years together"
+ ],
+ "16": [
+  "17:05 world time (13:05 in Toronto): a giant cloud from the Sun hits",
+  "Speed 447 to 608 km every second; the wind gets 2.4 times as crowded",
+  "Storm meter first goes UP to +79",
+  "Bz turns south: -16 at 17:30, -31 at 18:00",
+  "Lowest: -497 at 11 May 02:15 (10 May 22:15 in Toronto)"
+ ],
+ "17": [
+  "58 nights with a strong storm (storm meter -100 or lower) between",
+  "21:00 and 04:00 Toronto time",
+  "9 each in 2023, 2024 and 2025; 0 in 2019, 2020 and 2022",
+  "January 2026: -251 at 6:50 am in Toronto, just after the dark hours",
+  "The dark hours around it: -132 and -167"
+ ],
+ "18": [
+  "1,114,566 stars with a colour (of 1,165,165)",
+  "Main band: 1,024,913",
+  "White dwarfs: 84,595 (55,995 well measured)",
+  "Giants: 5,058",
+  "White-dwarf test: true brightness over 10 + 2.6 × colour",
+  "Giant test: true brightness under 3.5, colour over 0.9"
+ ],
+ "19": [
+  "Out of 100 main-band stars near the Sun: about 78 red dwarfs, 14 orange stars, 5 like the Sun and 3 yellow-white stars.",
+  "White and blue-white stars: less than 1 in 100",
+  "Red dwarfs: 792,571 of 1,024,913 = 77.3%"
+ ],
+ "20": [
+  "Circles 5 degrees across, same size: toward the middle 15,901, opposite way 2,041",
+  "15,901 ÷ 2,041 = 7.8 times as many",
+  "Badly measured: 66% toward the middle (all stars: 22%); no colour: 33%",
+  "Check: 1,881 against 1,894, no extra stars"
+ ],
+ "21": [
+  "24 groups found by the computer (DBSCAN) using where 700,570 stars are and how they drift",
+  "Biggest: 768 stars, about 136 parsecs (442 light-years) away: the Pleiades",
+  "Next: 176 and 171 stars",
+  "1,964 stars are in a group"
+ ],
+ "22": [
+  "Faster than 300 km every second toward or away: 201 stars",
+  "They look fainter: middle brightness number",
+  "14.7, against 13.4 for all stars",
+  "Sideways faster than 200: 2,278 stars",
+  "Fastest drift: 10.4 arcseconds a year (Barnard's Star)"
+ ],
+ "23": [
+  "6,451 planets; 4,785 found by transit",
+  "By transit: 79 in 2013, 810 in 2014, 99 in 2015, 1,432 in 2016",
+  "Busiest: 2016, 1,504 planets",
+  "All of 2025: 246; 2026 so far: 361"
+ ],
+ "24": [
+  "Neptune-size planets (2.5 to 6 Earths): 449 with a year of 3 to 10 days, only 70 with a year shorter than 3 days",
+  "Hot Jupiters: 764",
+  "6,050 planets with a year length and a size"
+ ],
+ "25": [
+  "Planets with a year shorter than 100 days and a size of 0.5 to 6 Earths: 3,982",
+  "Smaller hump: 1.47 to 1.59 Earths, 233",
+  "The dip: 1.73 to 1.88 Earths, only 199",
+  "Bigger hump: 2.22 to 2.41 Earths, 347"
+ ],
+ "26": [
+  "Matched by ID, read as text: 2,045 planets around 1,424 stars",
+  "Read as decimal numbers, 57% of the IDs change and only 789 planets still match",
+  "Sun-like (G): 28% of hosts, 6% of stars",
+  "Orange (K): 33% of hosts, 17% of stars",
+  "Red dwarfs (M): 27% of hosts, 71% of stars"
+ ],
+ "27": [
+  "Giant planet: heavier than 95 Earths or wider than 6 Earths",
+  "Least metal: 196 giants of 689 planets = 28%",
+  "Middle groups: 23% and 32%",
+  "Most metal: 510 of 842 = 61%",
+  "5,747 planets used; 699 have no metal score"
+ ],
+ "28": [
+  "43 planets in the box: 18 found by radial velocity, 24 by transit",
+  "Closest: Proxima Cen b, 1.30 parsecs (4.2 light-years); 1.02 Earths wide, starlight 0.64 of Earth's",
+  "Within 10 parsecs: 17 of them",
+  "Voyager 1 (17 km every second) would need about 75,000 years to reach the closest one"
+ ],
+ "29": [
+  "Craters 5 km and wider: 83,061",
+  "Far side 55,586, near side 27,475: 55,586 ÷ 27,475 = 2.0 times as many",
+  "1 km and wider: 736,618 against 560,178 (1.3)",
+  "20 km and wider: 4,161 against 2,812 (1.5)"
+ ],
+ "30": [
+  "At least 1 km: 1,296,796; at least 10 km: 24,412",
+  "At least 100 km: 314; at least 1,000 km: only 3",
+  "1,296,796 ÷ 24,412 = 53; 24,412 ÷ 314 = 78; 314 ÷ 3 = 105",
+  "Biggest: 2,492 km, about 72% of the Moon's width"
+ ],
+ "31": [
+  "Stretch = longest width ÷ shortest width (1 = round)",
+  "Middle stretch: 1.12, only 12% longer than wide",
+  "More than 1.5: 2.1% of craters; more than 2: 0.22%",
+  "Stretched, at least 3 km wide: 4,853 (orange dots)",
+  "1,935 point between 60 and 105 degrees: 40% (an even spread would give 25%); only 456 between 0 and 30"
+ ],
+ "32": [
+  "24,381 craters at 80 to 90 N, 89,510 at 0 to 10 N",
+  "Per area: the north pole band has 3.0 times as many as the equator; the south pole band 1.8 times",
+  "Beyond 80 degrees: 24,381 north, 14,406 south"
+ ]
+}

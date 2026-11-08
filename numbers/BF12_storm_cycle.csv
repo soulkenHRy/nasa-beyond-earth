@@ -1,0 +1,34 @@
+key,value,shown,unit,source
+storm_cut,-50.0,-50,nT,rule we used
+strong_cut,-100.0,-100,nT,rule we used
+days,6117.0,"6,117",,our data
+storm_2015,69.0,69,,our data
+strong_2015,12.0,12,,our data
+storm_2019,11.0,11,,our data
+strong_2019,0.0,0,,our data
+storm_2020,9.0,9,,our data
+strong_2020,0.0,0,,our data
+storm_2024,66.0,66,,our data
+strong_2024,21.0,21,,our data
+storm_2025,97.0,97,,our data
+strong_2025,14.0,14,,our data
+storm_max_year,2025.0,2025,,our data
+storm_max,97.0,97,,our data
+strong_max_year,2024.0,2024,,our data
+strong_max,21.0,21,,our data
+storm_min_year,2020.0,2020,,our data
+storm_min,9.0,9,,our data
+last_day,0.0,2026-09-30,,our data (date)
+speed_max_year,2025.0,2025,,our data
+speed_max,490.30001324219984,490,km/s,our data
+speed_min_year,2020.0,2020,,our data
+speed_min,377.92363167006425,378,km/s,our data
+ex_day,0.0,2024-05-11,,our data (date)
+ex_day_min,-497.0,-497,nT,our data
+cycle_years,11.0,11,years,known science (sunspot cycle)
+y_2019,2019.0,2019,,rule we used
+y_2020,2020.0,2020,,rule we used
+y_2024,2024.0,2024,,rule we used
+y_2025,2025.0,2025,,rule we used
+y_2026,2026.0,2026,,rule we used
+ex_speed,782.1762773722627,782,km/s,our data

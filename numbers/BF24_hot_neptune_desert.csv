@@ -1,0 +1,25 @@
+key,value,shown,unit,source
+nep_lo,2.5,2.5,Earth radii,rule we used
+nep_hi,6.0,6,Earth radii,rule we used
+p1,3.0,3,days,rule we used
+p2,10.0,10,days,rule we used
+rows,6050.0,"6,050",,our data
+nep_at_2_5,23.0,23,,our data
+nep_lt3,70.0,70,,our data
+nep_3_10,449.0,449,,our data
+nep_ratio,6.414285714285715,6.4,,our data
+jup6_lt10,815.0,815,,our data
+jup8_lt10,764.0,764,,our data
+guide_jup,764.0,764,,Field Guide
+rv_flat,509.0,509,,our data
+rv_with_radius,1167.0,"1,167",,our data
+jupiter_re,11.2,11.2,Earth radii,known science (Jupiter's radius)
+neptune_re,3.9,3.9,Earth radii,known science (Neptune's radius)
+ex_name,0.0,HD 209458 b,,our data (name)
+ex_orbper,3.52474859,3.52,days,our data
+ex_rade,15.58051,15.6,Earth radii,our data
+jup_size,8.0,8,Earth radii,rule we used
+flat_lo,12.0,12,Earth radii,rule we used
+flat_hi,13.5,13.5,Earth radii,rule we used
+zoom_days,20.0,20,days,rule we used
+zoom_size,20.0,20,Earth radii,rule we used

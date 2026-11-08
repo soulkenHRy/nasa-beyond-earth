@@ -1,0 +1,3 @@
+key,value,shown,unit,source
+ac_ruwe_bad,17.8,18%,%,numbers/K20_sky_map.csv
+cell,2.0,2,degrees,rule we used (map squares)

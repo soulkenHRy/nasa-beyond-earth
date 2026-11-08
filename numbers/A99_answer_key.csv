@@ -1,0 +1,17 @@
+item,answer_key,mine,result,note
+rows,"1,582,869","1,582,869",match,
+kind an / au / cn / cu,"895,910 / 682,876 / 610 / 3,473","895,910 / 682,876 / 610 / 3,473",match,
+neo = Y,"43,050","43,050",match,
+pha = Y,"2,550","2,550",match,
+diameter filled,"139,688","139,688",match,
+a in 2.48-2.52 (asteroids),"8,659","9,123 with 2.48 <= a < 2.52; 8,659 with 2.48 < a < 2.52",match,"The key counts strictly inside the window (lo < a < hi). a is rounded to 3 decimals, so many asteroids sit exactly on an edge (464 at 2.480 AU); counting from lo inclusive adds them."
+a in 2.40-2.44,"54,292","55,906 with <= ... <; 54,292 with < ... <",match,Same window-edge rule as the row above.
+a in 2.60-2.64,"86,354","88,615 with <= ... <; 86,354 with < ... <",match,Same window-edge rule as the row above.
+% albedo > 0.15 by zone,57 / 37 / 15 / 3,56.5 / 36.7 / 14.6 / 2.7,match (rounded),Same numbers; the key rounds to whole percent.
+> 0.3 km with spin / of those < 2.2 h,"33,616 / 1,236","33,616 / 1,236",match,
+< 0.15 km / of those < 2.2 h,655 / 524,655 / 524,match,
+first_obs in 2025,"56,928","56,928",match,
+first_obs in July 2025,"25,523","25,523",match,
+a in 39.2-39.7,586,"601 with 39.2 <= a < 39.7 (all objects, e < 1); 587 with < ... <; 586 asteroids only with < ... <",match,"The key's number is asteroids only, strictly inside the window (586); chart A06 uses all closed orbits with lo <= a < hi (601)."
+Trojan clumps,"about 5,900 and about 10,500","5,951 and 10,494",match (rounded),The key gives rounded values.
+pha rule matches,"2,517 of 2,550","2,517 of 2,550",match,

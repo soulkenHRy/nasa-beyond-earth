@@ -1,0 +1,18 @@
+key,value,shown,unit,source
+d1,1.0,1,km,rule we used
+n_ge_1,1296796.0,"1,296,796",,our data
+d2,2.0,2,km,rule we used
+n_ge_2,443016.0,"443,016",,our data
+d10,10.0,10,km,rule we used
+n_ge_10,24412.0,"24,412",,our data
+d100,100.0,100,km,rule we used
+n_ge_100,314.0,314,,our data
+d1000,1000.0,"1,000",km,rule we used
+n_ge_1000,3.0,3,,our data
+r_1_10,53.12125184335573,53,,our data
+r_10_100,77.7452229299363,78,,our data
+r_100_1000,104.66666666666667,105,,our data
+median_d,1.60684,1.6,km,our data
+max_d,2491.87,"2,492",km,our data
+min_d,1.0,1.00,km,our data
+title_low,50.0,50,,Field Guide title

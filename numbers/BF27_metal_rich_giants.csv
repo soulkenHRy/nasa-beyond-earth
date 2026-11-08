@@ -1,0 +1,27 @@
+key,value,shown,unit,source
+mass_cut,95.0,95,Earth masses,rule we used
+size_cut,6.0,6,Earth radii,rule we used
+b1_lo,-1.0,-1.0,,rule we used
+b1_hi,-0.2,-0.2,,rule we used
+b1_n,689.0,689,,our data
+b1_giants,196.0,196,,our data
+b1_pct,28.447024673439767,28%,,our data
+b2_lo,-0.2,-0.2,,rule we used
+b2_hi,0.0,0,,rule we used
+b2_n,1905.0,"1,905",,our data
+b2_giants,441.0,441,,our data
+b2_pct,23.1496062992126,23%,,our data
+b3_lo,0.0,0,,rule we used
+b3_hi,0.2,0.2,,rule we used
+b3_n,2311.0,"2,311",,our data
+b3_giants,751.0,751,,our data
+b3_pct,32.496754651665945,32%,,our data
+b4_lo,0.2,0.2,,rule we used
+b4_hi,0.6,0.6,,rule we used
+b4_n,842.0,842,,our data
+b4_giants,510.0,510,,our data
+b4_pct,60.57007125890736,61%,,our data
+met_blank,699.0,699,,our data
+met_rows,5747.0,"5,747",,our data
+b3_pct1,32.496754651665945,32.5%,,our data
+guide_b3,33.0,33%,,Field Guide

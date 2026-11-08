@@ -1,0 +1,5 @@
+key,value,shown,unit,source
+x_max,60,60,Moon distances,rule we used (paths farther apart are not drawn)
+dots,34559,"34,559",asteroids,our data (near-Earth asteroids drawn)
+dots_N,32009,"32,009",,our data
+dots_Y,2550,"2,550",,our data

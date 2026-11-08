@@ -1,0 +1,23 @@
+key,value,shown,unit,source
+sample,700570.0,"700,570",,our data
+eps,3.0,3,,rule we used
+min_samples,12.0,12,,rule we used
+vel_weight,4.0,4,,rule we used
+g_cut,18.0,18,,rule we used
+groups,24.0,24,,our data
+in_groups,1964.0,"1,964",,our data
+top_stars,768.0,768,,our data
+top_ra,56.64851572035343,56.6,degrees,our data
+top_dec,24.115155610241004,24.1,degrees,our data
+top_dist,135.61762151984277,136,pc,our data
+top_ly,442.1134461546874,442,light-years,our data
+top_pmra,19.93049957955126,19.9,mas/yr,our data
+top_pmdec,-45.482437325617,-45.5,mas/yr,our data
+second_stars,176.0,176,,our data
+third_stars,171.0,171,,our data
+pleiades_ra,56.75,56.75,degrees,known science (Pleiades position)
+pleiades_dec,24.12,24.12,degrees,known science (Pleiades position)
+guide_groups,24.0,24,,Field Guide
+guide_top,768.0,768,,Field Guide
+km_s_factor,4.74,4.74,,rule we used
+mas_per_arcsec,1000.0,"1,000",,rule we used

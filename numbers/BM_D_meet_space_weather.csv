@@ -1,0 +1,36 @@
+key,value,shown,unit,source
+rows_total,1766880.0,"1,766,880",,our data
+n_columns,14.0,14,,our data
+first,0.0,2010-01-01 00:00,,our data (date and time)
+last,0.0,2026-10-18 23:55,,our data (date and time)
+symh_last,0.0,2026-09-30,,our data (date)
+step_min,5.0,5,minutes,rule we used
+per_day,288.0,288,,rule we used (minutes in a day ÷ 5)
+per_year,105120.0,"105,120",,rule we used (5-minute steps in a year)
+years_span,16.79397672826831,17,years,our data
+storm_cut,-50.0,-50,nT,rule we used
+strong_cut,-100.0,-100,nT,rule we used
+extreme_cut,-250.0,-250,nT,rule we used
+symh_blank_pct,0.293398533007335,0.3%,,our data
+bz_blank_pct,4.432332699447613,4.4%,,our data
+speed_blank_pct,8.664255637055147,8.7%,,our data
+den_blank_pct,8.664255637055147,8.7%,,our data
+pre_blank_pct,8.664255637055147,8.7%,,our data
+speed_median,401.0,401,km/s,our data
+speed_kmh,1443600.0,"1,443,600",km per hour,our data
+moon_minutes,15.97672485453034,16,minutes,our data (Moon distance ÷ middle speed)
+den_median,4.96,5.0,per cm3,our data
+pre_median,1.67,1.7,nPa,our data
+symh_median,-8.0,-8,nT,our data
+storm_pct,3.1133634860952175,3.1%,,our data
+file_low,-497.0,-497,nT,our data
+file_low_time,0.0,2024-05-11 02:15,,our data (date and time)
+ex_time,0.0,2019-06-01 00:00,,our data (date and time)
+ex_symh,-8.0,-8,nT,our data
+ex_bz,-0.26,-0.3,nT,our data
+ex_speed,371.0,371,km/s,our data
+ex_den,2.74,2.7,per cm3,our data
+ex_pre,0.75,0.75,nPa,our data
+ex_kmh,1335600.0,"1,335,600",km per hour,our data
+sun_days,4.317847473330562,4.3,days,"our data (1 AU ÷ middle speed, in days)"
+n_other,8.0,8,,our data

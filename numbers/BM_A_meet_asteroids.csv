@@ -1,0 +1,53 @@
+key,value,shown,unit,source
+rows_total,1582869.0,"1,582,869",,our data
+n_columns,29.0,29,,our data
+read_days,18.320243055555554,18,days,our data (rows ÷ seconds in a day)
+asteroids,1578786.0,"1,578,786",,our data
+numbered,895910.0,"895,910",,our data
+unnumbered,682876.0,"682,876",,our data
+comets,4083.0,"4,083",,our data
+asteroid_pct,99.74205066875402,99.7%,,our data
+neo_y,43050.0,"43,050",,our data
+pha_y,2550.0,"2,550",,our data
+mba,1395259.0,"1,395,259",,our data
+mba_pct,88.14747145847193,88%,,our data
+diam_share,8.841160233242503,9%,,our data
+albedo_share,8.77015630997488,9%,,our data
+rot_share,2.191050592037173,2%,,our data
+partial_dates,5829.0,"5,829",,our data
+partial_example,0.0,1999-??-??,,our data (a date with question marks)
+ceres_number,1.0,1,,our data
+ceres_name,0.0,Ceres,,our data (name)
+ceres_kind,0.0,an,,our data (code)
+ceres_class,0.0,MBA,,our data (code)
+ceres_neo,0.0,N,,our data (flag)
+ceres_pha,0.0,N,,our data (flag)
+ceres_a,2.766,2.766,,our data
+ceres_q,2.545,2.54,,our data
+ceres_e,0.0797,0.08,,our data
+ceres_i,10.59,10.6,,our data
+ceres_per,4.6,4.60,,our data
+ceres_om,80.25,80.2,,our data
+ceres_w,73.29,73.3,,our data
+ceres_ma,274.42,274.4,,our data
+ceres_H,3.34,3.34,,our data
+ceres_d,939.4,939.4,,our data
+ceres_albedo,0.09,0.09,,our data
+ceres_rot,9.07417,9.07,,our data
+ceres_moid,1.58,1.58,,our data
+ceres_first_obs,0.0,1995-01-05,,our data (date)
+ceres_day_vs_earth,2.644869999129397,2.6,,our data (24 hours ÷ Ceres's spin time)
+hours_per_day,24.0,24,hours,rule we used
+apophis_neo,0.0,Y,,our data (flag)
+apophis_pha,0.0,Y,,our data (flag)
+apophis_moid,0.000108,0.00011,AU,our data
+apophis_moid_km,16156.570035599998,"16,157",km,our data
+apophis_H,19.09,19.09,,our data
+demo_q,1.3,1.3,AU,rule we used
+demo_Q,3.3,3.3,AU,rule we used
+demo_a,2.3,2.3,AU,rule we used: (closest + farthest) ÷ 2
+demo_two,2.0,2,,rule we used
+demo_moid,0.30000000000000004,0.3,AU,rule we used: closest point minus Earth's distance (1)
+e_demo1,0.0,0,,rule we used
+e_demo2,0.5,0.5,,rule we used
+e_demo3,0.9,0.9,,rule we used

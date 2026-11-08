@@ -1,0 +1,45 @@
+key,value,shown,unit,source
+events_all,442.0,442,,our data
+events_strong,71.0,71,,our data
+join_gap_h,12.0,12,hours,rule we used
+events_200,10.0,10,,our data
+events_250,4.0,4,,our data
+raw_runs,1751.0,"1,751",,our data
+events_strict_12h,446.0,446,,our data
+guide_events,442.0,442,,Field Guide
+den_base,5.1275517241379305,5.1,per cm3,our data
+den_m20,9.99,10.0,per cm3,our data
+den_m8,12.379999999999999,12.4,per cm3,our data
+pre_base,1.627896551724138,1.6,nPa,our data
+pre_m8,5.245,5.2,nPa,our data
+pre_ratio_m8,3.2219492046008176,3.2,,our data
+den_m24,6.845,6.8,per cm3,our data
+pre_m24,2.0949999999999998,2.1,nPa,our data
+bz_24,0.49,0.5,nT,our data
+symh_24,-8.0,-8,nT,our data
+bz_8,-3.375,-3.4,nT,our data
+symh_8,-29.0,-29,nT,our data
+bz_6,-7.08,-7.1,nT,our data
+symh_6,-50.0,-50,nT,our data
+bz_2,-11.15,-11.2,nT,our data
+symh_2,-90.0,-90,nT,our data
+bz_0,-8.785,-8.8,nT,our data
+symh_0,-125.0,-125,nT,our data
+speed_m24,393.29999999999995,393,km/s,our data
+speed_0,481.9,482,km/s,our data
+bz_cut,-10.0,-10,nT,rule we used
+lead_n,70.0,70,,our data
+lead_median,10.75,10.8,hours,our data
+lead_q1,5.645833333333333,5.6,hours,our data
+lead_q3,16.604166666666668,16.6,hours,our data
+lead48_median,12.916666666666668,12.9,hours,our data
+step_min,5.0,5,minutes,rule we used
+h20,20.0,20,hours,rule we used
+h8,8.0,8,hours,rule we used
+h6,6.0,6,hours,rule we used
+h2,2.0,2,hours,rule we used
+h48,48.0,48,hours,rule we used
+h36,36.0,36,hours,rule we used
+h24,24.0,24,hours,rule we used
+storm_cut,-50.0,-50,nT,rule we used
+strong_cut,-100.0,-100,nT,rule we used

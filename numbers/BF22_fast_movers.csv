@@ -1,0 +1,27 @@
+key,value,shown,unit,source
+pm_max,10.393348722273943,10.4,arcseconds per year,our data
+pm_max_dist,1.828233981355542,1.83,pc,our data
+barnard_match,0.0,yes,,our data (position match)
+groom_vt,307.0046316270333,307,km/s,our data
+groom_pm,7.061730897797728,7.06,arcsec/yr,our data
+groom_dist,9.171817867791482,9.17,pc,our data
+kapteyn_rv,245.05313,245,km/s,our data
+vt_cut,200.0,200,km/s,rule we used
+vt_over_200,2278.0,"2,278",,our data
+rv_cut,300.0,300,km/s,rule we used
+rv_n,460304.0,"460,304",,our data
+rv_over_300,201.0,201,,our data
+rv_over_300_pos,103.0,103,,our data
+rv_fast_g,14.651099,14.7,,our data
+rv_all_g,13.443053500000001,13.4,,our data
+rv_min,-864.9447,-865,km/s,our data
+rv_min_dist,130.6741969814288,131,pc,our data
+ex_pm_arcsec,7.061730897797728,7.06,,our data
+ex_step1,33.47260445556123,33.47,,our data
+ex_step2,307.0046316270333,307,,our data
+escape_speed,550.0,550,km/s,known science (rough escape speed from the Milky Way near the Sun)
+groom_name,0.0,Groombridge 1830,,"known name, matched by position"
+groom_rv,-98.054276,-98.1,km/s,our data
+groom_pmra,4002.654640989075,"4,003",mas/yr,our data
+groom_pmdec,-5817.8001940492695,"-5,818",mas/yr,our data
+guide_vt,2280.0,"2,280",,Field Guide

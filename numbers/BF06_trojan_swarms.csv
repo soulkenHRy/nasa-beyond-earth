@@ -1,0 +1,18 @@
+key,value,shown,unit,source
+trojans,16445.0,"16,445",,our data
+ahead_peak,177.5,177.5,degrees,our data
+behind_peak,57.5,57.5,degrees,our data
+peaks_apart,120.0,120,degrees,our data
+n_ahead,10494.0,"10,494",,our data
+n_behind,5951.0,"5,951",,our data
+ratio,1.7634011090573012,1.76,,our data
+jupiter_est,117.5,117.5,degrees,our data
+guide_jupiter,112.0,112,degrees,Field Guide estimate
+bin,5.0,5,degrees,rule we used
+achilles_om,316.53,316.53,,our data
+achilles_w,134.31,134.31,,our data
+achilles_ma,93.31,93.31,,our data
+achilles_sum,544.15,544.15,,our data
+achilles_L,184.14999999999998,184.15,degrees,our data
+full_circle,360.0,360,degrees,rule we used
+lagrange,60.0,60,degrees,known science

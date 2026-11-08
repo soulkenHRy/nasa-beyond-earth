@@ -1,0 +1,24 @@
+key,value,shown,unit,source
+rows,1296796.0,"1,296,796",,our data
+near_cut,90.0,90,degrees,rule we used
+d1,1.0,1,km,rule we used
+near_1,560178.0,"560,178",,our data
+far_1,736618.0,"736,618",,our data
+ratio_1,1.314971312689895,1.3,,our data
+d5,5.0,5,km,rule we used
+near_5,27475.0,"27,475",,our data
+far_5,55586.0,"55,586",,our data
+ratio_5,2.0231483166515014,2.0,,our data
+d20,20.0,20,km,rule we used
+near_20,2812.0,"2,812",,our data
+far_20,4161.0,"4,161",,our data
+ratio_20,1.4797297297297298,1.5,,our data
+ex_lon_east,300.0,300.0,degrees,our data
+ex_lon,-60.0,-60.0,degrees,our data
+cell,4.0,4,degrees,rule we used
+all_5,83061.0,"83,061",,our data
+ex_lat,-22.1657,-22.2,degrees,our data
+ex_d,2.72497,2.72,km,our data
+lon_min,0.0,0,,rule we used
+lon_max,360.0,360,,rule we used
+lon_half,180.0,180,,rule we used

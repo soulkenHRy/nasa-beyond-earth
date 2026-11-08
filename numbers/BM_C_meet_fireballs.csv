@@ -1,0 +1,25 @@
+key,value,shown,unit,source
+rows_total,1074.0,"1,074",,our data
+n_columns,9.0,9,,our data
+first,0.0,1988-04-15,,our data (date)
+last,0.0,2026-10-04,,our data (date)
+years_span,38.469541409993155,38,years,our data
+per_year,27.91819087609423,28,,our data
+no_place,186.0,186,,our data
+no_alt,472.0,472,,our data
+no_vel,711.0,711,,our data
+ex_date,0.0,2013-02-15 03:20:26,,our data (date and time)
+ex_energy,37500.0,"37,500",,our data
+ex_kt,441.0,441,kt,our data
+ex_tonnes,441000.0,"441,000",tonnes of TNT,our data
+ex_lat,54.8,54.8,,our data
+ex_latdir,0.0,N,,our data (code)
+ex_lon,61.1,61.1,,our data
+ex_londir,0.0,E,,our data (code)
+ex_alt,23.3,23.3,km,our data
+ex_vel,18.6,18.6,km/s,our data
+ex_kmh,66960.0,"66,960",km per hour,our data
+plane_km,11.0,11,km,known science (typical cruising height of a passenger plane)
+ex_alt_vs_plane,2.118181818181818,2.1,,our data ÷ known science
+energy_unit,10000000000.0,ten billion,joules,rule we used
+kt_median,0.2,0.20,kt,our data

@@ -1,0 +1,27 @@
+key,value,shown,unit,source
+ms_rows,1024913.0,"1,024,913",,our data
+n_OB,668.0,668,,our data
+pct_OB,0.06517626374141025,0.07%,,our data
+n_A,3135.0,"3,135",,our data
+pct_A,0.30587962100197774,0.31%,,our data
+n_F,32054.0,"32,054",,our data
+pct_F,3.127484967016713,3.1%,,our data
+n_G,51962.0,"51,962",,our data
+pct_G,5.0698937373220945,5.1%,,our data
+n_K,144523.0,"144,523",,our data
+pct_K,14.101001743562625,14.1%,,our data
+n_M,792571.0,"792,571",,our data
+pct_M,77.33056366735518,77.3%,,our data
+c1,0.0,0,,rule we used
+c2,0.33,0.33,,rule we used
+c3,0.75,0.75,,rule we used
+c4,0.98,0.98,,rule we used
+c5,1.8,1.80,,rule we used
+m_per_4,3.093222546694207,3.1,,our data
+w_OB,0.0,0,,"our data (out of 100, rounded so the total is 100)"
+w_A,0.0,0,,"our data (out of 100, rounded so the total is 100)"
+w_F,3.0,3,,"our data (out of 100, rounded so the total is 100)"
+w_G,5.0,5,,"our data (out of 100, rounded so the total is 100)"
+w_K,14.0,14,,"our data (out of 100, rounded so the total is 100)"
+w_M,78.0,78,,"our data (out of 100, rounded so the total is 100)"
+hundred,100.0,100,,rule we used

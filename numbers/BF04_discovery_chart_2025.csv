@@ -1,0 +1,36 @@
+key,value,shown,unit,source
+y2025,56928.0,"56,928",,our data
+y2024,15495.0,"15,495",,our data
+y2018_24_min,15495.0,"15,495",,our data
+y2018_24_max,22716.0,"22,716",,our data
+y2018_24_avg,19089.0,"19,089",,our data
+ratio_2025_avg,2.982241081250982,3.0,,our data
+busiest_year,2005.0,2005,,our data
+busiest_count,79735.0,"79,735",,our data
+y1997,22617.0,"22,617",,our data
+y1998,43566.0,"43,566",,our data
+y2000,73311.0,"73,311",,our data
+july_2025,25523.0,"25,523",,our data
+july_share,44.8338251826869,45%,,our data
+neo_1995,62.0,62,,our data
+neo_2022_25_min,2781.0,"2,781",,our data
+neo_2022_25_max,3157.0,"3,157",,our data
+neo_2025,3157.0,"3,157",,our data
+neo_medH_1995,18.83,18.8,,our data
+neo_size_1995,608.7808225655481,609,m,our data
+neo_medH_2026,25.41,25.4,,our data
+neo_size_2026,29.407693485330086,29,m,our data
+rubin_new,11000.0,"11,000",,"Field Guide, citing Sky & Telescope"
+y_lo,1980.0,1980,,rule we used
+y_hi,2026.0,2026,,rule we used
+rows_1980_2026,1556667.0,"1,556,667",,our data
+ceres_first_obs,0.0,1995-01-05,,our data (date)
+prev_bigger_year,2015.0,2015,,our data (last year before 2025 with more first sightings)
+rubin_weeks,6.0,six,weeks,"Field Guide, citing Sky & Telescope"
+y_2018,2018.0,2018,,rule we used
+y_2022,2022.0,2022,,rule we used
+y_1995,1995.0,1995,,rule we used
+y_2025,2025.0,2025,,rule we used
+y_2024,2024.0,2024,,rule we used
+y_2026,2026.0,2026,,rule we used
+ceres_found,1801.0,1801,,known science (year Ceres was discovered)

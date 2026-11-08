@@ -1,0 +1,27 @@
+key,value,shown,unit,source
+rows_total,1296796.0,"1,296,796",,our data
+n_columns,10.0,10,,our data
+count_days,15.009212962962962,15.0,days,our data (rows ÷ seconds in a day)
+visit_years,3550.4339493497605,"3,550",years,our data (rows ÷ days in a year)
+blank_cells,152.0,152,,our data
+dup_craters,3.0,3,,README (craters listed twice under different IDs)
+min_km,1.0,1,km,rule we used
+cop_known_lat,9.62,9.62,degrees,known science (Copernicus crater position)
+cop_id,0.0,04-1-000623,,our data (crater ID)
+cop_lat,9.62058,9.62,,our data
+cop_lon_east,339.928,339.93,,our data
+cop_d,93.0195,93.0,,our data
+cop_major,93.9577,94.0,,our data
+cop_minor,91.9076,91.9,,our data
+cop_ecc,0.207755,0.21,,our data
+cop_angle,27.6856,27.7,,our data
+cop_rim,0.978354,0.98,,our data
+cop_rim_points,909.0,909,,our data
+cop_lon,-20.072000000000003,-20.07,degrees,our data
+cop_stretch,1.0223060987339458,1.02,,our data
+full_turn,360.0,360,degrees,rule we used
+half_turn,180.0,180,degrees,rule we used
+moon_width,3474.8,"3,475",km,known science (the Moon's diameter)
+max_d,2491.87,"2,492",km,our data
+max_share,71.7126165534707,72%,,our data ÷ known science
+median_d,1.60684,1.6,km,our data

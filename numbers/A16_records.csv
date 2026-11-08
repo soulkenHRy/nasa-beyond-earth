@@ -1,0 +1,7 @@
+record,full_name,class,value,unit
+biggest measured diameter,1 Ceres (A801 AA),MBA,939.4,km
+fastest spin (shortest rot_per),(2020 HS7),APO,0.00083181,hours
+slowest spin (longest rot_per),52534 (1996 TB15),IMB,4812.0,hours
+largest e (most stretched orbit),C/2025 N1 (ATLAS),HYP,6.1235,
+oldest first_obs,C/-146 P1,PAR,-146-08-06,date (year < 0 = BC)
+most observations used,234 Barbara (A883 PA),MBA,19426.0,observations

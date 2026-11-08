@@ -1,0 +1,40 @@
+key,value,shown,unit,source
+located,888.0,888,,our data
+slot_0,91.0,91,,our data
+slot_2,70.0,70,,our data
+slot_4,49.0,49,,our data
+slot_6,52.0,52,,our data
+slot_8,84.0,84,,our data
+slot_10,83.0,83,,our data
+slot_12,86.0,86,,our data
+slot_14,66.0,66,,our data
+slot_16,54.0,54,,our data
+slot_18,72.0,72,,our data
+slot_20,70.0,70,,our data
+slot_22,111.0,111,,our data
+min_slot_from,4.0,4,,our data
+min_slot_to,6.0,6,,our data
+min_count,49.0,49,,our data
+max_slot_from,22.0,22,,our data
+max_slot_to,24.0,24,,our data
+max_count,111.0,111,,our data
+avg_slot,74.0,74,,our data
+month_min,81.0,81,,our data
+month_max,99.0,99,,our data
+rows_all,1074.0,"1,074",,our data
+deg_per_hour,15.0,15,,rule we used
+ex_utc_h,3.0,3,,our data
+ex_utc_min,20.0,20,,our data
+ex_utc_dec,3.3333333333333335,3.33,,our data
+ex_lon,61.1,61.1,,our data
+ex_lon_h,4.073333333333333,4.07,,our data
+ex_local,7.406666666666666,7.4,,our data
+ex_local_clock,0.0,07:24,,our data (time)
+before2010_n,320.0,320,,our data
+before2010_dawn,20.0,20,,our data
+before2010_night,50.0,50,,our data
+from2010_n,568.0,568,,our data
+from2010_dawn,29.0,29,,our data
+from2010_night,61.0,61,,our data
+slot_hours,2.0,2,hours,rule we used
+split_year,2010.0,2010,,rule we used

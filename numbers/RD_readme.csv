@@ -1,0 +1,21 @@
+key,value,shown,unit,source
+rows_asteroids,1582869.0,"1,582,869",rows,numbers/data_files.csv
+rows_close_approaches,120071.0,"120,071",rows,numbers/data_files.csv
+rows_fireballs,1074.0,"1,074",rows,numbers/data_files.csv
+rows_space_weather,1766880.0,"1,766,880",rows,numbers/data_files.csv
+rows_stars,1165165.0,"1,165,165",rows,numbers/data_files.csv
+rows_planets,6451.0,"6,451",rows,numbers/data_files.csv
+rows_craters,1296796.0,"1,296,796",rows,numbers/data_files.csv
+raw_mb,833.1999999999999,833,MB,numbers/data_files.csv (sum)
+res_3_1,2.501822254626584,2.50,AU,"a_J (m/n)^(2/3), a_J from numbers/AN06_trojan_swarms.csv"
+res_5_2,2.8251658553519787,2.83,AU,"a_J (m/n)^(2/3), a_J from numbers/AN06_trojan_swarms.csv"
+res_7_3,2.9581448156989745,2.96,AU,"a_J (m/n)^(2/3), a_J from numbers/AN06_trojan_swarms.csv"
+res_2_1,3.27831457182646,3.28,AU,"a_J (m/n)^(2/3), a_J from numbers/AN06_trojan_swarms.csv"
+neptune_a2,30.07,30.07,AU,numbers/BF05_neptune_rhythm.csv
+a_3_2,39.402846861930755,39.4,AU,a_N (3/2)^(2/3)
+b_1_10,1.7252683009656757,1.73,,"log10 of the ratio, numbers/BF30_size_rule.csv"
+b_10_100,1.8906737132113405,1.89,,"log10 of the ratio, numbers/BF30_size_rule.csv"
+b_100_1000,2.0198083933535527,2.02,,"log10 of the ratio, numbers/BF30_size_rule.csv"
+sw_from,0.0,2010-01-01,date,data_cache/space_weather.parquet
+sw_to,0.0,2026-10-18,date,data_cache/space_weather.parquet
+n_guide_diff,12.0,12,,numbers/BF_guide_differences.csv (rows)

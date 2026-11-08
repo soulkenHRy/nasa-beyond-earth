@@ -1,0 +1,630 @@
+{
+ "1": {
+  "n": 1,
+  "slug": "empty_lanes",
+  "title": "The asteroid belt has empty lanes",
+  "part": "A",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F01_empty_lanes.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: real asteroids go around the Sun, and the empty lanes in the belt light up.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/asteroids.parquet",
+   "numbers/AN01_empty_lanes.csv",
+   "numbers/AN06_trojan_swarms.csv",
+   "numbers/BF01_asteroid_belt_lanes.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 873,
+  "kb": 152
+ },
+ "2": {
+  "n": 2,
+  "slug": "darker_farther_out",
+  "title": "Asteroids get darker the farther they are from the Sun",
+  "part": "A",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F02_darker_farther_out.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: a probe flies out through the belt and counts the shiny rocks in each zone.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/asteroids.parquet",
+   "numbers/AN01_empty_lanes.csv",
+   "numbers/AN06_trojan_swarms.csv",
+   "numbers/BF01_asteroid_belt_lanes.csv",
+   "numbers/BF02_darker_farther_out.csv",
+   "numbers/K02_darker_farther_out.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 804,
+  "kb": 159
+ },
+ "3": {
+  "n": 3,
+  "slug": "spin_speed_limit",
+  "title": "Big asteroids almost never spin faster than once every 2.2 hours",
+  "part": "A",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F03_spin_speed_limit.html",
+  "seconds": 14.0,
+  "how": "Press ▶ Play: big and small asteroids spin at their real speeds, sped up.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/asteroids.parquet",
+   "numbers/BF03_spin_limit.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 804,
+  "kb": 73
+ },
+ "4": {
+  "n": 4,
+  "slug": "discoveries_per_year",
+  "title": "In 2025, three times as many objects were seen for the first time as in a normal recent year",
+  "part": "A",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F04_discoveries_per_year.html",
+  "seconds": 15.2,
+  "how": "Press ▶ Play: year by year, new space rocks light up when they are first seen.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/asteroids.parquet",
+   "numbers/AN06_trojan_swarms.csv",
+   "numbers/BF01_asteroid_belt_lanes.csv",
+   "numbers/BF04_discovery_chart_2025.csv",
+   "numbers/K04_discoveries_per_year.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 804,
+  "kb": 158
+ },
+ "5": {
+  "n": 5,
+  "slug": "neptune_rhythm",
+  "title": "Past Neptune, icy objects crowd into the spot where Neptune's rhythm keeps them safe",
+  "part": "A",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F05_neptune_rhythm.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: Neptune goes around the Sun 3 times while Pluto goes around 2 times.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/asteroids.parquet",
+   "numbers/AN05_neptune_rhythm.csv",
+   "numbers/BF05_neptune_rhythm.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 132
+ },
+ "6": {
+  "n": 6,
+  "slug": "trojan_swarms",
+  "title": "Jupiter has two swarms of asteroids, and the one in front is bigger",
+  "part": "A",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F06_trojan_swarms.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: Jupiter goes once around the Sun, with one swarm ahead of it and one behind.",
+  "illustration": true,
+  "numbers": [
+   "numbers/AN06_trojan_places.csv",
+   "numbers/AN06_trojan_swarms.csv",
+   "numbers/BF01_asteroid_belt_lanes.csv",
+   "numbers/BF06_trojan_swarms.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 873,
+  "kb": 145
+ },
+ "7": {
+  "n": 7,
+  "slug": "hazard_box",
+  "title": "\"Potentially hazardous\" is a rule, not a warning",
+  "part": "A",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F07_hazard_box.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: real near-Earth rocks go around the Sun, and the two measuring lines are checked.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/asteroids.parquet",
+   "numbers/BF07_hazard_formula.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 74
+ },
+ "8": {
+  "n": 8,
+  "slug": "passes_per_decade",
+  "title": "Close passes bunch up around today, because that's when we find the rocks",
+  "part": "B",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F08_passes_per_decade.html",
+  "seconds": 15.2,
+  "how": "Press ▶ Play: decade by decade, real space rocks fly past Earth.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/close_approaches.parquet",
+   "numbers/BF08_passes_bunch_today.csv",
+   "numbers/K08_passes_per_decade.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 81
+ },
+ "9": {
+  "n": 9,
+  "slug": "passes_by_month",
+  "title": "July is quiet, for the telescopes",
+  "part": "B",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F09_passes_by_month.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: Earth goes once around the Sun, and each month the rocks found that month flash.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF09_july_quiet.csv",
+   "numbers/K09_passes_by_month.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 72
+ },
+ "10": {
+  "n": 10,
+  "slug": "fireball_map",
+  "title": "Fireballs happen everywhere, and one was far bigger than all the others",
+  "part": "C",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F10_fireball_map.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: real fireballs flash on Earth at their real places, in time order.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/fireballs.parquet",
+   "numbers/BF10_fireballs_anywhere.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 197
+ },
+ "11": {
+  "n": 11,
+  "slug": "fewer_at_dawn",
+  "title": "Fewer fireballs at dawn",
+  "part": "C",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F11_fewer_at_dawn.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: real fireballs hit Earth at their real local time; watch the evening side.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF11_fewer_at_dawn.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 86
+ },
+ "12": {
+  "n": 12,
+  "slug": "storm_cycle",
+  "title": "Storms rise and fall with the Sun's 11-year cycle",
+  "part": "D",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F12_storm_cycle.html",
+  "seconds": 15.9,
+  "how": "Press ▶ Play: year by year, the solar wind blows and Earth's space storms rise and fall.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF12_storm_cycle.csv",
+   "numbers/K12_storm_days_per_year.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 74
+ },
+ "13": {
+  "n": 13,
+  "slug": "before_a_storm",
+  "title": "What the solar wind does in the hours before a big storm",
+  "part": "D",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F13_before_a_storm.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: the two days before a big storm, as the solar wind changes hour by hour.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF13_before_a_storm.csv",
+   "numbers/BF13_median_curves.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 896,
+  "kb": 87
+ },
+ "14": {
+  "n": 14,
+  "slug": "repeats_27_days",
+  "title": "The Sun repeats itself every 27 days",
+  "part": "D",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F14_repeats_27_days.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: the Sun turns, and its fast-wind beam sweeps over Earth every 27 days.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF14_repeats_27_days.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 72
+ },
+ "15": {
+  "n": 15,
+  "slug": "storms_by_month",
+  "title": "Storms like the months around the equinoxes",
+  "part": "D",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F15_storms_by_month.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: Earth goes once around the Sun; storms flash more around March and October.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF15_equinox_storms.csv",
+   "numbers/K15_storms_by_month.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 73
+ },
+ "16": {
+  "n": 16,
+  "slug": "may_2024_superstorm",
+  "title": "The May 2024 superstorm, hour by hour",
+  "part": "D",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F16_may_2024_superstorm.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: the May 2024 superstorm, hour by hour, as a giant cloud from the Sun hits Earth.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF12_storm_cycle.csv",
+   "numbers/BF16_may_2024_superstorm.csv",
+   "numbers/BF16_may_2024_window.csv",
+   "numbers/BF17_ontario_nights.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 118
+ },
+ "17": {
+  "n": 17,
+  "slug": "ontario_nights",
+  "title": "Big storms that happened during an Ontario night",
+  "part": "D",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F17_ontario_nights.html",
+  "seconds": 19.6,
+  "how": "Press ▶ Play: year by year, every strong storm that happened while it was dark in Toronto.",
+  "illustration": true,
+  "numbers": [
+   "numbers/AN17_january_2026_storm.csv",
+   "numbers/BF17_ontario_nights.csv",
+   "numbers/K17_ontario_nights.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 107
+ },
+ "18": {
+  "n": 18,
+  "slug": "colour_brightness",
+  "title": "A star's colour and true brightness sort it into a family",
+  "part": "E",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F18_colour_brightness.html",
+  "seconds": 13.5,
+  "how": "Press ▶ Play: real stars, all mixed up, sort themselves into families.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/stars.parquet",
+   "numbers/BF18_star_families.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 873,
+  "kb": 101
+ },
+ "19": {
+  "n": 19,
+  "slug": "star_types",
+  "title": "Three out of four nearby stars are red dwarfs",
+  "part": "E",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F19_star_types.html",
+  "seconds": 13.5,
+  "how": "Press ▶ Play: 100 stars near the Sun, first the bright ones, then the faint red dwarfs.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF19_red_dwarfs.csv",
+   "numbers/K19_star_types.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 72
+ },
+ "20": {
+  "n": 20,
+  "slug": "sky_map",
+  "title": "Eight times too many \"nearby\" stars toward the middle of the Milky Way",
+  "part": "E",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F20_sky_map.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: two same-size circles on the sky fill up with the stars the file calls nearby.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/stars.parquet",
+   "numbers/AN20_sky_map.csv",
+   "numbers/BF18_star_families.csv",
+   "numbers/BF20_galactic_centre_excess.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 148
+ },
+ "21": {
+  "n": 21,
+  "slug": "star_groups",
+  "title": "Stars that were born together still travel together",
+  "part": "E",
+  "kind": "3D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F21_star_groups.html",
+  "seconds": 16.0,
+  "how": "Press ▶ Play: real stars in 3D; the star groups light up and drift together.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/stars.parquet",
+   "numbers/BF21_dbscan_labels.csv",
+   "numbers/BF21_groups.csv",
+   "numbers/BF21_star_clusters.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 252
+ },
+ "22": {
+  "n": 22,
+  "slug": "fast_movers",
+  "title": "Some stars are really fast, and some speeds can't be right",
+  "part": "E",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F22_fast_movers.html",
+  "seconds": 14.0,
+  "how": "Press ▶ Play: real stars rush toward us or away from us at their measured speeds.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/stars.parquet",
+   "numbers/BF22_fast_movers.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 77
+ },
+ "23": {
+  "n": 23,
+  "slug": "planets_per_year",
+  "title": "Planet discoveries arrive in batches",
+  "part": "F",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F23_planets_per_year.html",
+  "seconds": 15.4,
+  "how": "Press ▶ Play: year by year, planets light up on the sky in the year they were announced.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/planets.parquet",
+   "numbers/BF23_planet_batches.csv",
+   "numbers/K23_planets_per_year.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 237
+ },
+ "24": {
+  "n": 24,
+  "slug": "orbit_vs_size",
+  "title": "Hot Jupiters are common in the list, but hot Neptunes are rare",
+  "part": "F",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F24_orbit_vs_size.html",
+  "seconds": 14.0,
+  "how": "Press ▶ Play: real short-year planets circle a star; then only the Neptune-size ones are shown.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/planets.parquet",
+   "numbers/BF24_hot_neptune_desert.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 89
+ },
+ "25": {
+  "n": 25,
+  "slug": "radius_gap",
+  "title": "A gap between rocky planets and gassy planets",
+  "part": "F",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F25_radius_gap.html",
+  "seconds": 14.0,
+  "how": "Press ▶ Play: small real planets circle a star; then only the ones in the size gap are shown.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/planets.parquet",
+   "numbers/BF25_radius_valley.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 90
+ },
+ "26": {
+  "n": 26,
+  "slug": "host_stars",
+  "title": "Planet hunters mostly look at Sun-like stars",
+  "part": "F",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F26_host_stars.html",
+  "seconds": 13.0,
+  "how": "Press ▶ Play: 100 ordinary stars and 100 planet hosts sort themselves by type.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF26_sun_like_hosts.csv",
+   "numbers/K26_host_stars.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 72
+ },
+ "27": {
+  "n": 27,
+  "slug": "giant_share",
+  "title": "Stars with more metal have more giant planets",
+  "part": "F",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F27_giant_share.html",
+  "seconds": 12.5,
+  "how": "Press ▶ Play: four kinds of stars, from little metal to lots, with their share of giant planets.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF27_metal_rich_giants.csv",
+   "numbers/K27_giant_share.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 850,
+  "kb": 72
+ },
+ "28": {
+  "n": 28,
+  "slug": "just_right",
+  "title": "Earth-size planets in the \"just right\" zone",
+  "part": "F",
+  "kind": "2D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F28_just_right.html",
+  "seconds": 14.0,
+  "how": "Press ▶ Play: Earth-size planets appear in the just-right zone, from the closest to us to the farthest.",
+  "illustration": true,
+  "numbers": [
+   "numbers/BF28_just_right_zone.csv",
+   "numbers/BF28_planet_list.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 73
+ },
+ "29": {
+  "n": 29,
+  "slug": "crater_map",
+  "title": "The craters draw the Moon's dark \"seas\"",
+  "part": "G",
+  "kind": "3D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F29_crater_map.html",
+  "seconds": 14.0,
+  "how": "Press ▶ Play: real craters appear on both sides of the Moon, and the dark seas show up.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/craters.parquet",
+   "numbers/BF29_craters_draw_seas.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 320
+ },
+ "30": {
+  "n": 30,
+  "slug": "size_rule",
+  "title": "Ten times wider, about 50 to 100 times rarer",
+  "part": "G",
+  "kind": "3D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F30_size_rule.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: the Moon turns, showing many small craters, fewer big ones, and three giants.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/craters.parquet",
+   "numbers/BF30_size_rule.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 827,
+  "kb": 336
+ },
+ "31": {
+  "n": 31,
+  "slug": "stretched_craters",
+  "title": "Most craters are nearly round, and the stretched ones lean one way",
+  "part": "G",
+  "kind": "3D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F31_stretched_craters.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: the stretched craters appear as lines; many lean the same way.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/craters.parquet",
+   "numbers/BF31_stretched_craters.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 873,
+  "kb": 322
+ },
+ "32": {
+  "n": 32,
+  "slug": "polar_craters",
+  "title": "More craters per square kilometre toward the poles",
+  "part": "G",
+  "kind": "3D",
+  "style": "space sketch (2D canvas, no WebGL)",
+  "html": "animations/F32_polar_craters.html",
+  "seconds": 15.0,
+  "how": "Press ▶ Play: the Moon tips to show its north pole, where craters are the most crowded.",
+  "illustration": true,
+  "numbers": [
+   "data_cache/craters.parquet",
+   "numbers/BF32_bands.csv",
+   "numbers/BF32_polar_craters.csv",
+   "numbers/AN_keys.json"
+  ],
+  "height": 804,
+  "kb": 293
+ }
+}

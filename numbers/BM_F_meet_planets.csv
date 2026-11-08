@@ -1,0 +1,31 @@
+key,value,shown,unit,source
+rows_total,6451.0,"6,451",,our data
+n_columns,25.0,25,,our data
+n_hosts,4847.0,"4,847",,our data
+multi_hosts,1069.0,"1,069",,our data
+first_year,1992.0,1992,,our data
+last_year,2026.0,2026,,our data
+rade_blank,50.0,50,,our data
+mass_blank,30.0,30,,our data
+insol_blank,596.0,596,,our data
+met_blank,699.0,699,,our data
+orbper_blank,354.0,354,,our data
+transit_pct,74.17454658192528,74%,,our data
+rv_pct,18.66377305844055,19%,,our data
+n_methods,11.0,11,,our data
+ex_name,0.0,Proxima Cen b,,our data (name)
+ex_host,0.0,Proxima Cen,,our data (name)
+ex_year,2016.0,2016,,our data
+ex_method,0.0,Radial Velocity,,our data (text)
+ex_facility,0.0,European Southern Observatory,,our data (text)
+ex_orbper,11.18465,11.18,days,our data
+ex_rade,1.02,1.02,Earth radii,our data
+ex_mass,1.055,1.05,Earth masses,our data
+ex_insol,0.641,0.64,,our data
+ex_met,,blank,dex,our data
+ex_dist,1.30119,1.30,pc,our data
+ex_ly,4.2418794,4.2,light-years,our data
+ex_gaia,0.0,5853498713190525696,,"our data (Gaia ID, read as text)"
+pc_ly,3.26,3.26,light-years,README (1 parsec)
+earth_year_days,365.25,365,days,known science (one Earth year)
+ex_years_per_earth_year,32.65636385582025,33,,our data (365 days ÷ its year)

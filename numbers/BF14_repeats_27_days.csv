@@ -1,0 +1,21 @@
+key,value,shown,unit,source
+days,6115.0,"6,115",,our data
+all_13,0.07827147427523796,0.08,,our data
+sub_13,0.08845356024090609,0.09,,our data
+all_20,0.036650525687150694,0.04,,our data
+sub_20,-0.0964336144777079,-0.10,,our data
+all_27,0.45503580752570666,0.46,,our data
+sub_27,0.5995919154550269,0.60,,our data
+best_lag,27.0,27,days,our data
+ex_day1,0.0,2010-04-11,,our data (date)
+ex_speed1,402.97136752136754,403,km/s,our data
+ex_day2,0.0,2010-05-08,,our data (date)
+ex_speed2,469.43255813953493,469,km/s,our data
+sun_turn,27.0,27,days,known science (the Sun's turn as seen from Earth)
+lag13,13.0,13,days,rule we used
+lag20,20.0,20,days,rule we used
+lag35,35.0,35,days,rule we used
+y_2016,2016.0,2016,,rule we used
+y_2018,2018.0,2018,,rule we used
+lag60,60.0,60,days,rule we used
+y_2017,2017.0,2017,,rule we used

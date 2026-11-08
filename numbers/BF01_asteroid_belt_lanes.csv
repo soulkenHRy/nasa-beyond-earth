@@ -1,0 +1,38 @@
+key,value,shown,unit,source
+rows_total,1582869.0,"1,582,869",,our data
+a_low,1.7,1.7,AU,rule we used
+a_high,5.5,5.5,AU,rule we used
+slice_width,0.01,0.01,AU,rule we used
+rows_kept,1546750.0,"1,546,750",,our data
+gap_lo,2.48,2.48,AU,rule we used
+gap_hi,2.52,2.52,AU,rule we used
+inside_lo,2.4,2.40,AU,rule we used
+inside_hi,2.44,2.44,AU,rule we used
+outside_lo,2.6,2.60,AU,rule we used
+outside_hi,2.64,2.64,AU,rule we used
+gap_count,8659.0,"8,659",,our data
+inside_count,54292.0,"54,292",,our data
+outside_count,86354.0,"86,354",,our data
+gap_count_ge,9123.0,"9,123",,our data
+on_edge_2_48,464.0,464,,our data
+ratio_inside,6.270008084074373,6.3,,our data
+ratio_outside,9.972745120683681,10.0,,our data
+ceres_e,0.0797,0.08,,our data
+ceres_a,2.766,2.766,AU,our data
+a_example,2.5,2.5,AU,rule we used
+sqrt_2_5,1.5811388300841898,1.58,,our data
+period_2_5,3.952847075210474,3.95,years,our data
+file_per_y_at_2_5,3.95,3.95,years,our data
+jupiter_period,11.86,11.86,years,known science
+period_ratio,3.0003690439677584,3.0,,our data
+dip1_a,2.5,2.50,AU,our data
+dip1_ratio,3.0003690439677584,3.00,,our data
+dip2_a,2.82,2.82,AU,our data
+dip2_ratio,2.504442277773194,2.50,,our data
+dip3_a,2.95,2.95,AU,our data
+dip3_ratio,2.340731852715743,2.34,,our data
+dip4_a,3.29,3.29,AU,our data
+dip4_ratio,1.9874254281279207,1.99,,our data
+e_ge_1_rows,2313.0,"2,313",,our data
+e_cut,1.0,1,,rule we used
+guide_dip4,3.28,3.28,AU,Field Guide

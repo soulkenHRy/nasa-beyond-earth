@@ -1,0 +1,44 @@
+pl_name,sy_dist,pl_rade,pl_insol,discoverymethod
+Proxima Cen b,1.301,1.02,0.641,Radial Velocity
+Ross 128 b,3.375,1.11,1.38,Radial Velocity
+GJ 1061 c,3.673,1.19,1.4,Radial Velocity
+GJ 1061 d,3.673,1.16,0.6,Radial Velocity
+Teegarden's Star b,3.831,1.05,1.08,Radial Velocity
+Teegarden's Star c,3.831,1.02,0.35,Radial Velocity
+Wolf 1061 c,4.306,1.66,1.3,Radial Velocity
+GJ 1002 b,4.849,1.03,0.67,Radial Velocity
+GJ 1002 c,4.849,1.1,0.257,Radial Velocity
+GJ 251 c,5.581,1.8,0.404,Radial Velocity
+GJ 273 b,5.922,1.51,1.06,Radial Velocity
+Gl 725 B c,6.842,1.66,0.474,Radial Velocity
+GJ 667 C e,7.244,1.45,0.302,Radial Velocity
+GJ 667 C f,7.244,1.45,0.563,Radial Velocity
+GJ 667 C c,7.244,1.77,0.877,Radial Velocity
+GJ 3378 b,7.723,1.32,0.91,Radial Velocity
+Wolf 1069 b,9.583,1.08,0.652,Radial Velocity
+L 98-59 f,10.619,1.48,1.1,Radial Velocity
+TRAPPIST-1 g,12.43,1.129,0.252,Transit
+TRAPPIST-1 d,12.43,0.788,1.115,Transit
+TRAPPIST-1 e,12.43,0.92,0.646,Transit
+TRAPPIST-1 f,12.43,1.045,0.373,Transit
+LHS 1140 b,14.986,1.73,0.43,Transit
+TOI-700 d,31.126,1.145,0.85,Transit
+TOI-700 e,31.126,0.919,1.27,Transit
+LP 890-9 c,32.43,1.367,0.906,Transit
+TOI-1266 d,36.012,1.74,1.3,Transit Timing Variations
+TOI-715 b,42.405,1.55,0.67,Transit
+K2-3 d,44.073,1.458,1.44,Transit
+K2-72 e,66.432,1.29,1.2,Transit
+Kepler-1649 c,92.191,1.06,0.75,Transit
+Kepler-296 e,167.0,1.53,1.41,Transit
+Kepler-296 f,167.0,1.8,0.62,Transit
+Kepler-186 f,177.594,1.17,0.3,Transit
+Kepler-438 b,195.943,1.12,1.4,Transit
+Kepler-1652 b,252.0,1.6,0.81,Transit
+Kepler-1229 b,265.482,1.4,0.524,Transit
+Kepler-62 f,300.874,1.41,0.5,Transit
+Kepler-62 e,300.874,1.61,1.352,Transit
+Kepler-1544 b,335.09,1.78,0.833,Transit
+Kepler-442 b,365.965,1.34,0.66,Transit
+Kepler-1410 b,367.0,1.78,1.06,Transit
+Kepler-452 b,551.727,1.63,1.1,Transit

@@ -1,0 +1,24 @@
+key,value,shown,unit,source
+rows,3982.0,"3,982",,our data
+bins,30.0,30,,rule we used
+p_cut,100.0,100,days,rule we used
+b15_lo,1.4676253713775869,1.47,,our data
+b15_hi,1.594365613560178,1.59,,our data
+b15_n,233.0,233,,our data
+b18_lo,1.7320508075688774,1.73,,our data
+b18_hi,1.8816261304714648,1.88,,our data
+b18_n,199.0,199,,our data
+b23_lo,2.22064303492292,2.22,,our data
+b23_hi,2.412411889247806,2.41,,our data
+b23_n,347.0,347,,our data
+peak1_lo,1.4676253713775869,1.47,,our data
+peak1_hi,1.594365613560178,1.59,,our data
+peak1_n,233.0,233,,our data
+peak2_lo,2.22064303492292,2.22,,our data
+peak2_hi,2.412411889247806,2.41,,our data
+peak2_n,347.0,347,,our data
+valley_lo,1.7320508075688774,1.73,,our data
+valley_hi,1.8816261304714648,1.88,,our data
+valley_n,199.0,199,,our data
+size_lo,0.5,0.5,Earth radii,rule we used
+size_hi,6.0,6,Earth radii,rule we used

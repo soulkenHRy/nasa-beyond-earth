@@ -1,0 +1,20 @@
+key,value,shown,unit,source
+size_cut,1.8,1.8,Earth radii,rule we used
+insol_lo,0.25,0.25,,rule we used
+insol_hi,1.5,1.5,,rule we used
+n,43.0,43,,our data
+n_rv,18.0,18,,our data
+n_transit,24.0,24,,our data
+top_name,0.0,Proxima Cen b,,our data (name)
+top_pc,1.30119,1.30,pc,our data
+pc_ly,3.26,3.26,light-years,README (1 parsec)
+top_ly,4.2418794,4.2,light-years,our data
+top_rade,1.02,1.02,Earth radii,our data
+top_insol,0.641,0.64,,our data
+voyager_kms,17.0,17,km/s,known science (Voyager 1's speed)
+pc_km,30857000000000.0,30.9 trillion,km,known science (1 parsec)
+voyager_years,74841.33556342912,"75,000",years,our data
+n_within_10pc,17.0,17,,our data
+earth_insol,1.0,1,,rule we used
+near_pc,10.0,10,pc,rule we used
+voyager_name,0.0,Voyager 1,,known name

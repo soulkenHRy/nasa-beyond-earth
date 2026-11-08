@@ -1,0 +1,18 @@
+key,value,shown,unit,source
+au_million_km,149.5978707,149.6,million km,known science (1 AU)
+au_round,150.0,150,million km,1 AU rounded to the nearest 10
+car_kmh,100.0,100,km per hour,rule we used (a highway speed)
+car_years_au,170.65693668720053,171,years,"1 AU divided by 100 km per hour, in years"
+ld_km,384400.0,"384,400",km,the brief (1 lunar distance)
+car_days_ld,160.16666666666666,160,days,"1 lunar distance divided by 100 km per hour, in days"
+ld_per_au,389.1724003642039,389,Moon distances,1 AU divided by 1 lunar distance
+pc_ly,3.26,3.26,light-years,README (1 parsec)
+kt_tonnes,1000.0,"1,000",tonnes of TNT,definition of a kiloton
+earth_radius,6371.0,"6,371",km,the brief
+earth_width,12742.0,"12,742",km,2 x Earth's radius
+light_kms,299792.458,"300,000",km per second,"known science (speed of light, rounded)"
+sec_per_hour,3600.0,"3,600",seconds,60 x 60
+full_circle,360.0,360,degrees,a full circle
+hundred,100.0,100,,percent means out of 100
+n_findings,32.0,32,,count of findings written
+n_parts,7.0,7,,count of parts written

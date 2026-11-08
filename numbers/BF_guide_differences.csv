@@ -1,0 +1,13 @@
+finding,title,note
+1,The asteroid belt has empty lanes,the guide said the last lane is at 3.28; our data gives 3.29.
+2,Asteroids get darker the farther they are from the Sun,"the guide said the bump's middle shininess is 0.57; our data gives 0.54 (1.90 to 1.95, 266 asteroids)."
+6,"Jupiter has two swarms of asteroids, and the one in front is bigger",the guide estimated Jupiter at about 112 degrees; our halfway point is 117.5 degrees.
+9,"July is quiet, for the telescopes",the guide said a brightness number over 25 means under about 30 m; with a shininess of 0.14 we get about 36 m.
+10,"Fireballs happen everywhere, and one was far bigger than all the others",the guide said 243 were over land; our land map gives 241.
+15,Storms like the months around the equinoxes,the guide said 3.7-3.8% for September and October; our data gives 3.7% and 4.0%.
+16,"The May 2024 superstorm, hour by hour","the guide said the cloud hit at about 17:10 with the speed jumping to 572; our readings show the jump at 17:05 to 608, then 572 at 17:15."
+17,Big storms that happened during an Ontario night,the guide said the dark-hours value was -167; our data gives -132 the night before and -167 the night after.
+20,"Eight times too many ""nearby"" stars toward the middle of the Milky Way","the guide said 15,895 against 2,040 (wobble score 1.65, 34% with no colour) and 1,594 against 1,587; our circles give 15,901 against 2,041 (1.63, 33%) and 1,881 against 1,894."
+22,"Some stars are really fast, and some speeds can't be right","the guide said 2,280 stars beat 200 km every second sideways; our data gives 2,278."
+26,Planet hunters mostly look at Sun-like stars,"the guide said decimals change 73% of the IDs, leaving 555; our test gives 57% and 789 (it depends on how the IDs are turned into numbers)."
+27,Stars with more metal have more giant planets,the guide said 33% for the third group; ours is 32% (32.5% before rounding).

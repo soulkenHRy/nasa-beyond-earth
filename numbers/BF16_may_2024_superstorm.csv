@@ -1,0 +1,37 @@
+key,value,shown,unit,source
+shock_utc,0.0,17:05,,our data (time)
+shock_tor,0.0,13:05,,our data (time)
+speed_before,447.4,447,km/s,our data
+speed_after,608.2,608,km/s,our data
+den_before,14.88,14.9,per cm3,our data
+den_after,35.13,35.1,per cm3,our data
+den_ratio,2.3608870967741935,2.4,,our data
+symh_up,79.0,+79,nT,our data
+bz_step1,-15.0,-15,nT,rule we used
+bz_step2,-30.0,-30,nT,rule we used
+bz1,-16.28,-16,nT,our data
+bz1_utc,0.0,17:30,,our data (time)
+bz1_min_after,25.0,25,minutes,our data
+bz2,-30.79,-31,nT,our data
+bz2_utc,0.0,18:00,,our data (time)
+speed_plus10,571.8,572,km/s,our data
+plus10_utc,0.0,17:15,,our data (time)
+guide_speed_after,572.0,572,km/s,Field Guide
+low,-497.0,-497,nT,our data
+low_utc,0.0,11 May 02:15,,our data (time)
+low_tor,0.0,10 May 22:15,,our data (time)
+hours_shock_to_low,9.166666666666666,9.2,hours,our data
+bz_min_window,-44.3,-44.3,nT,our data
+bz_blank_pct,1.386481802426343,1%,,our data
+oct_low,-343.0,-343,nT,our data
+oct_utc,0.0,11 Oct 01:45,,our data (time)
+oct_tor,0.0,10 Oct 21:45,,our data (time)
+file_low,-497.0,-497,nT,our data
+win_from,0.0,10 May 2024 12:00,,rule we used
+win_to,0.0,12 May 2024 12:00,,rule we used
+win_from_code,0.0,2024-05-10 12:00,,rule we used
+win_to_code,0.0,2024-05-12 12:00,,rule we used
+win_rows,577.0,577,,our data
+guide_shock,0.0,17:10,,Field Guide
+y_2024,2024.0,2024,,rule we used
+step_min,5.0,5,minutes,rule we used

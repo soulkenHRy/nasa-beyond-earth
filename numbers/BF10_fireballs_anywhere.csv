@@ -1,0 +1,56 @@
+key,value,shown,unit,source
+rows,1074.0,"1,074",,our data
+located,888.0,888,,our data
+first,0.0,1988-04-15,,our data (date)
+last,0.0,2026-10-04,,our data (date)
+band_-90_-60_obs,58.0,58,,our data
+band_-90_-60_exp,59.484720719709266,59,,our data
+band_-90_-60_share,6.698729810778071,6.7%,,our data
+band_-60_-30_obs,171.0,171,,our data
+band_-60_-30_exp,162.51527928029077,163,,our data
+band_-60_-30_share,18.30127018922193,18.3%,,our data
+band_-30_0_obs,220.0,220,,our data
+band_-30_0_exp,221.99999999999997,222,,our data
+band_-30_0_share,24.999999999999996,25.0%,,our data
+band_0_30_obs,227.0,227,,our data
+band_0_30_exp,221.99999999999997,222,,our data
+band_0_30_share,24.999999999999996,25.0%,,our data
+band_30_60_obs,176.0,176,,our data
+band_30_60_exp,162.51527928029077,163,,our data
+band_30_60_share,18.30127018922193,18.3%,,our data
+band_60_90_obs,36.0,36,,our data
+band_60_90_exp,59.484720719709266,59,,our data
+band_60_90_share,6.698729810778071,6.7%,,our data
+sin30,0.49999999999999994,0.5,,rule we used
+over_land,241.0,241,,our data
+over_ocean,647.0,647,,our data
+ocean_pct,72.86036036036036,73%,,our data
+earth_ocean_pct,71.0,71%,,known science (share of Earth's surface covered by ocean)
+big1_kt,441.0,441,kt,our data
+big1_date,0.0,2013-02-15,,our data (date)
+big1_lat,54.8,54.8,,our data
+big1_lon,61.1,61.1,,our data
+big2_kt,49.0,49,kt,our data
+big2_date,0.0,2018-12-18,,our data (date)
+big_ratio,9.0,9,,our data
+big1_alt,23.3,23.3,km,our data
+big1_vel,18.6,18.6,km/s,our data
+kt_tnt,1000.0,"1,000",tonnes of TNT,definition of a kiloton
+hiroshima_kt,15.0,15,kt,"known science (Hiroshima bomb, about 15 kt)"
+big1_hiroshimas,29.4,29,,our data
+years,21.0,21,,rule we used
+n_ge_01,609.0,609,,our data
+per_year_ge_01,29.0,29.0,,our data
+n_ge_1,80.0,80,,our data
+per_year_ge_1,3.8095238095238093,3.8,,our data
+n_ge_10,8.0,8,,our data
+per_year_ge_10,0.38095238095238093,0.4,,our data
+every_years_ge_10,2.625,2.6,years,our data
+band_edge,30.0,30,degrees,rule we used
+y_from,2005.0,2005,,rule we used
+y_to,2025.0,2025,,rule we used
+cut_01,0.1,0.1,kt,rule we used
+cut_1,1.0,1,kt,rule we used
+cut_10,10.0,10,kt,rule we used
+guide_land,243.0,243,,Field Guide
+no_place,186.0,186,,our data

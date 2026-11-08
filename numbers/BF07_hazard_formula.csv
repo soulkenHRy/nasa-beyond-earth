@@ -1,0 +1,26 @@
+key,value,shown,unit,source
+ast_rows,1578786.0,"1,578,786",,our data
+pha_filled,1520750.0,"1,520,750",,our data
+moid_cut,0.05,0.05,AU,rule we used
+H_cut,22.0,22,,rule we used
+pha_y,2550.0,"2,550",,our data
+match,2517.0,"2,517",,our data
+match_pct,98.70588235294117,98.7%,,our data
+exceptions,33.0,33,,our data
+exc_H_min,22.01,22.01,,our data
+exc_H_max,22.57,22.57,,our data
+pha_n_rule_yes,17.0,17,,our data
+moid_km,7.479893535,7.5,million km,our data
+moid_ld,19.45525291828794,19.5,lunar distances,our data
+size_H22,141.4037617489543,141,m,our data
+neo_y,42841.0,"42,841",,our data
+neo_rule,42827.0,"42,827",,our data
+q_cut,1.3,1.3,AU,rule we used
+neo_n_at_1_3,19.0,19,,our data
+yr4_H,23.93,23.9,,our data
+yr4_moid,0.00275,0.0027,AU,our data
+yr4_size,58.13811720621297,58,m,our data
+yr4_pha,0.0,N,,our data (flag)
+yr4_chance,3.0,3%,,Field Guide (news in early 2025)
+yr4_name,0.0,2024 YR4,,our data (name)
+yr4_q,0.852,0.85,AU,our data

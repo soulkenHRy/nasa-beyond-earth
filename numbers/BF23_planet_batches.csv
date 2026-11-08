@@ -1,0 +1,20 @@
+key,value,shown,unit,source
+rows,6451,"6,451",,our data
+transit_all,4785,"4,785",,our data
+tr_2014,810,810,,our data
+tr_2016,1432,"1,432",,our data
+tr_2015,99,99,,our data
+tr_2013,79,79,,our data
+tot_2025,246,246,,our data
+tot_2026,361,361,,our data
+kepler_2016,1276,"1,276",,our data
+kepler_2014,784,784,,our data
+first_year,1992,1992,,our data
+busiest_year,2016,2016,,our data
+busiest_n,1504,"1,504",,our data
+y_2013,2013,2013,,rule we used
+y_2014,2014,2014,,rule we used
+y_2015,2015,2015,,rule we used
+y_2016,2016,2016,,rule we used
+y_2025,2025,2025,,rule we used
+y_2026,2026,2026,,rule we used

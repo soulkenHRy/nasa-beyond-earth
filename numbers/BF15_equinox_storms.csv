@@ -1,0 +1,33 @@
+key,value,shown,unit,source
+share_1,2.709255745308876,2.7%,,our data
+strong_1,6.0,6,,our data
+share_2,1.9552951388888888,2.0%,,our data
+strong_2,3.0,3,,our data
+share_3,4.535631456883829,4.5%,,our data
+strong_3,10.0,10,,our data
+share_4,4.170070806100218,4.2%,,our data
+strong_4,6.0,6,,our data
+share_5,3.611901749947291,3.6%,,our data
+strong_5,5.0,5,,our data
+share_6,2.6130174291938997,2.6%,,our data
+strong_6,7.0,7,,our data
+share_7,1.9541956567573266,2.0%,,our data
+strong_7,2.0,2,,our data
+share_8,3.0301233396584437,3.0%,,our data
+strong_8,6.0,6,,our data
+share_9,3.6683006535947715,3.7%,,our data
+strong_9,6.0,6,,our data
+share_10,3.9769545250896057,4.0%,,our data
+strong_10,9.0,9,,our data
+share_11,3.5669849537037037,3.6%,,our data
+strong_11,9.0,9,,our data
+share_12,1.4973958333333335,1.5%,,our data
+strong_12,2.0,2,,our data
+readings,1761696.0,"1,761,696",,our data
+strong_total,71.0,71,,our data
+max_month,0.0,Mar,,our data (month)
+min_month,0.0,Dec,,our data (month)
+max_vs_min,3.029013007727635,3.0,,our data
+guide_sep_oct,3.75,3.7-3.8%,,Field Guide
+storm_cut,-50.0,-50,nT,rule we used
+strong_cut,-100.0,-100,nT,rule we used

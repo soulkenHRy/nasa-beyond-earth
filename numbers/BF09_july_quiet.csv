@@ -1,0 +1,21 @@
+key,value,shown,unit,source
+y_from,2005.0,2005,,rule we used
+y_to,2025.0,2025,,rule we used
+h_cut,25.0,25,,rule we used
+rows,30810.0,"30,810",,our data
+small_rows,18547.0,"18,547",,our data
+small_jul,691.0,691,,our data
+small_oct,2555.0,"2,555",,our data
+ratio,3.6975397973950797,3.7,,our data
+small_min_month,0.0,July,,our data (month)
+small_max_month,0.0,October,,our data (month)
+all_jul,1519.0,"1,519",,our data
+all_oct,3866.0,"3,866",,our data
+size_h25,35.5190190501612,36,m,our data
+albedo_guess,0.14,0.14,,rule we used
+h_blank,73.0,73,,our data
+ex_cd,0.0,2005-Jan-03 05:24,,our data (date)
+ex_h,26.1,26.10,,our data
+ex_dist,0.0180231647094555,0.0180,AU,our data
+guide_size,30.0,30,m,Field Guide
+ex_name,0.0,2005 AU3,,our data (name)

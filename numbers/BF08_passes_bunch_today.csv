@@ -1,0 +1,35 @@
+key,value,shown,unit,source
+rows,120071.0,"120,071",,our data
+objects,28430.0,"28,430",,our data
+range_au,0.1,0.1,AU,rule we used
+range_ld,38.91050583657588,39,lunar distances,our data
+ld_au,0.00257,0.00257,AU,the brief (1 lunar distance)
+ld_km,384400.0,"384,400",km,the brief (1 lunar distance)
+dec_1900s_avg,3322.6,"3,323",,our data
+dec_1900s_n,10.0,10,,our data
+dec_2010,12237.0,"12,237",,our data
+dec_2020,18757.0,"18,757",,our data
+dec_2030,3805.0,"3,805",,our data
+drop_2020s_2030s,4.929566360052562,4.9,,our data
+moon_2025,189.0,189,,our data
+moon_2026,135.0,135,,our data
+moon_2027,0.0,0,,our data
+moon_2028,3.0,3,,our data
+last_date,0.0,2026-12-31,,our data (date)
+ex_name,0.0,2025 UC11,,our data (name)
+ex_dist_au,4.41128327249007e-05,0.000044,AU,our data
+ex_km,6599.185846190423,"6,599",km,our data
+ex_height,228.18584619042304,228,km,our data
+earth_radius,6371.0,"6,371",km,the brief
+au_km,149.5978707,149.6,million km,known science
+iss_km,400.0,400,km,known science (space station height)
+ex_cd,0.0,2025-Oct-30 12:11,,our data (date)
+ex_des,0.0,2025 UC11,,our data (name)
+dec_1900s_label,0.0,1900s to 1990s,,rule we used
+lbl_2010,0.0,2010s,,rule we used
+lbl_2020,0.0,2020s,,rule we used
+lbl_2030,0.0,2030s,,rule we used
+yr_2027,2027.0,2027,,rule we used
+yr_2028,2028.0,2028,,rule we used
+yr_2025,2025.0,2025,,rule we used
+yr_2026,2026.0,2026,,rule we used

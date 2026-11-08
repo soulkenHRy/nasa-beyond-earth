@@ -1,0 +1,1580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Finding 26: Planet hunters mostly look at Sun-like stars</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; background: #0b1020; color: #e8ecf5;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 10px 12px 14px; }
+  .bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 0 0 8px; }
+  .bar h1 { font-size: 16.5px; line-height: 1.3; margin: 0 6px 0 0; font-weight: 600; flex: 1 1 260px; }
+  button { font: inherit; font-size: 15px; padding: 7px 16px; border-radius: 9px; border: 1px solid #3a4770;
+    background: #1d2747; color: #fff; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  #play { background: #2f6fed; border-color: #2f6fed; font-weight: 600; min-width: 132px; }
+  canvas { width: 100%; height: 440px; display: block; border-radius: 12px; background: #03050d; }
+  #live { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; min-height: 56px; }
+  #live .blk { background: #141b30; border: 1px solid #2a3452; border-radius: 9px; padding: 6px 12px;
+    font-size: 14px; line-height: 1.4; max-width: 100%; }
+  #live .hd { font-weight: 600; color: #ffffff; }
+  #live .ln { color: #d5dcec; }
+  #note { margin: 6px 2px 0; font-size: 13px; font-style: italic; color: #f0c674; }
+  #step { margin: 8px 2px 0; font-size: 15px; line-height: 1.45; min-height: 2.9em; color: #f3f5fb; }
+  .keys { margin-top: 6px; background: #141b30; border: 1px solid #2a3452; border-radius: 10px;
+    padding: 8px 14px 6px; font-size: 14.5px; line-height: 1.45; }
+  .keys b { color: #ffd166; }
+  .keys ul { margin: 4px 0; padding-left: 20px; }
+  .keys li { transition: opacity .35s; }
+  .keys li.hide { opacity: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar"><h1>Finding 26: Planet hunters mostly look at Sun-like stars</h1>
+    <button id="play" type="button">▶ Play</button><button id="pause" type="button">⏸ Pause</button></div>
+  <canvas id="sky" role="img" aria-label="Press ▶ Play: 100 ordinary stars and 100 planet hosts sort themselves by type."></canvas>
+  <div id="note"></div>
+  <div id="live" aria-live="polite"></div>
+  <div id="step"></div>
+  <div class="keys"><b>Key numbers</b><ul id="keys"></ul></div>
+</div>
+<script>window.SCENE = {"type":"crowd","dur":13,"crowd":{"crowds":[{"x0":0.03,"w":0.45,"title":"100 ordinary stars near the Sun","groups":[{"n":71,"color":"#ff7b4a","size":3.0,"text":"71%\nred dwarfs"},{"n":17,"color":"#ffab5e","size":4.0,"text":"17%\norange"},{"n":6,"color":"#ffe9a0","size":5.0,"text":"6%\nlike the Sun"},{"n":5,"color":"#fff7e0","size":5.6,"text":"5%\nyellow-white"},{"n":1,"color":"#e8eeff","size":6.0,"text":"1%\nwhite"}],"stagger":true},{"x0":0.52,"w":0.45,"title":"100 stars with planets found","groups":[{"n":27,"color":"#ff7b4a","size":3.0,"text":"27%\nred dwarfs"},{"n":33,"color":"#ffab5e","size":4.0,"text":"33%\norange"},{"n":28,"color":"#ffe9a0","size":5.0,"text":"28%\nlike the Sun"},{"n":11,"color":"#fff7e0","size":5.6,"text":"11%\nyellow-white"},{"n":1,"color":"#e8eeff","size":6.0,"text":"1%\nwhite"}],"planets":true,"stagger":true}],"tSort":4,"readout":[{"at":0,"lines":["Two crowds of 100 stars","left: ordinary stars; right: planet hosts"]}]},"tag":"Illustration, not to scale","how":"Press ▶ Play: 100 ordinary stars and 100 planet hosts sort themselves by type.","steps":[[0,"Left: 100 ordinary stars near the Sun. Right: 100 stars where planets were found (each with a tiny planet)."],[4,"Sort them by type."],[7.5,"Sun-like stars (yellow) are only 6% of ordinary stars, but 28% of planet hosts. Like looking for your keys only under the streetlight."]],"n":26,"keys":["Matched by ID, read as text: 2,045 planets around 1,424 stars","Read as decimal numbers, 57% of the IDs change and only 789 planets still match","Sun-like (G): 28% of hosts, 6% of stars","Orange (K): 33% of hosts, 17% of stars","Red dwarfs (M): 27% of hosts, 71% of stars"],"keyAt":[5.85,7.47,9.1,10.72,12.35],"intro":"This is the finished picture. Press ▶ Play to watch it happen, step by step.","tagNote":"The share of each star type is real (out of 100); places and sizes are drawn."};</script>
+<script>
+/* Space sketches for the 32 findings, drawn on a plain 2D canvas: no WebGL, no libraries, works in any browser.
+   notebooks/make_space_anims.py puts one finding's numbers (from numbers/ and the data files) in window.SCENE,
+   and this engine draws it. Before Play the page shows the finished picture. Play runs the story from the
+   start and stops on the finished picture again. */
+(function () {
+  "use strict";
+  const S = window.SCENE;
+  const cv = document.getElementById("sky");
+  // CPU drawing: works the same with or without a graphics card (and never needs WebGL)
+  const ctx = cv.getContext("2d", { willReadFrequently: true, alpha: false });
+  const playBtn = document.getElementById("play");
+  const pauseBtn = document.getElementById("pause");
+  const stepEl = document.getElementById("step");
+  const keyList = document.getElementById("keys");
+  const liveEl = document.getElementById("live");
+  let LIVE = [], lastLive = "", TOP = 54;
+  const T = S.dur;
+  let t = T, playing = false, started = false, lastTs = 0, W = 800, H = 440;
+  const STATE = (window.__anim = {
+    T: T, frames: 0, errors: [],
+    get t() { return t; }, get playing() { return playing; }, get started() { return started; },
+  });
+
+  // ------------------------------------------------------------------------------------------ small helpers
+  const TAU = Math.PI * 2, RAD = Math.PI / 180;
+  const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+  const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
+  const seg = (x, a, b) => (b <= a ? (x >= b ? 1 : 0) : clamp((x - a) / (b - a), 0, 1));
+  const ease = (x) => x * x * (3 - 2 * x);
+  const lerp = (a, b, f) => a + (b - a) * f;
+  const fmt = (v) => Math.round(v).toLocaleString("en-US");
+  function rng(seed) {
+    let s = seed >>> 0;
+    return function () {
+      s = (s + 0x6d2b79f5) >>> 0;
+      let r = Math.imul(s ^ (s >>> 15), 1 | s);
+      r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+      return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function rgb(hex) { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  function rgba(hex, a) { const c = rgb(hex); return `rgba(${c[0]},${c[1]},${c[2]},${clamp(a, 0, 1).toFixed(3)})`; }
+  function mix(h1, h2, f) {
+    const a = rgb(h1), b = rgb(h2);
+    return `rgb(${Math.round(lerp(a[0], b[0], f))},${Math.round(lerp(a[1], b[1], f))},${Math.round(lerp(a[2], b[2], f))})`;
+  }
+  function latest(list, tt) { let out = null; if (list) for (const it of list) if (tt >= it.at - 1e-9) out = it; return out; }
+  function interp(xs, ys, x) {
+    const n = xs.length;
+    if (x <= xs[0]) return ys[0];
+    if (x >= xs[n - 1]) return ys[n - 1];
+    let lo = 0, hi = n - 1;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (xs[m] <= x) lo = m; else hi = m; }
+    return lerp(ys[lo], ys[hi], (x - xs[lo]) / (xs[hi] - xs[lo]));
+  }
+  function idxAt(xs, x) {
+    let lo = 0, hi = xs.length - 1;
+    if (x < xs[0]) return 0;
+    if (x >= xs[hi]) return hi;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (xs[m] <= x) lo = m; else hi = m; }
+    return lo;
+  }
+  function kepler(M, e) {
+    let E = e < 0.8 ? M : Math.PI;
+    for (let i = 0; i < 8; i++) E -= (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E));
+    return E;
+  }
+  // star colour from the Gaia colour number (bp_rp): blue-white for hot stars, red for cool ones
+  const STAR_RAMP = [[-0.4, "#9db4ff"], [0.3, "#dfe6ff"], [0.8, "#fff4d6"], [1.3, "#ffd28a"], [2.0, "#ffab5e"], [3.2, "#ff7b4a"]];
+  function starColour(c) {
+    if (c <= STAR_RAMP[0][0]) return STAR_RAMP[0][1];
+    for (let i = 1; i < STAR_RAMP.length; i++) {
+      if (c <= STAR_RAMP[i][0]) return mix(STAR_RAMP[i - 1][1], STAR_RAMP[i][1], (c - STAR_RAMP[i - 1][0]) / (STAR_RAMP[i][0] - STAR_RAMP[i - 1][0]));
+    }
+    return STAR_RAMP[STAR_RAMP.length - 1][1];
+  }
+
+  // ------------------------------------------------------------------------------------------ drawing kit
+  const BG = (function () {
+    const r = rng(11), out = [];
+    for (let i = 0; i < 240; i++) out.push([r(), r(), 0.2 + 0.8 * r() * r(), r() * TAU]);
+    return out;
+  })();
+  function backdrop() {
+    ctx.fillStyle = "#03050d";
+    ctx.fillRect(0, 0, W, H);
+    for (const s of BG) {
+      const a = s[2] * (0.7 + 0.3 * Math.sin(s[3] + t * 1.7));
+      ctx.fillStyle = `rgba(215,225,255,${(0.7 * a).toFixed(3)})`;
+      const z = s[2] > 0.75 ? 1.7 : 1.1;
+      ctx.fillRect(s[0] * W, s[1] * H, z, z);
+    }
+  }
+  function font(size, bold, italic) { return `${italic ? "italic " : ""}${bold ? "600 " : ""}${size}px ${FONT}`; }
+  function rrect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  function label(s, x, y, o) {
+    o = o || {};
+    if (!s) return;
+    const size = o.size || 13;
+    ctx.save();
+    ctx.font = font(size, o.bold, o.italic);
+    ctx.textBaseline = "middle";
+    ctx.globalAlpha = o.alpha == null ? 1 : clamp(o.alpha, 0, 1);
+    const w = ctx.measureText(s).width, h = size * 1.5;
+    let bx = o.align === "center" ? x - w / 2 : o.align === "right" ? x - w : x;
+    bx = clamp(bx, 8, Math.max(8, W - w - 8));
+    const by = clamp(y, h / 2 + 4, H - h / 2 - 4);
+    if (o.box !== false) {
+      ctx.fillStyle = o.box || "rgba(6,10,26,0.74)";
+      rrect(bx - 6, by - h / 2, w + 12, h, 6);
+      ctx.fill();
+      if (o.border) { ctx.strokeStyle = o.border; ctx.lineWidth = 1; ctx.stroke(); }
+    } else {
+      ctx.shadowColor = "rgba(0,0,0,0.95)";
+      ctx.shadowBlur = 4;
+    }
+    ctx.textAlign = "left";
+    ctx.fillStyle = o.color || "#eef2fb";
+    ctx.fillText(s, bx, by + 0.5);
+    ctx.restore();
+  }
+  function wrapText(s, maxW) {
+    const words = String(s).split(" "), out = [];
+    let cur = "";
+    for (const w of words) {
+      const test = cur ? cur + " " + w : w;
+      if (cur && ctx.measureText(test).width > maxW) { out.push(cur); cur = w; } else cur = test;
+    }
+    if (cur) out.push(cur);
+    return out;
+  }
+  // the live numbers: shown in boxes under the picture, so they never cover the drawing
+  function panel(lines, x, y, o) {
+    if (lines && lines.length) LIVE.push({ lines: lines, colors: (o && o.colors) || [] });
+  }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function showLive() {
+    const html = LIVE.map((b) => '<div class="blk">' + b.lines.map((s, i) =>
+      `<div class="${i ? "ln" : "hd"}"${b.colors[i] ? ` style="color:${b.colors[i]}"` : ""}>${esc(s)}</div>`).join("") + "</div>").join("");
+    if (html !== lastLive) { liveEl.innerHTML = html; lastLive = html; }
+  }
+  function panelOnCanvas(lines, x, y, o) {
+    if (!lines || !lines.length) return;
+    o = o || {};
+    const size = o.size || (W < 560 ? 12.5 : 14), lh = size * 1.36, maxW = o.maxW || Math.min(W * 0.42, 400);
+    ctx.save();
+    const rows = [];
+    lines.forEach((s, i) => {
+      ctx.font = font(size, i === 0);
+      wrapText(s, maxW).forEach((r) => rows.push([r, i]));
+    });
+    let w = 0;
+    rows.forEach(([r, i]) => { ctx.font = font(size, i === 0); w = Math.max(w, ctx.measureText(r).width); });
+    const h = rows.length * lh;
+    let bx = o.align === "right" ? x - w : o.align === "center" ? x - w / 2 : x;
+    bx = clamp(bx, 12, Math.max(12, W - w - 12));
+    const by = o.valign === "bottom" ? y - h : y;
+    ctx.globalAlpha = o.alpha == null ? 1 : clamp(o.alpha, 0, 1);
+    ctx.fillStyle = "rgba(6,10,26,0.82)";
+    rrect(bx - 10, by - 7, w + 20, h + 12, 9);
+    ctx.fill();
+    ctx.strokeStyle = o.border || "rgba(130,150,200,0.45)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    rows.forEach(([r, i], k) => {
+      ctx.font = font(size, i === 0);
+      ctx.fillStyle = (o.colors && o.colors[i]) || (i === 0 ? "#ffffff" : "#d5dcec");
+      ctx.fillText(r, bx, by + k * lh);
+    });
+    ctx.restore();
+  }
+  function readout(list, tt, o) { const r = latest(list, tt); if (r) panel(r.lines, W - 14, 14, Object.assign({ align: "right" }, o || {})); }
+  function tagBox() {
+    if (!S.tag) return;
+    ctx.save();
+    ctx.font = font(12.5, false, true);
+    const rows = wrapText(S.tag, Math.min(W * 0.6, 470));
+    let w = 0;
+    rows.forEach((r) => (w = Math.max(w, ctx.measureText(r).width)));
+    const lh = 16, h = rows.length * lh, x = 14, y = 12;
+    ctx.fillStyle = "rgba(60,40,0,0.78)";
+    rrect(x - 6, y - 5, w + 12, h + 9, 6);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(237,161,0,0.9)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = "#ffd98a";
+    ctx.textBaseline = "top";
+    rows.forEach((r, i) => ctx.fillText(r, x, y + i * lh));
+    ctx.restore();
+  }
+  function glow(x, y, r, col, a) {
+    if (r <= 0) return;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, rgba(col, a == null ? 0.55 : a));
+    g.addColorStop(1, rgba(col, 0));
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, TAU);
+    ctx.fill();
+  }
+  function sun(x, y, r, col) {
+    col = col || "#ffbe3b";
+    glow(x, y, r * 3.3, col, 0.33);
+    const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r);
+    g.addColorStop(0, "#fffbe8");
+    g.addColorStop(0.6, col);
+    g.addColorStop(1, rgba(col, 0.95));
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, TAU);
+    ctx.fill();
+  }
+  function ball(x, y, r, col, lx, ly) {
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, TAU);
+    ctx.fill();
+    if (r < 2.5) return;
+    const g = ctx.createRadialGradient(x + (lx == null ? -0.45 : lx) * r, y + (ly == null ? -0.45 : ly) * r, r * 0.12, x, y, r * 1.05);
+    g.addColorStop(0, "rgba(255,255,255,0.45)");
+    g.addColorStop(0.5, "rgba(255,255,255,0)");
+    g.addColorStop(1, "rgba(0,0,0,0.55)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, TAU);
+    ctx.fill();
+  }
+  function ringFill(cx, cy, r0, r1, tilt, fill) {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, Math.max(0.1, r1), Math.max(0.1, r1 * tilt), 0, 0, TAU);
+    ctx.ellipse(cx, cy, Math.max(0.1, r0), Math.max(0.1, r0 * tilt), 0, 0, TAU);
+    ctx.fillStyle = fill;
+    ctx.fill("evenodd");
+  }
+  function ellipseLine(cx, cy, r, tilt, col, w, dash) {
+    ctx.strokeStyle = col;
+    ctx.lineWidth = w || 1.2;
+    ctx.setLineDash(dash || []);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, Math.max(0.1, r), Math.max(0.1, r * tilt), 0, 0, TAU);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  function arrow(x0, y0, x1, y1, col, w) {
+    const a = Math.atan2(y1 - y0, x1 - x0), hl = 9 + (w || 2) * 1.5;
+    ctx.strokeStyle = col;
+    ctx.fillStyle = col;
+    ctx.lineWidth = w || 2;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1 - Math.cos(a) * hl * 0.6, y1 - Math.sin(a) * hl * 0.6);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hl * Math.cos(a - 0.4), y1 - hl * Math.sin(a - 0.4));
+    ctx.lineTo(x1 - hl * Math.cos(a + 0.4), y1 - hl * Math.sin(a + 0.4));
+    ctx.closePath();
+    ctx.fill();
+  }
+  function dotsByColour(n, colOf, cols, cb) {   // cb(i) -> [x, y, size] or null
+    for (let c = 0; c < cols.length; c++) {
+      ctx.fillStyle = cols[c];
+      for (let i = 0; i < n; i++) {
+        if (colOf(i) !== c) continue;
+        const p = cb(i);
+        if (p) ctx.fillRect(p[0] - p[2] / 2, p[1] - p[2] / 2, p[2], p[2]);
+      }
+    }
+  }
+
+  // ===================================================================================== 1. the Sun and its rocks
+  function beltView(B) {
+    const tilt = B.tilt || 0.56;
+    const cx = W * (B.cx || 0.5), cy = H * (B.cy || 0.54);
+    const R = Math.min(W * (B.wf || 0.46), (H * (B.hf || 0.44)) / tilt);
+    const k = B.rmap;
+    const rOf = (a) => {
+      if (a <= k[0][0]) return R * k[0][1];
+      for (let i = 1; i < k.length; i++) {
+        if (a <= k[i][0]) return R * lerp(k[i - 1][1], k[i][1], (a - k[i - 1][0]) / (k[i][0] - k[i - 1][0]));
+      }
+      return R * k[k.length - 1][1];
+    };
+    return { cx, cy, R, tilt, rOf };
+  }
+  function belt(tt) {
+    const B = S.belt, V = beltView(B), cx = V.cx, cy = V.cy, tilt = V.tilt, rOf = V.rOf;
+    const yrs = tt * B.yps;
+    const scr = (r, th) => [cx + r * Math.cos(th), cy - r * Math.sin(th) * tilt];
+    for (const z of B.zones || []) {
+      const a = seg(tt, z.at, z.at + 0.8) * (z.alpha || 0.22);
+      if (a > 0) ringFill(cx, cy, rOf(z.a0), rOf(z.a1), tilt, rgba(z.color, a));
+    }
+    for (const p of B.planets || []) {
+      if (p.e) {
+        ctx.strokeStyle = rgba(p.color, 0.75);
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        for (let i = 0; i <= 200; i++) {
+          const nu = (i / 200) * TAU, r = (p.a * (1 - p.e * p.e)) / (1 + p.e * Math.cos(nu));
+          const q = scr(rOf(r), nu + p.peri * RAD);
+          if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]);
+        }
+        ctx.stroke();
+      } else ellipseLine(cx, cy, rOf(p.a), tilt, rgba(p.color, 0.55), 1.2, [4, 5]);
+    }
+    const d = B.dots;
+    if (d) {
+      if (!d._inv) d._inv = d.a.map((a) => 1 / Math.pow(a, 1.5));
+      const sz = d.size || 1.6;
+      ctx.globalAlpha = d.alpha || 0.85;
+      dotsByColour(d.a.length, (i) => (d.c ? d.c[i] : 0), d.colors, (i) => {
+        let s = sz;
+        if (d.t0) {
+          const age = tt - d.t0[i];
+          if (age < 0) return null;
+          if (age < 0.7 && started) s = sz * (1 + 2.4 * (1 - age / 0.7));
+        }
+        const th = (d.ang[i] + 360 * yrs * (d.lockP ? 1 / d.lockP : d._inv[i])) * RAD;
+        const r = rOf(d.a[i]);
+        return [cx + r * Math.cos(th), cy - r * Math.sin(th) * tilt, s];
+      });
+      ctx.globalAlpha = 1;
+    }
+    for (const m of B.marks || []) {
+      const a = seg(tt, m.at, m.at + 0.6);
+      if (a <= 0) continue;
+      ctx.globalAlpha = a;
+      ellipseLine(cx, cy, rOf(m.a), tilt, m.color || "#ff7a59", 1.7, [6, 4]);
+      ctx.globalAlpha = 1;
+      if (m.text) { const q = scr(rOf(m.a), (m.ang || 0) * RAD); label(m.text, q[0], q[1], { color: m.color || "#ffb39c", alpha: a, size: 12.5, align: "center", bold: true }); }
+    }
+    if (B.sweep) {
+      const sw = B.sweep;
+      if (started && tt >= sw.t0 && tt <= sw.t1 + 0.3) {
+        const r = rOf(lerp(sw.a0, sw.a1, seg(tt, sw.t0, sw.t1)));
+        ctx.globalAlpha = 0.95;
+        ellipseLine(cx, cy, r, tilt, "#7fe3ff", 2.4);
+        ctx.globalAlpha = 1;
+        const q = scr(r, -0.35);
+        ball(q[0], q[1], 4.5, "#7fe3ff");
+      }
+    }
+    sun(cx, cy, B.sunR || 11);
+    for (const p of B.planets || []) {
+      let r, th;
+      if (p.e) {
+        const E = kepler(((p.M0 + (360 * yrs) / p.P) % 360) * RAD, p.e);
+        const x = p.a * (Math.cos(E) - p.e), y = p.a * Math.sqrt(1 - p.e * p.e) * Math.sin(E);
+        r = rOf(Math.hypot(x, y));
+        th = Math.atan2(y, x) + p.peri * RAD;
+      } else { r = rOf(p.a); th = (p.lon0 + (360 * yrs) / p.P) * RAD; }
+      const q = scr(r, th);
+      if (p.glow) glow(q[0], q[1], (p.r || 5) * 3, p.color, 0.35);
+      ball(q[0], q[1], p.r || 5, p.color);
+      if (p.name) label(p.name, q[0], q[1] - (p.r || 5) - 12, { size: 12.5, align: "center", color: "#ffffff", bold: true });
+    }
+    for (const L of B.labels || []) {
+      const a = seg(tt, L.at, L.at + 0.6);
+      if (a <= 0) continue;
+      const th = (L.ang + (L.lockP ? (360 * yrs) / L.lockP : 0)) * RAD;
+      const q = scr(rOf(L.a), th);
+      label(L.text, q[0], q[1] + (L.dy || 0), { alpha: a, color: L.color, size: L.size || 13, align: "center", bold: L.bold, border: L.border });
+    }
+    const ro = latest(B.readout, tt);
+    const lines = ro ? ro.lines.slice() : [];
+    if (B.trips) {
+      lines.push(B.trips.map((q) => {
+        const n = Math.floor(yrs / B.planets[q.p].P + 1e-6);
+        return `${q.name}: ${n} ${n === 1 ? "trip" : "trips"}`;
+      }).join("   ·   "));
+    }
+    if (lines.length) panel(lines, W - 14, 14, { align: "right" });
+  }
+
+  // ===================================================================================== 2. near-Earth rocks and the rule
+  function nea(tt) {
+    const N = S.nea, tilt = 0.62;
+    const cx = W * 0.44, cy = H * 0.54;
+    const R = Math.min(W * 0.42, (H * 0.45) / tilt), k = R / N.rmax;
+    const yrs = tt * N.yps;
+    const scr = (x, y) => [cx + x * k, cy - y * k * tilt];
+    const bandA = seg(tt, N.tBand, N.tBand + 0.8);
+    if (bandA > 0) ringFill(cx, cy, (1 - N.band) * k, (1 + N.band) * k, tilt, rgba("#ffd166", 0.42 * bandA));
+    ellipseLine(cx, cy, k, tilt, "rgba(110,170,255,0.9)", 1.4);
+    const rk = N.rocks, n = rk.a.length;
+    const cols = ["#8d9bb8", "#ffd166", "#ff5a4f", "#46e0ff"];
+    const stateOf = (i) => {
+      if (rk.yr4 && rk.yr4[i] && tt >= N.tYr4) return 3;
+      if (tt < N.tBand) return 0;
+      if (rk.kind[i] === 2 && tt >= N.tSize) return 2;
+      return rk.kind[i] >= 1 ? 1 : 0;
+    };
+    const pos = [];
+    for (let i = 0; i < n; i++) {
+      const a = rk.a[i], e = rk.e[i], w = rk.w[i] * RAD, b = a * Math.sqrt(1 - e * e);
+      const st = stateOf(i);
+      ctx.strokeStyle = rgba(cols[st], st === 0 ? 0.16 : st === 3 ? 0.95 : 0.34);
+      ctx.lineWidth = st === 3 ? 2 : 1;
+      ctx.beginPath();
+      for (let j = 0; j <= 72; j++) {
+        const E = (j / 72) * TAU, x = a * (Math.cos(E) - e), y = b * Math.sin(E);
+        const q = scr(x * Math.cos(w) - y * Math.sin(w), x * Math.sin(w) + y * Math.cos(w));
+        if (j) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]);
+      }
+      ctx.stroke();
+      const E = kepler((((rk.M0[i] + (360 * yrs) / Math.pow(a, 1.5)) % 360) * RAD), e);
+      const x = a * (Math.cos(E) - e), y = b * Math.sin(E);
+      pos.push(scr(x * Math.cos(w) - y * Math.sin(w), x * Math.sin(w) + y * Math.cos(w)));
+    }
+    sun(cx, cy, 10);
+    for (let i = 0; i < n; i++) {
+      const st = stateOf(i);
+      const r = tt >= N.tSize ? clamp(1.3 + (23.5 - rk.H[i]) * 0.55, 1.3, 5.5) : 2.2;
+      ball(pos[i][0], pos[i][1], st === 3 ? Math.max(r, 3.5) : r, cols[st]);
+      if (st === 3) label(N.yr4Name, pos[i][0], pos[i][1] - 16, { color: "#46e0ff", bold: true, size: 13, align: "center", border: "#46e0ff" });
+    }
+    const th = (N.earthLon0 + 360 * yrs) * RAD, q = scr(Math.cos(th), Math.sin(th));
+    glow(q[0], q[1], 16, "#4f8cff", 0.45);
+    ball(q[0], q[1], 5.5, "#4f8cff");
+    label("Earth", q[0], q[1] + 16, { size: 12.5, align: "center", bold: true });
+    readout(N.readout, tt);
+  }
+
+  // ===================================================================================== 3. rocks flying past Earth
+  let FLY = null;
+  function flyInit() {
+    const F = S.flyby, r = rng(5);
+    const out = [];
+    F.decades.forEach((dcd, k) => {
+      dcd.d.forEach((ld) => out.push({ k: k, ld: ld, ts: k * F.tDec + r() * F.tDec, ph: r() * TAU, near: ld < 1 }));
+    });
+    FLY = out;
+  }
+  function flyby(tt) {
+    const F = S.flyby;
+    if (!FLY) flyInit();
+    const cx = W * 0.4, cy = H * 0.53, R = Math.min(W * 0.36, H * 0.44);
+    const rOf = (ld) => R * Math.sqrt(ld / F.rmax);
+    ctx.strokeStyle = "rgba(140,160,210,0.28)";
+    ctx.setLineDash([3, 5]);
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, TAU);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    const rm = rOf(1);
+    ctx.strokeStyle = "rgba(220,220,220,0.75)";
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    ctx.arc(cx, cy, rm, 0, TAU);
+    ctx.stroke();
+    const L = R * 1.15, dur = F.cross;
+    for (const s of FLY) {
+      if (tt < s.ts) continue;
+      const rr = rOf(s.ld), ccx = cx + rr * Math.cos(s.ph), ccy = cy + rr * Math.sin(s.ph);
+      const ux = -Math.sin(s.ph), uy = Math.cos(s.ph);
+      const f = (tt - s.ts) / dur;
+      if (f >= 1 || !started) {
+        ctx.fillStyle = s.near ? "rgba(255,90,79,0.95)" : "rgba(170,190,235,0.5)";
+        const z = s.near ? 3 : 1.6;
+        ctx.fillRect(ccx - z / 2, ccy - z / 2, z, z);
+        continue;
+      }
+      const px = ccx + ux * (f - 0.5) * 2 * L, py = ccy + uy * (f - 0.5) * 2 * L;
+      ctx.strokeStyle = s.near ? "rgba(255,90,79,0.8)" : "rgba(200,215,255,0.45)";
+      ctx.lineWidth = s.near ? 2 : 1;
+      ctx.beginPath();
+      ctx.moveTo(px - ux * 22, py - uy * 22);
+      ctx.lineTo(px, py);
+      ctx.stroke();
+      ctx.fillStyle = s.near ? "#ff5a4f" : "#e6ecff";
+      ctx.fillRect(px - 1.5, py - 1.5, 3, 3);
+    }
+    const mth = tt * 0.8 + 0.6;
+    ball(cx + rm * Math.cos(mth), cy - rm * Math.sin(mth), 3.4, "#d6d6d6");
+    glow(cx, cy, 15, "#4f8cff", 0.5);
+    ball(cx, cy, 6.5, "#4f8cff");
+    label("Earth", cx, cy + 17, { size: 12, align: "center", bold: true });
+    label("the Moon's path", cx + rm * 0.72, cy - rm * 0.72 - 10, { size: 11.5, align: "left", color: "#dddddd" });
+    label(F.edgeText, cx, cy - R - 2, { size: 11.5, align: "center", color: "#aab6d6" });
+    const k = Math.min(F.decades.length - 1, Math.floor(tt / F.tDec));
+    const lines = tt >= F.tDec * F.decades.length - 1e-9 || !started ? F.final : F.decades[k].lines;
+    panel(lines, W - 14, 14, { align: "right" });
+  }
+
+  // ===================================================================================== 4. a year around the Sun, month by month
+  let MON = null;
+  function months(tt) {
+    const M = S.months, tilt = 0.55;
+    const cx = W * 0.5, cy = H * 0.52, R = Math.min(W * 0.33, (H * 0.32) / tilt);
+    if (!MON) {
+      const r = rng(9), fl = [];
+      M.flashes.forEach((c, m) => { for (let j = 0; j < c; j++) fl.push({ m: m, u: r(), ang: r() * TAU, d: 0.5 + r() }); });
+      MON = fl;
+    }
+    sun(cx, cy, 13);
+    ellipseLine(cx, cy, R, tilt, "rgba(110,170,255,0.65)", 1.3);
+    const f = started ? seg(tt, M.t0, M.t1) * 12 : 12;
+    const angOf = (m) => (-90 + m * 30) * RAD;
+    for (let m = 0; m < 12; m++) {
+      const th0 = angOf(m), thc = angOf(m + 0.5);
+      ctx.strokeStyle = "rgba(150,170,220,0.5)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx + R * 0.92 * Math.cos(th0), cy - R * 0.92 * Math.sin(th0) * tilt);
+      ctx.lineTo(cx + R * 1.08 * Math.cos(th0), cy - R * 1.08 * Math.sin(th0) * tilt);
+      ctx.stroke();
+      const lx = cx + R * 1.24 * Math.cos(thc), ly = cy - R * 1.3 * Math.sin(thc) * tilt;
+      const hi = M.hi.indexOf(m) >= 0;
+      label(M.names[m], lx, ly - 9, { size: 12, align: "center", color: hi ? "#ffd166" : "#c9d3ea", box: false, bold: hi });
+      if (f >= m + 0.5) label(M.texts[m], lx, ly + 9, { size: 12.5, bold: true, align: "center", color: hi ? "#ffd166" : "#ffffff" });
+    }
+    const th = angOf(Math.min(f, 12));
+    const ex = cx + R * Math.cos(th), ey = cy - R * Math.sin(th) * tilt;
+    const dm = (M.t1 - M.t0) / 12;
+    for (const s of MON) {
+      const ts = M.t0 + (s.m + s.u) * dm, age = tt - ts;
+      if (!started || age < 0 || age > 0.5) continue;
+      const a = 1 - age / 0.5, rr = 12 + s.d * 16;
+      const x = ex + rr * Math.cos(s.ang), y = ey + rr * Math.sin(s.ang) * 0.8;
+      glow(x, y, 7, M.flashColour, 0.9 * a);
+      ctx.fillStyle = rgba(M.flashColour, a);
+      ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
+    }
+    if (M.aurora) {
+      const m = Math.min(11, Math.floor(f >= 12 ? 11 : f));
+      glow(ex, ey, 14 + 22 * M.level[m], "#4dff9a", 0.55);
+    }
+    glow(ex, ey, 15, "#4f8cff", 0.45);
+    ball(ex, ey, 6.5, "#4f8cff");
+    label("Earth", ex, ey - 17, { size: 12, align: "center", bold: true });
+    const m = Math.min(11, Math.floor(f >= 12 ? 11 : f));
+    const lines = !started || tt >= M.t1 ? M.final : [M.title, M.lines[m]];
+    panel(lines, W - 14, 14, { align: "right", maxW: Math.min(W * 0.36, 360) });
+  }
+
+  // ===================================================================================== 5. globes: Earth and the Moon
+  let GL = null;
+  function globeInit() {
+    const G = S.globe;
+    const prep = (lat, lon) => {
+      const n = lat.length, cp = new Float32Array(n), sp = new Float32Array(n), lm = new Float32Array(n);
+      for (let i = 0; i < n; i++) { cp[i] = Math.cos(lat[i] * RAD); sp[i] = Math.sin(lat[i] * RAD); lm[i] = lon[i] * RAD; }
+      return { n: n, cp: cp, sp: sp, lm: lm };
+    };
+    GL = { land: G.land ? prep(G.land.lat, G.land.lon) : null, pts: G.pts ? prep(G.pts.lat, G.pts.lon) : null };
+    if (G.pts) {
+      const byC = G.pts.colors.map(() => []);
+      for (let i = 0; i < G.pts.lat.length; i++) byC[G.pts.c ? G.pts.c[i] : 0].push(i);
+      GL.byC = byC;
+    }
+    GL.rings = (G.rings || []).map((r) => Object.assign({ p: prep(r.lat, r.lon) }, r));
+    GL.segs = G.segs ? { a: prep(G.segs.lat0, G.segs.lon0), b: prep(G.segs.lat1, G.segs.lon1) } : null;
+    GL.circ = (G.circles || []).map((c) => {
+      const lat = [], lon = [];
+      for (let i = 0; i <= 120; i++) { lat.push(c.lat); lon.push(-180 + i * 3); }
+      return Object.assign({ p: prep(lat, lon) }, c);
+    });
+  }
+  function view(g, tt) {
+    const ks = g.rot, xs = ks.map((q) => q[0]);
+    const lon = interp(xs, ks.map((q) => q[1]), tt), lat = interp(xs, ks.map((q) => q[2]), tt);
+    const R = Math.min(W * g.wf, H * g.hf), cx = W * g.cx, cy = H * g.cy;
+    const cl = Math.cos(lat * RAD), sl = Math.sin(lat * RAD), lr = lon * RAD;
+    const out = new Float32Array(3);
+    return {
+      cx: cx, cy: cy, R: R,
+      p: function (P, i) {
+        const dl = P.lm[i] - lr, x = P.cp[i] * Math.sin(dl), y0 = P.sp[i], z0 = P.cp[i] * Math.cos(dl);
+        out[0] = cx + R * x;
+        out[1] = cy - R * (y0 * cl - z0 * sl);
+        out[2] = y0 * sl + z0 * cl;
+        return out;
+      },
+    };
+  }
+  function globeBody(v, kind) {
+    const cx = v.cx, cy = v.cy, R = v.R;
+    if (kind === "earth") {
+      glow(cx, cy, R * 1.18, "#5aa9ff", 0.3);
+      const g = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.35, R * 0.1, cx, cy, R);
+      g.addColorStop(0, "#2d6fbd");
+      g.addColorStop(1, "#0a2142");
+      ctx.fillStyle = g;
+    } else {
+      glow(cx, cy, R * 1.1, "#bfc4d6", 0.12);
+      const g = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.35, R * 0.1, cx, cy, R);
+      g.addColorStop(0, "#4a4a52");
+      g.addColorStop(1, "#1c1c22");
+      ctx.fillStyle = g;
+    }
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, TAU);
+    ctx.fill();
+  }
+  function globe(tt) {
+    const G = S.globe;
+    if (!GL) globeInit();
+    G.globes.forEach((g, gi) => {
+      const v = view(g, tt);
+      globeBody(v, G.body);
+      if (GL.land) {
+        ctx.fillStyle = "#3f8f5a";
+        const L = GL.land, s = Math.max(1.3, v.R / 110);
+        for (let i = 0; i < L.n; i++) { const q = v.p(L, i); if (q[2] > 0) ctx.fillRect(q[0] - s / 2, q[1] - s / 2, s, s); }
+      }
+      for (const c of GL.circ) {
+        const a = seg(tt, c.at, c.at + 0.6);
+        if (a <= 0) continue;
+        ctx.strokeStyle = rgba(c.color, 0.85 * a);
+        ctx.lineWidth = 1.3;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        let pen = false;
+        for (let i = 0; i < c.p.n; i++) {
+          const q = v.p(c.p, i);
+          if (q[2] > 0) { if (pen) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); pen = true; } else pen = false;
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      if (GL.pts) {
+        const P = G.pts, Q = GL.pts, base = P.size || 1.5;
+        P.colors.forEach((col, c) => {
+          const idx = GL.byC[c];
+          if (P.colAt && tt < P.colAt[c]) return;
+          ctx.fillStyle = col;
+          for (let j = 0; j < idx.length; j++) {
+            const i = idx[j];
+            let s = P.s ? P.s[i] : base;
+            if (P.t0) {
+              const age = tt - P.t0[i];
+              if (age < 0) continue;
+              if (started && age < 0.6 && P.pop) {
+                const q0 = v.p(Q, i);
+                if (q0[2] > 0) glow(q0[0], q0[1], 6 + s * 4 * (1 - age / 0.6), P.popColour || "#ffcf70", 0.9 * (1 - age / 0.6));
+                ctx.fillStyle = col;
+              }
+            }
+            const q = v.p(Q, i);
+            if (q[2] > 0) ctx.fillRect(q[0] - s / 2, q[1] - s / 2, s, s);
+          }
+        });
+      }
+      for (const r of GL.rings) {
+        const a = seg(tt, r.at, r.at + 0.5);
+        if (a <= 0) continue;
+        ctx.strokeStyle = rgba(r.color, a);
+        ctx.lineWidth = r.w || 1.4;
+        ctx.beginPath();
+        let pen = false;
+        for (let i = 0; i < r.p.n; i++) {
+          const q = v.p(r.p, i);
+          if (q[2] > 0) { if (pen) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); pen = true; } else pen = false;
+        }
+        ctx.stroke();
+      }
+      if (GL.segs) {
+        const sg = G.segs, A = GL.segs.a, B2 = GL.segs.b;
+        sg.colors.forEach((col, c) => {
+          if (sg.colAt && tt < sg.colAt[c]) return;
+          ctx.strokeStyle = col;
+          ctx.lineWidth = sg.w || 1.6;
+          ctx.beginPath();
+          for (let i = 0; i < A.n; i++) {
+            if (sg.c[i] !== c) continue;
+            if (sg.t0 && tt < sg.t0[i]) continue;
+            const qa = v.p(A, i), xa = qa[0], ya = qa[1], za = qa[2];
+            const qb = v.p(B2, i);
+            if (za > 0.05 && qb[2] > 0.05) { ctx.moveTo(xa, ya); ctx.lineTo(qb[0], qb[1]); }
+          }
+          ctx.stroke();
+        });
+      }
+      if (g.title) label(g.title, v.cx, v.cy - v.R - 16, { size: 13, align: "center", bold: true, color: g.titleColour || "#ffffff" });
+      if (g.under) {
+        const u = latest(g.under, tt);
+        if (u) label(u.text, v.cx, v.cy + v.R + 16, { size: 13, align: "center", bold: true, color: u.color || "#ffd166" });
+      }
+      for (const L of G.labels || []) {
+        if ((L.g || 0) !== gi || tt < L.at) continue;
+        const P = { cp: [Math.cos(L.lat * RAD)], sp: [Math.sin(L.lat * RAD)], lm: [L.lon * RAD] };
+        const q = v.p(P, 0);
+        if (q[2] > 0.15) {
+          ctx.strokeStyle = L.color || "#ffd166";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(q[0], q[1], L.r || 9, 0, TAU);
+          ctx.stroke();
+          label(L.text, q[0] + (L.dx || 0), q[1] + (L.dy == null ? -(L.r || 9) - 13 : L.dy), { size: 12.5, bold: true, align: "center", color: L.color || "#ffd166", border: L.color || "#ffd166" });
+        }
+      }
+    });
+    if (G.compass) compass(G.compass, tt);
+    readout(G.readout, tt, { maxW: Math.min(W * (G.roW || 0.36), 380) });
+  }
+  function compass(C, tt) {
+    const a = seg(tt, C.at, C.at + 0.8);
+    if (a <= 0) return;
+    const r = Math.min(W * 0.09, H * 0.16), cx = W * C.x, cy = H * C.y;
+    ctx.globalAlpha = a;
+    ctx.strokeStyle = "rgba(200,210,235,0.7)";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, TAU);
+    ctx.stroke();
+    label("N", cx, cy - r - 9, { size: 11.5, align: "center", box: false });
+    label("E", cx + r + 9, cy, { size: 11.5, align: "center", box: false });
+    ctx.fillStyle = rgba("#ffd166", 0.35);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, -C.a1 * RAD, -C.a0 * RAD);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, -(C.a1 + 180) * RAD, -(C.a0 + 180) * RAD);
+    ctx.closePath();
+    ctx.fill();
+    const m = ((C.a0 + C.a1) / 2) * RAD;
+    arrow(cx - r * 0.9 * Math.cos(m), cy + r * 0.9 * Math.sin(m), cx + r * 0.9 * Math.cos(m), cy - r * 0.9 * Math.sin(m), "#ffd166", 2.5);
+    label(C.text, cx, cy + r + 16, { size: 12, align: "center", color: "#ffd166", bold: true });
+    ctx.globalAlpha = 1;
+  }
+
+  // ===================================================================================== 6. Earth seen from above the North Pole
+  let POLE = null;
+  function poleInit() {
+    const P = S.pole, r = rng(3), rocks = [];
+    if (P.slots) {
+      P.slots.forEach((s, k) => {
+        for (let j = 0; j < s.n; j++) rocks.push({ k: k, h: s.h0 + r() * (s.h1 - s.h0), ts: P.tR0 + r() * (P.tR1 - P.tR0) });
+      });
+    }
+    const land = P.land ? { lat: P.land.lat, lon: P.land.lon } : null;
+    POLE = { rocks: rocks, land: land };
+  }
+  const angOfHour = (h) => (180 + (h - 12) * 15) * RAD;
+  function pole(tt) {
+    const P = S.pole;
+    if (!POLE) poleInit();
+    const cx = W * 0.4, cy = H * 0.53, R = Math.min(W * 0.21, H * 0.27);
+    const sunG = ctx.createLinearGradient(0, 0, W * 0.2, 0);
+    sunG.addColorStop(0, "rgba(255,200,90,0.42)");
+    sunG.addColorStop(1, "rgba(255,200,90,0)");
+    ctx.fillStyle = sunG;
+    ctx.fillRect(0, 0, W * 0.2, H);
+    label("sunlight →", 14, TOP + 4, { size: 12.5, color: "#ffd98a", box: false, bold: true });
+    let ut = P.ut0 + tt * P.hps, storm = 0, night = null;
+    if (P.series && tt >= P.tS0) {
+      const s = P.series, x = seg(tt, P.tS0, P.tS1) * (s.h.length - 1), i = Math.min(s.h.length - 1, Math.round(x));
+      const hT = s.h[i];
+      ut = (angOfHour(hT) / RAD - P.toronto.lon) / 15;
+      storm = clamp(-s.v[i] / P.series.scale, 0, 1.2);
+      night = s.lines[i];
+    }
+    if (P.years && tt < P.tS0) {
+      const k = Math.min(P.years.length - 1, Math.floor(tt / P.tYear));
+      const yt = tt - k * P.tYear, n = P.years[k].n;
+      for (let j = 0; j < n; j++) { const ts = ((j + 0.5) / n) * P.tYear * 0.9; if (yt >= ts && yt < ts + 0.3) storm = Math.max(storm, 1 - (yt - ts) / 0.3); }
+      ut = (angOfHour(0) / RAD - P.toronto.lon) / 15;
+    }
+    const rotDeg = 15 * ut;
+    glow(cx, cy, R * 1.2, "#5aa9ff", 0.25);
+    ctx.fillStyle = "#2d6fbd";
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, TAU);
+    ctx.fill();
+    if (POLE.land) {
+      ctx.fillStyle = "#4b9c63";
+      const L = POLE.land, s = Math.max(1.5, R / 70);
+      for (let i = 0; i < L.lat.length; i++) {
+        const rr = R * Math.cos(L.lat[i] * RAD), a = (L.lon[i] + rotDeg) * RAD;
+        ctx.fillRect(cx + rr * Math.cos(a) - s / 2, cy - rr * Math.sin(a) - s / 2, s, s);
+      }
+    }
+    ctx.fillStyle = "rgba(2,6,22,0.68)";
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, -Math.PI / 2, Math.PI / 2);
+    ctx.closePath();
+    ctx.fill();
+    if (P.toronto) {
+      const ol = lerp(P.ovalQuiet, P.ovalStorm, clamp(storm, 0, 1)), ro = R * Math.cos(ol * RAD);
+      ctx.strokeStyle = rgba("#4dff9a", 0.25 + 0.6 * clamp(storm, 0, 1));
+      ctx.lineWidth = 4 + 8 * clamp(storm, 0, 1);
+      ctx.beginPath();
+      ctx.arc(cx, cy, ro, 0, TAU);
+      ctx.stroke();
+      const tr = R * Math.cos(P.toronto.lat * RAD), ta = (P.toronto.lon + rotDeg) * RAD;
+      const tx = cx + tr * Math.cos(ta), ty = cy - tr * Math.sin(ta);
+      ball(tx, ty, 4.5, "#ffd166");
+      label("Toronto", tx + 8, ty - 13, { size: 12, bold: true, color: "#ffd166" });
+    }
+    const ringR = R * 1.12;
+    if (P.slots) {
+      const counts = P.slots.map(() => 0);
+      for (const rk of POLE.rocks) if (!started || tt >= rk.ts) counts[rk.k]++;
+      const max = Math.max.apply(null, P.slots.map((s) => s.n));
+      P.slots.forEach((s, k) => {
+        const a0 = angOfHour(s.h0), a1 = angOfHour(s.h1), f = counts[k] / max;
+        ctx.strokeStyle = mix("#26314f", "#ff9f43", f);
+        ctx.lineWidth = 12;
+        ctx.beginPath();
+        ctx.arc(cx, cy, ringR, -a0 - 0.02, -a1 + 0.02, true);
+        ctx.stroke();
+        const am = (a0 + a1) / 2;
+        label(fmt(counts[k]), cx + R * 1.33 * Math.cos(am), cy - R * 1.33 * Math.sin(am), { size: 12.5, bold: s.hi, align: "center", color: s.hi ? "#ffd166" : "#ffffff" });
+      });
+      for (const rk of POLE.rocks) {
+        const age = tt - rk.ts;
+        if (!started || age > 0.45 || age < -0.6) continue;
+        const a = angOfHour(rk.h), ix = cx + R * Math.cos(a), iy = cy - R * Math.sin(a);
+        if (age < 0) {
+          const dir = Math.sin(a) > 0 ? -1 : 1, d = (-age / 0.6) * R * 1.6;
+          const x = ix, y = iy + dir * d;
+          ctx.strokeStyle = "rgba(255,210,140,0.7)";
+          ctx.lineWidth = 1.4;
+          ctx.beginPath();
+          ctx.moveTo(x, y + dir * 10);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+          ctx.fillStyle = "#ffe2b0";
+          ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
+        } else glow(ix, iy, 10, "#ffb347", 0.95 * (1 - age / 0.45));
+      }
+    }
+    [[12, "noon"], [18, "6 pm"], [0, "midnight"], [6, "6 am"]].forEach(([h, s]) => {
+      const a = angOfHour(h);
+      label(s, cx + R * 1.62 * Math.cos(a), cy - R * 1.5 * Math.sin(a), { size: 12, align: "center", color: "#aab6d6", box: false });
+    });
+    arrow(cx - R * 1.95, cy + R * 0.55, cx - R * 1.95, cy - R * 0.55, "#9fd0ff", 2.5);
+    label("Earth moves", cx - R * 1.95, cy + R * 0.55 + 14, { size: 12, align: "center", color: "#9fd0ff", box: false });
+    label("this way", cx - R * 1.95, cy + R * 0.55 + 29, { size: 12, align: "center", color: "#9fd0ff", box: false });
+    if (P.years && tt < P.tS0 && started) {
+      const k = Math.min(P.years.length - 1, Math.floor(tt / P.tYear));
+      panel(P.years[k].lines, W - 14, 14, { align: "right" });
+    } else if (P.series && tt >= P.tS0 && started && tt < P.tS1) {
+      panel(night, W - 14, 14, { align: "right" });
+    } else readout(P.readout, started ? tt : T);
+  }
+
+  // ===================================================================================== 7. the solar wind from the Sun to Earth
+  let WIND = null;
+  function windInit() {
+    const Wd = S.wind, r = rng(21), parts = [];
+    for (let i = 0; i < 520; i++) parts.push({ y: 0.06 + 0.88 * r(), ph: r(), k: r() });
+    const steps = 600, cum = [0], ts = [0];
+    for (let i = 1; i <= steps; i++) {
+      const t0 = ((i - 1) / steps) * T, t1 = (i / steps) * T;
+      cum.push(cum[i - 1] + 0.5 * (speedAt(t0) + speedAt(t1)) * (t1 - t0));
+      ts.push(t1);
+    }
+    WIND = { parts: parts, cum: cum, ts: ts };
+  }
+  function speedAt(tt) {
+    const Wd = S.wind;
+    if (Wd.series) return interp(Wd.series.t, Wd.series.speed, tt);
+    const y = Wd.years, k = Math.min(y.length - 1, Math.floor(tt / Wd.tYear));
+    return y[k].speed;
+  }
+  function wind(tt) {
+    const Wd = S.wind;
+    if (!WIND) windInit();
+    const sr = H * 0.42, sx = -sr * 0.55, sy = H * 0.5;
+    const ex = W * 0.8, ey = H * 0.5, er = Math.max(8, H * 0.03);
+    let v = speedAt(tt), dens = 1, bz = 0, sym = 0, press = 1, k = 0;
+    if (Wd.series) {
+      const s = Wd.series;
+      dens = interp(s.t, s.dens, tt); bz = interp(s.t, s.bz, tt); sym = interp(s.t, s.sym, tt); press = interp(s.t, s.press, tt);
+    } else {
+      k = Math.min(Wd.years.length - 1, Math.floor(tt / Wd.tYear));
+      dens = Wd.years[k].dens;
+      sym = -Wd.years[k].level * Wd.symScale;
+      press = Wd.pRef;
+    }
+    const b = er * 5.2 * Math.pow(Math.max(0.2, press) / Wd.pRef, -1 / 6);
+    const xn = ex - b;
+    glow(sx, sy, sr * 1.7, "#ffb02e", 0.4);
+    ctx.fillStyle = "#ffcf4a";
+    ctx.beginPath();
+    ctx.arc(sx, sy, sr, 0, TAU);
+    ctx.fill();
+    const spots = Wd.years ? Wd.years[k].spots : Wd.spots || 2;
+    const rs = rng(4);
+    for (let i = 0; i < spots; i++) {
+      const a = (rs() - 0.5) * 1.5, rr = sr * (0.45 + 0.5 * rs());
+      const x = sx + rr * Math.cos(a), y = sy + rr * Math.sin(a);
+      if (x < 4) continue;
+      ctx.fillStyle = "rgba(120,60,10,0.85)";
+      ctx.beginPath();
+      ctx.arc(x, y, 3 + 4 * rs(), 0, TAU);
+      ctx.fill();
+    }
+    label("the Sun", Math.max(16, sx + sr * 0.55), sy + sr * 0.9 + 4, { size: 12.5, bold: true, color: "#ffd98a", box: false });
+    const x0 = sx + sr * 1.02, L = W - x0 + 30;
+    const dist = interp(WIND.ts, WIND.cum, tt) * Wd.pxPerKm;
+    const share = clamp(dens / Wd.densMax, 0.06, 1);
+    const col = mix("#fff3c4", "#ff6a3d", clamp((v - 300) / 500, 0, 1));
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    const len = 5 + v / 60;
+    for (const p of WIND.parts) {
+      if (p.k > share) continue;
+      let x = x0 + ((p.ph * L + dist) % L), y = p.y * H;
+      if (x > xn) {
+        const hw = Math.min(3.4 * b, Math.sqrt(2.6 * b * (x - xn)));
+        if (Math.abs(y - ey) < hw) y = ey + (y >= ey ? hw : -hw);
+      }
+      ctx.moveTo(x - len, y);
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(120,190,255,0.65)";
+    ctx.fillStyle = "rgba(90,160,255,0.08)";
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    for (let i = -40; i <= 40; i++) {
+      const yy = (i / 40) * 3.4 * b, xx = xn + (yy * yy) / (2.6 * b);
+      if (i === -40) ctx.moveTo(xx, ey + yy); else ctx.lineTo(xx, ey + yy);
+    }
+    ctx.fill();
+    ctx.stroke();
+    if (Wd.cme) {
+      const c = Wd.cme;
+      if (tt >= c.t0 && tt < c.t1 + 1.6) {
+        const f = seg(tt, c.t0, c.t1), x = lerp(x0, xn - 10, f), rr = lerp(sr * 0.25, H * 0.42, f);
+        const a = tt < c.t1 ? 0.55 : 0.55 * (1 - (tt - c.t1) / 1.6);
+        const g = ctx.createRadialGradient(x - rr * 0.6, ey, rr * 0.2, x - rr * 0.6, ey, rr);
+        g.addColorStop(0, rgba("#ff9a5a", 0));
+        g.addColorStop(0.75, rgba("#ff9a5a", a * 0.5));
+        g.addColorStop(1, rgba("#ffcf9a", a));
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x - rr * 0.6, ey, rr, -1.0, 1.0);
+        ctx.lineTo(x - rr * 0.6, ey);
+        ctx.closePath();
+        ctx.fill();
+        if (tt < c.t1) label(c.text, x - 10, ey - rr * 0.9 - 6, { size: 12.5, bold: true, color: "#ffcf9a", align: "center" });
+      }
+    }
+    const aur = clamp(-sym / Wd.symScale, 0, 1.4);
+    if (aur > 0.02) {
+      glow(ex, ey - er * 0.95, er * (0.8 + aur * 1.6), "#4dff9a", 0.35 + 0.4 * Math.min(1, aur));
+      glow(ex, ey + er * 0.95, er * (0.8 + aur * 1.6), "#4dff9a", 0.35 + 0.4 * Math.min(1, aur));
+    }
+    ball(ex, ey, er, "#3b82f6", -0.9, 0);
+    label("Earth", ex, ey + er + 14, { size: 12.5, bold: true, align: "center" });
+    label("Earth's magnetic bubble", xn + b * 0.3, ey - 3.1 * b - 10, { size: 11.5, color: "#9fd0ff", align: "center", box: false });
+    if (Wd.series) {
+      const ax = xn - 30, l = clamp(Math.abs(bz) * 3.2, 4, 44), up = bz >= 0;
+      arrow(ax, ey + (up ? l / 2 : -l / 2), ax, ey + (up ? -l / 2 : l / 2), up ? "#7fb2ff" : "#ff5a4f", 3);
+      label(up ? "magnet: north" : "magnet: SOUTH", ax, ey + 34 + l / 2, { size: 11.5, align: "center", bold: !up, color: up ? "#9fd0ff" : "#ff8a80" });
+    }
+    if (Wd.series) {
+      const s = Wd.series, i = idxAt(s.t, tt);
+      const lines = [s.when[i], `Wind speed: ${fmt(v)} km every second`, `Crowding: ${dens.toFixed(1)}`, `Push: ${press.toFixed(1)}`, `Storm meter: ${fmt(sym)}`];
+      panel(lines, W - 14, 14, { align: "right", colors: [null, null, null, null, sym <= Wd.redBelow ? "#ff8a80" : null] });
+    } else {
+      panel(Wd.years[k].lines, W - 14, 14, { align: "right" });
+    }
+    const nt = latest(Wd.notes, started ? tt : T);
+    if (nt) panel(nt.lines, W - 14, H - 14, { align: "right", valign: "bottom", size: 12.5, maxW: Math.min(W * 0.45, 420) });
+  }
+
+  // ===================================================================================== 8. the turning Sun and its fast-wind "lighthouse beam"
+  function spiral(tt) {
+    const Sp = S.spiral;
+    const cx = W * 0.38, cy = H * 0.52, D = Math.min(W * 0.48, H * 0.42), sr = D * 0.12;
+    const day = tt * Sp.dps, om = 360 / Sp.period, v = (D - sr) / Sp.travel;
+    const hole = Sp.a0 + om * day;
+    ctx.globalAlpha = 0.85;
+    for (let i = 0; i < 420; i++) {
+      const tau = (i / 420) * (Sp.travel * 1.45), r = sr + v * tau;
+      if (r > D * 1.45) continue;
+      const a = (hole - om * tau + Math.sin(i * 12.9898) * 5) * RAD;
+      ctx.fillStyle = "#ff8a4c";
+      ctx.fillRect(cx + r * Math.cos(a) - 1.5, cy - r * Math.sin(a) - 1.5, 3, 3);
+    }
+    ctx.globalAlpha = 1;
+    sun(cx, cy, sr);
+    const ha = hole * RAD;
+    ctx.fillStyle = "rgba(60,25,0,0.85)";
+    ctx.beginPath();
+    ctx.ellipse(cx + sr * 0.55 * Math.cos(ha), cy - sr * 0.55 * Math.sin(ha), sr * 0.28, sr * 0.2, -ha, 0, TAU);
+    ctx.fill();
+    ellipseLine(cx, cy, D, 1, "rgba(110,170,255,0.35)", 1, [3, 5]);
+    const ex = cx + D, ey = cy;
+    const lag = Sp.travel, k = Math.floor((day - lag - (0 - Sp.a0) / om) / Sp.period + 1e-9);
+    let flash = 0, hits = 0;
+    for (let j = 0; j <= 10; j++) {
+      const dh = lag + (360 * j - Sp.a0) / om;
+      if (dh < 0) continue;
+      if (day >= dh) hits++;
+      const age = (day - dh) / Sp.dps;
+      if (age >= 0 && age < 1.2) flash = Math.max(flash, 1 - age / 1.2);
+    }
+    if (flash > 0) glow(ex, ey, 26 + 30 * flash, "#4dff9a", 0.7 * flash);
+    glow(ex, ey, 14, "#4f8cff", 0.45);
+    ball(ex, ey, 7, "#4f8cff");
+    label("Earth", ex, ey + 18, { size: 12.5, bold: true, align: "center" });
+    label("the hole on the Sun", cx, cy + sr + 16, { size: 12, align: "center", color: "#ffd98a", box: false });
+    label("fast wind", cx + (sr + v * Sp.travel * 0.55) * Math.cos((hole - om * Sp.travel * 0.55) * RAD), cy - (sr + v * Sp.travel * 0.55) * Math.sin((hole - om * Sp.travel * 0.55) * RAD) - 12, { size: 12, color: "#ffb08a", align: "center" });
+    const lines = started && tt < T ? [`Day ${Math.floor(day)}`, hits ? Sp.hitText.replace("{n}", hits) : Sp.waitText] : Sp.final;
+    panel(lines, W - 14, 14, { align: "right" });
+    void k;
+  }
+
+  // ===================================================================================== 9. spinning asteroids
+  let ROCK = null;
+  function rockShape(seed, n) {
+    const r = rng(seed), pts = [];
+    for (let i = 0; i < n; i++) pts.push(0.72 + 0.28 * r());
+    return pts;
+  }
+  function spin(tt) {
+    const Sn = S.spin;
+    if (!ROCK) {
+      ROCK = { big: Sn.big.map((p, i) => ({ p: p, sh: rockShape(100 + i, 11) })), small: Sn.small.map((p, i) => ({ p: p, sh: rockShape(500 + i, 9) })) };
+    }
+    const hours = tt * Sn.hps;
+    const draw = (list, x0, y0, w, h, cols, rows, big, appear) => {
+      const cw = w / cols, ch = h / rows, rad = Math.min(cw, ch) * (big ? 0.38 : 0.26);
+      list.forEach((rk, i) => {
+        const cxr = x0 + cw * (0.5 + (i % cols)), cyr = y0 + ch * (0.5 + Math.floor(i / cols));
+        const fast = rk.p < Sn.limit, a = seg(tt, appear, appear + 0.6);
+        if (a <= 0) return;
+        ctx.globalAlpha = a;
+        const ang = (TAU * hours) / rk.p;
+        if (rk.p < Sn.blurBelow && started && tt < T) {
+          ctx.strokeStyle = fast ? "rgba(255,159,67,0.75)" : "rgba(180,180,190,0.75)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(cxr, cyr, rad, 0, TAU);
+          ctx.stroke();
+        }
+        ctx.fillStyle = fast ? "#ff9f43" : "#9b958c";
+        ctx.beginPath();
+        rk.sh.forEach((q, j) => {
+          const t2 = ang + (j / rk.sh.length) * TAU;
+          const x = cxr + rad * q * Math.cos(t2), y = cyr + rad * q * 0.82 * Math.sin(t2);
+          if (j) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+        });
+        ctx.closePath();
+        ctx.fill();
+        if (big) {
+          ctx.fillStyle = "rgba(40,35,30,0.55)";
+          for (let j = 0; j < 3; j++) {
+            const t2 = ang + j * 2.1;
+            ctx.beginPath();
+            ctx.arc(cxr + rad * 0.4 * Math.cos(t2), cyr + rad * 0.3 * Math.sin(t2), rad * 0.17, 0, TAU);
+            ctx.fill();
+          }
+        }
+        ctx.globalAlpha = 1;
+      });
+    };
+    const top = Math.max(H * 0.24, TOP + 46), hh = H * 0.7;
+    label(Sn.bigTitle, W * 0.25, top - 22, { size: 13.5, bold: true, align: "center" });
+    label(Sn.smallTitle, W * 0.71, top - 22, { size: 13.5, bold: true, align: "center" });
+    draw(ROCK.big, W * 0.03, top, W * 0.44, hh, 6, 5, true, 0);
+    draw(ROCK.small, W * 0.52, top, W * 0.38, hh, 6, 5, false, Sn.tSmall);
+    if (tt >= Sn.tRecord || !started) {
+      const x = W * 0.94, y = top + hh * 0.5, ang = TAU * tt * 3;
+      ctx.strokeStyle = "rgba(255,90,79,0.9)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(x, y, 9, ang, ang + 4.5);
+      ctx.stroke();
+      ball(x, y, 4.5, "#ff5a4f");
+      label(Sn.recordName, x, y - 22, { size: 12, align: "center", bold: true, color: "#ff8a80" });
+    }
+    const clock = started && tt < T ? `Clock: 1 second here = ${Sn.hps === 1 ? "1 hour" : Sn.hps + " hours"} in space` : null;
+    const ro = latest(Sn.readout, tt);
+    const lines = ro ? ro.lines.slice() : [];
+    if (clock) lines.push(clock);
+    panel(lines, W * 0.5, H - 16, { align: "center", valign: "bottom", maxW: Math.min(W * 0.8, 640) });
+    label(Sn.legend, W * 0.5, Math.max(TOP + 4, H * 0.13), { size: 12.5, align: "center", color: "#ffcf9a", box: false });
+  }
+
+  // ===================================================================================== 10. sorting stars into families
+  let SORT = null;
+  function sort(tt) {
+    const St = S.sort;
+    if (!SORT) {
+      const r = rng(17), n = St.bp.length, fam = St.fam;
+      const order = [...Array(n).keys()].sort((a, b) => St.bp[a] - St.bp[b]);
+      const rank = new Array(n), cnt = [0, 0, 0];
+      order.forEach((i) => (rank[i] = cnt[fam[i]]++));
+      SORT = { sx: [], sy: [], rank: rank, cnt: cnt, col: St.bp.map(starColour) };
+      for (let i = 0; i < n; i++) { SORT.sx.push(r()); SORT.sy.push(r()); }
+    }
+    const f = ease(started ? seg(tt, St.tMove0, St.tMove1) : 1);
+    const centres = St.groups.map((g) => [W * g.x, H * g.y]);
+    const unit = Math.min(W, H) / 120;
+    const n = St.bp.length;
+    for (let i = 0; i < n; i++) {
+      const g = St.fam[i], k = SORT.rank[i];
+      const rr = unit * St.groups[g].spread * Math.sqrt(k + 0.5), a = k * 2.39996;
+      const tx = centres[g][0] + rr * Math.cos(a), ty = centres[g][1] + rr * Math.sin(a) * 0.9;
+      const x = lerp(W * (0.03 + 0.94 * SORT.sx[i]), tx, f), y = lerp(H * (0.08 + 0.84 * SORT.sy[i]), ty, f);
+      const s = St.size[i];
+      if (s > 3.2) glow(x, y, s * 2.4, "#ffab5e", 0.35);
+      ctx.fillStyle = SORT.col[i];
+      ctx.beginPath();
+      ctx.arc(x, y, s / 2, 0, TAU);
+      ctx.fill();
+    }
+    St.groups.forEach((g, i) => {
+      const a = started ? seg(tt, g.at, g.at + 0.6) : 1;
+      if (a > 0) label(g.text, centres[i][0] + W * (g.lx || 0), centres[i][1] + H * g.ly, { size: 13, bold: true, align: "center", alpha: a, color: g.color, border: g.color });
+    });
+    readout(St.readout, started ? tt : T);
+  }
+
+  // ===================================================================================== 11. crowds of stars (out of 100)
+  let CROWD = null;
+  function crowd(tt) {
+    const Cr = S.crowd;
+    if (!CROWD) {
+      CROWD = Cr.crowds.map((c, ci) => {
+        const r = rng(40 + ci), stars = [];
+        c.groups.forEach((g, gi) => { for (let j = 0; j < g.n; j++) stars.push({ g: gi, j: j, x: r(), y: r(), ph: r() * TAU }); });
+        return stars;
+      });
+    }
+    const f = ease(started ? seg(tt, Cr.tSort, Cr.tSort + 2.2) : 1);
+    Cr.crowds.forEach((c, ci) => {
+      const bx = W * c.x0, bw = W * c.w, by = Math.max(H * 0.2, TOP + 30), bh = H * 0.62;
+      label(c.title, bx + bw / 2, by - 18, { size: 13.5, bold: true, align: "center" });
+      if (c.sun) { sun(bx + bw / 2, by + bh * 0.45, 7); }
+      const ng = c.groups.length, slot = bw / ng;
+      CROWD[ci].forEach((s) => {
+        const g = c.groups[s.g];
+        const hidden = Cr.hideUntil && g.hide && started && tt < Cr.hideUntil;
+        const fadeIn = Cr.hideUntil && g.hide ? (started ? seg(tt, Cr.hideUntil, Cr.hideUntil + 1.5) : 1) : 1;
+        if (hidden) return;
+        const sp = Math.max(4.2, Math.min(W, H) / 90) * 1.05;
+        const rr = sp * Math.sqrt(s.j + 0.5) * 0.95, a = s.j * 2.39996;
+        const gx = bx + slot * (s.g + 0.5), gy = by + bh * 0.42;
+        const tx = gx + rr * Math.cos(a), ty = gy + rr * Math.sin(a);
+        let x0 = bx + bw * (0.06 + 0.88 * s.x), y0 = by + bh * (0.04 + 0.92 * s.y);
+        if (c.sun) {
+          const dx = x0 - (bx + bw / 2), dy = y0 - (by + bh * 0.45);
+          if (Math.hypot(dx, dy) < 14) x0 += 20;
+        }
+        const x = lerp(x0, tx, f), y = lerp(y0, ty, f);
+        ctx.globalAlpha = fadeIn;
+        if (g.size > 3.4) glow(x, y, g.size * 2.2, g.color, 0.3);
+        ball(x, y, g.size / 2 + 0.6, g.color);
+        if (c.planets) {
+          const pa = s.ph + tt * 2.2, pr = g.size / 2 + 4;
+          ctx.fillStyle = "#9fd0ff";
+          ctx.fillRect(x + pr * Math.cos(pa) - 1, y + pr * Math.sin(pa) * 0.6 - 1, 2, 2);
+        }
+        ctx.globalAlpha = 1;
+      });
+      if (f > 0.6) {
+        c.groups.forEach((g, gi) => {
+          const gx = bx + slot * (gi + 0.5), gy = by + bh * 0.42;
+          const rr = Math.max(4.2, Math.min(W, H) / 90) * Math.sqrt(g.n + 0.5) * 1.0;
+          const lines = g.text.split("\n");
+          lines.forEach((ln, li) => label(ln, gx, gy + rr + 16 + li * 17 + (gi % 2) * (c.stagger ? 34 : 0), { size: 12, bold: li === 0, align: "center", color: li === 0 ? g.textColour || "#ffffff" : "#c9d3ea", alpha: (f - 0.6) / 0.4, box: li === 0 ? undefined : false }));
+        });
+      }
+    });
+    readout(Cr.readout, started ? tt : T);
+  }
+
+  // ===================================================================================== 12. the Milky Way and two telescope views
+  let GAL = null;
+  function galaxy(tt) {
+    const Gx = S.gal;
+    if (!GAL) {
+      const r = rng(8), pts = [];
+      for (let i = 0; i < 1300; i++) {
+        const arm = i % 2, u = r(), th = u * 3.6 * Math.PI + arm * Math.PI, rr = 0.12 + 0.88 * u;
+        pts.push([rr * Math.cos(th + (r() - 0.5) * 0.5) + (r() - 0.5) * 0.06, rr * Math.sin(th + (r() - 0.5) * 0.5) + (r() - 0.5) * 0.06, r()]);
+      }
+      GAL = { pts: pts };
+    }
+    const gx = W * 0.22, gy = H * 0.55, Rg = Math.min(W * 0.2, H * 0.4), tilt = 0.55;
+    glow(gx, gy, Rg * 0.5, "#ffe0a0", 0.5);
+    for (const p of GAL.pts) {
+      ctx.fillStyle = `rgba(220,225,255,${(0.25 + 0.5 * p[2]).toFixed(2)})`;
+      ctx.fillRect(gx + p[0] * Rg - 0.8, gy + p[1] * Rg * tilt - 0.8, 1.6, 1.6);
+    }
+    label("middle of the Milky Way", gx, gy - Rg * 0.18 - 14, { size: 11.5, align: "center", color: "#ffe0a0", box: false });
+    const sx = gx + Rg * 0.62, sy = gy;
+    const a = started ? seg(tt, 0.6, 1.6) : 1;
+    ctx.globalAlpha = a;
+    ctx.fillStyle = "rgba(255,159,67,0.28)";
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(gx - Rg * 0.1, gy - Rg * 0.1); ctx.lineTo(gx - Rg * 0.1, gy + Rg * 0.1); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "rgba(70,224,255,0.25)";
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + Rg * 0.55, sy - Rg * 0.08); ctx.lineTo(sx + Rg * 0.55, sy + Rg * 0.08); ctx.closePath(); ctx.fill();
+    ctx.globalAlpha = 1;
+    sun(sx, sy, 4);
+    label("the Sun (us)", sx, sy + 16, { size: 12, align: "center", bold: true, color: "#ffd98a", box: false });
+    Gx.views.forEach((vw, i) => {
+      const cxv = W * (0.58 + 0.27 * i), cyv = H * 0.5, rv = Math.min(W * 0.12, H * 0.27);
+      ctx.fillStyle = "#070b1c";
+      ctx.beginPath(); ctx.arc(cxv, cyv, rv, 0, TAU); ctx.fill();
+      ctx.strokeStyle = vw.colour; ctx.lineWidth = 2; ctx.stroke();
+      label(vw.title, cxv, cyv - rv - 16, { size: 13, bold: true, align: "center", color: vw.colour });
+      const n = vw.dl.length, fill = started ? seg(tt, Gx.tFill0, Gx.tFill1) : 1, shown = Math.floor(n * fill + 1e-9);
+      const bad = started ? tt >= Gx.tBad : true;
+      for (let j = 0; j < shown; j++) {
+        const x = cxv + (vw.dl[j] / Gx.radius) * rv, y = cyv - (vw.db[j] / Gx.radius) * rv;
+        ctx.fillStyle = bad && vw.bad[j] ? "#ff9f43" : "#e8ecff";
+        ctx.fillRect(x - 0.7, y - 0.7, 1.4, 1.4);
+      }
+      label(`${fmt(Math.round((vw.count * shown) / n))} stars`, cxv, cyv + rv + 16, { size: 13.5, bold: true, align: "center" });
+      if (bad) label(vw.badText, cxv, cyv + rv + 36, { size: 12, align: "center", color: "#ff9f43", box: false });
+    });
+    readout(Gx.readout, started ? tt : T, { maxW: Math.min(W * 0.5, 460) });
+  }
+
+  // ===================================================================================== 13. star groups in 3D (drawn on a flat canvas)
+  function cloud(tt) {
+    const C = S.cloud;
+    const cx = W * 0.42, cy = H * 0.53, R = Math.min(W * 0.36, H * 0.46);
+    const az = (C.az0 + C.azSpeed * tt) * RAD, el = C.el * RAD;
+    const ca = Math.cos(az), sa = Math.sin(az), ce = Math.cos(el), se = Math.sin(el);
+    const f = ease(started ? seg(tt, C.tDrift0, C.tDrift1) : 1);
+    const lit = started ? tt >= C.tGroups : true;
+    const n = C.x0.length, proj = (x, y, z) => {
+      const x1 = x * ca - y * sa, y1 = x * sa + y * ca;
+      const y2 = y1 * ce - z * se, z2 = y1 * se + z * ce;
+      const p = 3.2 / (3.2 + y2);
+      return [cx + R * x1 * p, cy - R * z2 * p, p];
+    };
+    const cols = ["#7d869c", "#ffa62b", "#46e0ff"];
+    for (let pass = 0; pass < 3; pass++) {
+      ctx.fillStyle = lit ? cols[pass] : "#9aa3b8";
+      for (let i = 0; i < n; i++) {
+        if (C.g[i] !== pass) continue;
+        const q = proj(lerp(C.x0[i], C.x1[i], f), lerp(C.y0[i], C.y1[i], f), lerp(C.z0[i], C.z1[i], f));
+        const s = (pass === 0 ? 1.3 : 2.1) * q[2];
+        ctx.globalAlpha = pass === 0 ? 0.55 : 0.95;
+        ctx.fillRect(q[0] - s / 2, q[1] - s / 2, s, s);
+      }
+    }
+    ctx.globalAlpha = 1;
+    const o = proj(0, 0, 0);
+    sun(o[0], o[1], 4);
+    label("the Sun", o[0], o[1] + 15, { size: 12, bold: true, color: "#ffd98a", box: false, align: "center" });
+    if (lit) {
+      const pc = C.pleiades, q = proj(lerp(pc[0], pc[3], f), lerp(pc[1], pc[4], f), lerp(pc[2], pc[5], f));
+      ctx.strokeStyle = "#ffa62b"; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.arc(q[0], q[1], 16, 0, TAU); ctx.stroke();
+      label(C.pleiadesText, q[0], q[1] - 30, { size: 12.5, bold: true, align: "center", color: "#ffcf8a", border: "#ffa62b" });
+    }
+    readout(C.readout, started ? tt : T);
+  }
+
+  // ===================================================================================== 14. stars rushing toward or away from us
+  function radial(tt) {
+    const Rd = S.radial;
+    const cx = W * 0.42, cy = H * 0.53, R = Math.min(W * 0.38, H * 0.45);
+    const r = rng(2);
+    const n = Rd.rv.length, k = (R * Rd.reach) / (Rd.vRef * T);
+    const fastOn = started ? tt >= Rd.tFast : true, flagOn = started ? tt >= Rd.tFlag : true;
+    ctx.strokeStyle = "rgba(140,160,210,0.25)"; ctx.setLineDash([3, 5]);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.stroke(); ctx.setLineDash([]);
+    const tt2 = started ? tt : T * 0.45;
+    for (let i = 0; i < n; i++) {
+      const ph = r() * TAU, r0 = R * (0.25 + 0.65 * Math.sqrt(r()));
+      const v = Rd.rv[i], fast = Math.abs(v) > Rd.cut, rr = r0 + v * k * tt2;
+      if (rr < 6 || rr > R * 1.25) continue;
+      const x = cx + rr * Math.cos(ph), y = cy + rr * Math.sin(ph);
+      const col = v > 0 ? "#ff7b6b" : "#7fb2ff";
+      if (fast && fastOn) {
+        ctx.strokeStyle = rgba(v > 0 ? "#ff7b6b" : "#7fb2ff", 0.8);
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(x - Math.cos(ph) * Math.sign(v) * 18, y - Math.sin(ph) * Math.sign(v) * 18);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ball(x, y, 2.6, col);
+        if (flagOn && Rd.flag[i]) label("?", x + 8, y - 8, { size: 13, bold: true, color: "#ffd166", box: false });
+      } else {
+        ctx.fillStyle = fastOn ? rgba(col, 0.35) : rgba(col, 0.8);
+        ctx.fillRect(x - 1, y - 1, 2, 2);
+      }
+    }
+    sun(cx, cy, 6);
+    label("the Sun (us)", cx, cy + 17, { size: 12, bold: true, color: "#ffd98a", box: false, align: "center" });
+    label("red: moving away     blue: coming closer", cx, cy + R + 2, { size: 12, align: "center", color: "#c9d3ea", box: false });
+    readout(Rd.readout, started ? tt : T);
+  }
+
+  // ===================================================================================== 15. the sky: where the planets were found
+  function sky(tt) {
+    const Sk = S.sky;
+    const cx = W * 0.5, cy = H * 0.56, Rx = Math.min(W * 0.46, H * 0.4 * 2), Ry = Rx / 2;
+    ctx.fillStyle = "#070b1c";
+    ctx.beginPath(); ctx.ellipse(cx, cy, Rx, Ry, 0, 0, TAU); ctx.fill();
+    ctx.strokeStyle = "rgba(140,160,210,0.45)"; ctx.lineWidth = 1; ctx.stroke();
+    const proj = (ra, dec) => {
+      const l = (ra > 180 ? ra - 360 : ra) * RAD, p = dec * RAD;
+      const d = Math.sqrt(1 + Math.cos(p) * Math.cos(l / 2));
+      return [cx - (Rx * Math.cos(p) * Math.sin(l / 2)) / d, cy - (Ry * Math.sin(p)) / d];
+    };
+    const n = Sk.ra.length, cols = Sk.colors;
+    const yearT = (y) => Sk.t0 + (y - Sk.y0) * Sk.tYear;
+    for (let i = 0; i < n; i++) {
+      const ts = yearT(Sk.yr[i]) + Sk.u[i] * Sk.tYear;
+      if (started && tt < ts) continue;
+      const q = proj(Sk.ra[i], Sk.dec[i]), age = tt - ts;
+      if (started && age < 0.7) { ctx.fillStyle = "#ffffff"; ctx.fillRect(q[0] - 2, q[1] - 2, 4, 4); continue; }
+      ctx.fillStyle = cols[Sk.m[i]];
+      ctx.fillRect(q[0] - 1.1, q[1] - 1.1, 2.2, 2.2);
+    }
+    const y = Math.min(Sk.y1, Sk.y0 + Math.floor(Math.max(0, tt - Sk.t0) / Sk.tYear));
+    const k = Sk.years.indexOf(y);
+    const lines = started && tt < T ? (k >= 0 ? Sk.lines[k] : [String(y)]) : Sk.final;
+    panel(lines, W - 14, 14, { align: "right" });
+    Sk.legend.forEach((s, i) => label(s, 16, TOP + 4 + i * 21, { size: 12.5, color: cols[i], bold: true }));
+    const kp = proj(Sk.kepler[0], Sk.kepler[1]);
+    if (!started || tt >= Sk.tKepler) label(Sk.keplerText, kp[0], kp[1] - 26, { size: 12, bold: true, color: "#ffd166", align: "center", border: "#ffd166" });
+  }
+
+  // ===================================================================================== 16. a star with its planets
+  function system(tt) {
+    const Y = S.sys, tilt = 0.6;
+    const cx = W * (Y.cx || 0.4), cy = H * 0.54, R = Math.min(W * 0.36, (H * 0.43) / tilt);
+    const rOf = (v) => R * Math.pow(clamp(v / Y.vmax, 0, 1.2), Y.pow);
+    for (const z of Y.zones || []) {
+      const a = started ? seg(tt, z.at, z.at + 0.8) : 1;
+      if (a > 0) ringFill(cx, cy, rOf(z.v0), rOf(z.v1), tilt, rgba(z.color, (z.alpha || 0.22) * a));
+    }
+    for (const g of Y.rings || []) {
+      const a = started ? seg(tt, g.at, g.at + 0.6) : 1;
+      if (a <= 0) continue;
+      ctx.globalAlpha = a;
+      ellipseLine(cx, cy, rOf(g.v), tilt, g.color, 1.5, [6, 4]);
+      ctx.globalAlpha = 1;
+      label(g.text, cx + rOf(g.v) * Math.cos(g.ang * RAD), cy - rOf(g.v) * Math.sin(g.ang * RAD) * tilt, { size: 12, bold: true, color: g.color, align: "center", alpha: a });
+    }
+    const r = rng(31), n = Y.v.length;
+    const focus = latest(Y.focus, started ? tt : T);
+    const cls = Y.classes;
+    const timeU = started ? tt : T;
+    const pos = [];
+    for (let i = 0; i < n; i++) {
+      const ph = r() * TAU;
+      const per = Y.periodOf === "d" ? Math.pow(Y.v[i], 1.5) : Y.v[i];
+      const ang = ph + (TAU * timeU * Y.speed) / per;
+      const rr = rOf(Y.v[i]);
+      pos.push([cx + rr * Math.cos(ang), cy - rr * Math.sin(ang) * tilt]);
+    }
+    sun(cx, cy, Y.starR || 10, Y.starColour);
+    for (let i = 0; i < n; i++) {
+      if (Y.t0 && started && tt < Y.t0[i]) continue;
+      const c = Y.c[i], on = !focus || focus.cls.indexOf(c) >= 0;
+      ctx.globalAlpha = on ? 1 : 0.13;
+      const s = clamp(Y.sizeK * Math.sqrt(Y.rade[i]), 1.2, 7);
+      if (s > 2.4) ball(pos[i][0], pos[i][1], s, cls[c].color);
+      else { ctx.fillStyle = cls[c].color; ctx.fillRect(pos[i][0] - s, pos[i][1] - s, 2 * s, 2 * s); }
+    }
+    ctx.globalAlpha = 1;
+    for (const L of Y.labels || []) {
+      if (started && tt < L.at) continue;
+      const q = pos[L.i];
+      ctx.strokeStyle = L.color || "#ffd166"; ctx.lineWidth = 1.8;
+      ctx.beginPath(); ctx.arc(q[0], q[1], 9, 0, TAU); ctx.stroke();
+      label(L.text, q[0], q[1] - 22, { size: 12.5, bold: true, align: "center", color: L.color || "#ffd166", border: L.color || "#ffd166" });
+    }
+    if (Y.earth) {
+      const e = Y.earth, ang = (TAU * timeU * Y.speed) / 1 + 0.4, rr = rOf(1);
+      const x = cx + rr * Math.cos(ang), y = cy - rr * Math.sin(ang) * tilt;
+      ctx.strokeStyle = "#4f8cff"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(x, y, 7, 0, TAU); ctx.stroke();
+      label(e, x, y + 17, { size: 11.5, color: "#9fc3ff", align: "center", box: false });
+    }
+    cls.forEach((c, i) => label(c.name, 16, TOP + 4 + i * 21, { size: 12.5, bold: true, color: c.color }));
+    readout(Y.readout, started ? tt : T);
+    if (Y.inset) inset(Y.inset, tt);
+  }
+  function inset(I, tt) {
+    const a = started ? seg(tt, I.at, I.at + 0.8) : 1;
+    if (a <= 0) return;
+    const w = Math.min(W * 0.3, 280), h = 118, x = W - w - 14, y = H - h - 14;
+    ctx.globalAlpha = a;
+    ctx.fillStyle = "rgba(6,10,26,0.85)"; rrect(x, y, w, h, 9); ctx.fill();
+    ctx.strokeStyle = "rgba(130,150,200,0.45)"; ctx.stroke();
+    const p1x = x + w * 0.27, p2x = x + w * 0.73, py = y + 52;
+    const haze = 0.5 + 0.5 * Math.sin(tt * 3);
+    glow(p2x, py, 30, "#7fb2ff", 0.55);
+    ball(p2x, py, 13, "#4f8cff");
+    ball(p1x, py, 9, "#b08a6a");
+    for (let j = 0; j < 4; j++) {
+      const f = ((tt * 0.8 + j * 0.25) % 1);
+      ctx.fillStyle = rgba("#7fb2ff", 0.6 * (1 - f));
+      ctx.beginPath(); ctx.arc(p1x + 12 + f * 34, py - 6 + j * 4 - 6, 3 + 3 * f, 0, TAU); ctx.fill();
+    }
+    void haze;
+    label(I.left, p1x, y + h - 26, { size: 11.5, align: "center", box: false, color: "#e0c8b0" });
+    label(I.right, p2x, y + h - 26, { size: 11.5, align: "center", box: false, color: "#9fc3ff" });
+    label(I.note, x + w / 2, y + h - 9, { size: 10.5, align: "center", box: false, color: "#aab6d6" });
+    ctx.globalAlpha = 1;
+  }
+
+  // ===================================================================================== 17. four star systems, from little metal to lots
+  function systems(tt) {
+    const Z = S.systems;
+    const tilt = 0.55;
+    Z.list.forEach((s, i) => {
+      const a = started ? seg(tt, s.at, s.at + 0.8) : 1;
+      if (a <= 0) return;
+      const cx = W * (0.125 + 0.25 * i), cy = H * 0.44, R = Math.min(W * 0.11, H * 0.3);
+      ctx.globalAlpha = a;
+      const r = rng(60 + i);
+      for (let k = 0; k < s.metal; k++) { ctx.fillStyle = "#ffe9a8"; ctx.fillRect(cx + (r() - 0.5) * 22, cy + (r() - 0.5) * 22, 1.6, 1.6); }
+      for (let k = 0; k < 10; k++) {
+        const rr = R * (0.28 + 0.072 * k);
+        ctx.strokeStyle = "rgba(140,160,210,0.18)"; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.ellipse(cx, cy, rr, rr * tilt, 0, 0, TAU); ctx.stroke();
+      }
+      sun(cx, cy, 8, "#ffd27d");
+      for (let k = 0; k < 10; k++) {
+        const rr = R * (0.28 + 0.072 * k), giant = s.giants.indexOf(k) >= 0;
+        const ang = r() * TAU + (started ? tt : T) * 1.6 * Math.pow(0.28 / (0.28 + 0.072 * k), 1.5);
+        const x = cx + rr * Math.cos(ang), y = cy - rr * Math.sin(ang) * tilt;
+        if (giant) { ball(x, y, 6, "#e0a96d"); ctx.strokeStyle = "rgba(120,70,30,0.8)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x - 5.5, y - 1.5); ctx.lineTo(x + 5.5, y - 1.5); ctx.moveTo(x - 5, y + 2); ctx.lineTo(x + 5, y + 2); ctx.stroke(); }
+        else ball(x, y, 2.4, "#9fb3d8");
+      }
+      label(s.top, cx, cy + R * tilt + 26, { size: 12.5, bold: true, align: "center", color: "#ffffff" });
+      label(s.mid, cx, cy + R * tilt + 46, { size: 12.5, align: "center", color: "#ffd166", bold: true, box: false });
+      label(s.bottom, cx, cy + R * tilt + 64, { size: 11.5, align: "center", color: "#c9d3ea", box: false });
+      ctx.globalAlpha = 1;
+    });
+    label(Z.arrow, W * 0.5, Math.max(TOP + 4, H * 0.13), { size: 13, align: "center", color: "#ffe9a8", bold: true });
+    readout(Z.readout, started ? tt : T);
+  }
+
+  const SCENES = { belt, nea, flyby, months, globe, pole, wind, spiral, spin, sort, crowd, galaxy, cloud, radial, sky, system, systems };
+
+  // ------------------------------------------------------------------------------------------ page, buttons, clock
+  (S.keys || []).forEach((k) => { const li = document.createElement("li"); li.textContent = k; keyList.appendChild(li); });
+  const noteEl = document.getElementById("note");
+  if (noteEl) noteEl.textContent = S.tagNote ? `${S.tag}: ${S.tagNote}` : "";
+  const keyEls = Array.from(keyList.children);
+  function stepAt(tt) {
+    let s = null, k = 0;
+    (S.steps || []).forEach((st, i) => { if (tt >= st[0] - 1e-9) { s = st[1]; k = i; } });
+    return [s, k];
+  }
+  function updateHtml() {
+    const n = (S.steps || []).length;
+    if (!started) stepEl.textContent = S.intro;
+    else {
+      const sk = stepAt(t);
+      stepEl.textContent = n > 1 ? `Step ${sk[1] + 1} of ${n}: ${sk[0]}` : sk[0];
+    }
+    keyEls.forEach((li, i) => li.classList.toggle("hide", started && t < S.keyAt[i] - 1e-9));
+  }
+  function tagHeight() {
+    if (!S.tag) return 0;
+    ctx.save();
+    ctx.font = font(12.5, false, true);
+    const n = wrapText(S.tag, Math.min(W * 0.6, 470)).length;
+    ctx.restore();
+    return 12 + n * 16 + 6;
+  }
+  function draw() {
+    try {
+      LIVE = [];
+      TOP = tagHeight() + 16;
+      ctx.save();
+      backdrop();
+      SCENES[S.type](t);
+      ctx.restore();
+      tagBox();
+      showLive();
+      updateHtml();
+    } catch (e) {
+      STATE.errors.push(String((e && e.stack) || e));
+      throw e;
+    }
+  }
+  function setButtons() {
+    playBtn.textContent = playing ? "▶ Playing…" : started && t < T ? "▶ Resume" : started ? "↺ Play again" : "▶ Play";
+    playBtn.disabled = playing;
+    pauseBtn.disabled = !playing;
+  }
+  function loop(ts) {
+    if (!playing) return;
+    const dt = Math.min(0.25, Math.max(0, (ts - lastTs) / 1000));
+    lastTs = ts;
+    t = Math.min(T, t + dt);
+    if (t >= T) playing = false;
+    draw();
+    STATE.frames++;
+    setButtons();
+    if (playing) requestAnimationFrame(loop);
+  }
+  playBtn.addEventListener("click", () => {
+    if (playing) return;
+    if (!started || t >= T) t = 0;
+    started = true;
+    playing = true;
+    lastTs = performance.now();
+    setButtons();
+    requestAnimationFrame(loop);
+  });
+  pauseBtn.addEventListener("click", () => { playing = false; setButtons(); draw(); });
+  function resize() {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = Math.max(320, r.width);
+    H = Math.max(260, r.height);
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  window.addEventListener("resize", resize);
+  setButtons();
+  resize();
+})();
+
+</script>
+</body>
+</html>

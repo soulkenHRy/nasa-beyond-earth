@@ -1,0 +1,8 @@
+What,README says,File has,Match?
+Data rows (pandas),"1,582,869","1,582,869",yes
+Raw lines minus header,"1,582,869","1,582,869",yes
+File size (MB),257,256.8,yes
+Columns,29 named in README table,29 in file,"yes, same names"
+Near-Earth objects (neo = Y),"about 43,000","43,050",yes
+Potentially hazardous (pha = Y),"about 2,500","2,550",yes
+Has a measured size (diameter filled),"about 140,000","139,688",yes

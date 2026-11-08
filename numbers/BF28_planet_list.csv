@@ -1,0 +1,44 @@
+pl_name,sy_dist,pl_rade,pl_insol,discoverymethod,disc_year
+Proxima Cen b,1.30119,1.02,0.641,Radial Velocity,2016.0
+Ross 128 b,3.37454,1.11,1.38,Radial Velocity,2017.0
+GJ 1061 c,3.67278,1.19,1.4,Radial Velocity,2020.0
+GJ 1061 d,3.67278,1.16,0.6,Radial Velocity,2020.0
+Teegarden's Star b,3.83078,1.05,1.08,Radial Velocity,2019.0
+Teegarden's Star c,3.83078,1.02,0.35,Radial Velocity,2019.0
+Wolf 1061 c,4.30592,1.66,1.3,Radial Velocity,2015.0
+GJ 1002 b,4.84867,1.03,0.67,Radial Velocity,2022.0
+GJ 1002 c,4.84867,1.1,0.257,Radial Velocity,2022.0
+GJ 251 c,5.58057,1.8,0.404,Radial Velocity,2025.0
+GJ 273 b,5.921535,1.51,1.06,Radial Velocity,2017.0
+Gl 725 B c,6.842357,1.66,0.4742,Radial Velocity,2026.0
+GJ 667 C e,7.24396,1.45,0.3022,Radial Velocity,2013.0
+GJ 667 C f,7.24396,1.45,0.5633,Radial Velocity,2013.0
+GJ 667 C c,7.24396,1.77,0.8774,Radial Velocity,2013.0
+GJ 3378 b,7.72274,1.32,0.91,Radial Velocity,2026.0
+Wolf 1069 b,9.58341,1.08,0.652,Radial Velocity,2023.0
+L 98-59 f,10.6194,1.48,1.1,Radial Velocity,2025.0
+TRAPPIST-1 g,12.42988881,1.129,0.252,Transit,2017.0
+TRAPPIST-1 d,12.42988881,0.788,1.115,Transit,2016.0
+TRAPPIST-1 e,12.42988881,0.92,0.646,Transit,2017.0
+TRAPPIST-1 f,12.42988881,1.045,0.373,Transit,2017.0
+LHS 1140 b,14.9861,1.73,0.43,Transit,2017.0
+TOI-700 d,31.1265,1.145,0.85,Transit,2020.0
+TOI-700 e,31.1265,0.919,1.27,Transit,2023.0
+LP 890-9 c,32.4298,1.367,0.906,Transit,2022.0
+TOI-1266 d,36.0118,1.74,1.3,Transit Timing Variations,2025.0
+TOI-715 b,42.4048,1.55,0.67,Transit,2023.0
+K2-3 d,44.0727,1.458,1.44,Transit,2015.0
+K2-72 e,66.4321,1.29,1.2,Transit,2016.0
+Kepler-1649 c,92.1913,1.06,0.75,Transit,2020.0
+Kepler-296 e,167.0,1.53,1.41,Transit,2014.0
+Kepler-296 f,167.0,1.8,0.62,Transit,2014.0
+Kepler-186 f,177.594,1.17,0.3,Transit,2014.0
+Kepler-438 b,195.94287175,1.12,1.4,Transit,2015.0
+Kepler-1652 b,252.0,1.6,0.81,Transit,2017.0
+Kepler-1229 b,265.482,1.4,0.524,Transit,2016.0
+Kepler-62 f,300.874,1.41,0.5,Transit,2013.0
+Kepler-62 e,300.874,1.61,1.352,Transit,2013.0
+Kepler-1544 b,335.09,1.78,0.833,Transit,2016.0
+Kepler-442 b,365.965,1.34,0.66,Transit,2015.0
+Kepler-1410 b,367.0,1.78,1.06,Transit,2016.0
+Kepler-452 b,551.727,1.63,1.1,Transit,2015.0

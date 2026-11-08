@@ -1,0 +1,31 @@
+key,value,shown,unit,source
+rows_total,1165165.0,"1,165,165",,our data
+n_columns,21.0,21,,our data
+count_days,13.485706018518519,13.5,days,our data (rows ÷ seconds in a day)
+max_pc,153.8460553076194,154,pc,our data
+max_ly,501.53814030283917,502,light-years,our data
+pc_ly,3.26,3.26,light-years,README (1 parsec)
+rv_have_pct,39.50547776495175,40%,,our data
+colour_blank_pct,4.342217625829818,4%,,our data
+ruwe_bad_pct,22.40558204202838,22%,,our data
+ruwe_cut,1.4,1.4,,rule we used
+median_ly,384.61205106470777,385,light-years,our data
+eye_limit,6.0,6,,known science (faintest stars an eye can see on a dark night: brightness number about 6)
+coin_km,4.0,4,km,known science (a coin about 2 cm wide seen from about 4 km covers about one arcsecond)
+eye_visible,3567.0,"3,567",,our data
+prox_ra,217.39232147200883,217.39,,our data
+prox_dec,-62.67607511676666,-62.68,,our data
+prox_l,313.92549558326704,313.9,,our data
+prox_b,-1.9177544232946375,-1.9,,our data
+prox_dist,1.3019705311704333,1.30,,our data
+prox_pmra,-3781.741008265163,"-3,782",,our data
+prox_pmdec,769.4650146478623,769,,our data
+prox_g,8.984749,8.98,,our data
+prox_bp_rp,3.8045802,3.80,,our data
+prox_absg,13.411743067769107,13.41,,our data
+prox_ruwe,0.97145325,0.97,,our data
+prox_rv,-21.942726,-21.9,km/s,our data
+prox_ly,4.2444239316156125,4.24,light-years,our data
+prox_id,0.0,5853498713190525696,,"our data (Gaia ID, read from the whole-number column)"
+prox_pm_arcsec,3.8592280915179717,3.86,arcseconds per year,our data
+mas_per_arcsec,1000.0,"1,000",,rule we used

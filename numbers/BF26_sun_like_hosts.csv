@@ -1,0 +1,22 @@
+key,value,shown,unit,source
+matched_planets,2045.0,"2,045",,our data
+matched_hosts,1424.0,"1,424",,our data
+ids_filled,6053.0,"6,053",,our data
+float_changed_pct,56.550470840905334,57%,,our data
+float_join,789.0,789,,our data
+host_OB,0.2808988764044944,0%,,our data
+gaia_OB,0.5008204950604314,1%,,our data
+host_A,0.7724719101123595,1%,,our data
+gaia_A,1.032056279949864,1%,,our data
+host_F,10.74438202247191,11%,,our data
+gaia_F,4.51357517825244,5%,,our data
+host_G,28.08988764044944,28%,,our data
+gaia_G,5.6002713151517485,6%,,our data
+host_K,33.35674157303371,33%,,our data
+gaia_K,17.23488230000601,17%,,our data
+host_M,26.75561797752809,27%,,our data
+gaia_M,71.1183944315795,71%,,our data
+hosts_with_colour,1424.0,"1,424",,our data
+gaia_with_colour,1114571.0,"1,114,571",,our data
+guide_changed,73.0,73%,,Field Guide
+guide_float_join,555.0,555,,Field Guide

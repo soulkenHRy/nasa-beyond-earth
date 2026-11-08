@@ -1,0 +1,30 @@
+key,value,shown,unit,source
+from_h,21.0,21:00,,rule we used
+to_h,4.0,04:00,,rule we used
+cut,-100.0,-100,nT,rule we used
+nights_total,58.0,58,,our data
+nights_all,6117.0,"6,117",,our data
+n_2019,0.0,0,,our data
+n_2020,0.0,0,,our data
+n_2022,0.0,0,,our data
+n_2023,9.0,9,,our data
+n_2024,9.0,9,,our data
+n_2025,9.0,9,,our data
+max_year_n,9.0,9,,our data
+jan_low,-251.0,-251,nT,our data
+jan_utc,0.0,20 Jan 11:50,,our data (time)
+jan_tor,0.0,06:50,,our data (time)
+jan_dark_before,-132.0,-132,nT,our data
+jan_dark_after,-167.0,-167,nT,our data
+utc_offset_winter,-5.0,5,hours,our data
+utc_offset_summer,-4.0,4,hours,our data
+guide_jan_dark,-167.0,-167,nT,Field Guide
+y_2010,2010.0,2010,,rule we used
+y_2019,2019.0,2019,,rule we used
+y_2020,2020.0,2020,,rule we used
+y_2022,2022.0,2022,,rule we used
+y_2023,2023.0,2023,,rule we used
+y_2024,2024.0,2024,,rule we used
+y_2025,2025.0,2025,,rule we used
+y_2026,2026.0,2026,,rule we used
+jan_tor_ampm,0.0,6:50 am,,our data (time)

@@ -1,0 +1,11 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# the raw NASA files (about 800 MB) and the Parquet copies made from them; see README, section 6
+NASA Beyond Earth/
+NASA Beyond Earth-*/
+data_cache/
+
+.streamlit/secrets.toml

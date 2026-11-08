@@ -1,0 +1,20 @@
+key,value,shown,unit,source
+rows,1165165.0,"1,165,165",,our data
+with_colour,1114566.0,"1,114,566",,our data
+wd,84595.0,"84,595",,our data
+wd_clean,55995.0,"55,995",,our data
+giants,5058.0,"5,058",,our data
+main_seq,1024913.0,"1,024,913",,our data
+wd_a,10.0,10,,rule we used
+wd_b,2.6,2.6,,rule we used
+wd_colour,1.7,1.7,,rule we used
+giant_mag,3.5,3.5,,rule we used
+giant_colour,0.9,0.9,,rule we used
+ruwe_cut,1.4,1.4,,rule we used
+sun_bp_rp,0.82,0.82,,the brief (the Sun's colour)
+sun_absg,4.67,4.67,,the brief (the Sun's true brightness)
+prox_bp_rp,3.8045802,3.80,,our data
+prox_absg,13.411743067769107,13.41,,our data
+prox_dist,1.3019705311704333,1.30,pc,our data
+pc_ly,3.26,3.26,light-years,README (1 parsec)
+prox_ly,4.2444239316156125,4.24,light-years,our data

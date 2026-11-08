@@ -1,0 +1,29 @@
+key,value,shown,unit,source
+rows_total,120071.0,"120,071",,our data
+n_columns,14.0,14,,our data
+objects,28430.0,"28,430",,our data
+y_first,1900.0,1900,,our data
+y_last,2199.0,2199,,our data
+n_years,300.0,300,,our data
+per_year,400.2366666666667,400,,our data (rows ÷ years)
+range_au,0.1,0.1,AU,rule we used
+range_ld,38.91050583657588,39,Moon distances,our data
+range_million_km,14.95978707,15,million km,our data
+h_blank,114.0,114,,our data
+passes_per_object,4.223390784382694,4.2,,our data
+apo_name,0.0,99942 Apophis (2004 MN4),,our data (name)
+apo_des,0.0,99942,,our data (name)
+apo_cd,0.0,2029-Apr-13 21:46,,our data (date)
+apo_dist,0.000254090910419299,0.000254,AU,our data
+apo_km,38011.45916295157,"38,011",km,our data
+apo_ld,0.09886805852891012,0.10,Moon distances,our data
+apo_height,31640.45916295157,"31,640",km,our data
+apo_v,7.42253895678452,7.42,km/s,our data
+apo_kmh,26721.140244424274,"26,721",km per hour,our data
+apo_h,19.09,19.09,,our data
+apo_passes,18.0,18,,our data
+apo_year,2029.0,2029,,our data (year of the example pass)
+geo_km,35786.0,"35,786",km,known science (height of TV satellites in geostationary orbit)
+au_km,149.5978707,149.6,million km,known science (1 AU)
+earth_radius,6371.0,"6,371",km,the brief
+v_median,9.60034990208906,9.6,km/s,our data

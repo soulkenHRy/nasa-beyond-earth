@@ -1,0 +1,29 @@
+key,value,shown,unit,source
+rows_kept,34592.0,"34,592",,our data
+measured,19930.0,"19,930",,our data
+estimated,14662.0,"14,662",,our data
+limit_h,2.2,2.2,hours,rule we used
+limit_min,132.0,132,minutes,our data
+big_km,0.3,0.3,km,rule we used
+big_m,300.0,300,m,rule we used
+small_km,0.15,0.15,km,rule we used
+small_m,150.0,150,m,rule we used
+big_n,33616.0,"33,616",,our data
+big_fast,1236.0,"1,236",,our data
+big_fast_pct,3.6768205616373155,3.7%,,our data
+big_fast_est,801.0,801,,our data
+big_fast_meas,435.0,435,,our data
+big_ok_pct,96.32317943836269,96%,,our data
+small_n,655.0,655,,our data
+small_fast,524.0,524,,our data
+small_fast_pct,80.0,80%,,our data
+record_name,0.0,2020 HS7,,our data (name)
+record_hours,0.00083181,0.000832,hours,our data
+record_seconds,2.994516,3.0,seconds,our data
+sec_per_hour,3600.0,"3,600",,rule we used
+ceres_rot,9.07417,9.07,hours,our data
+ceres_d,939.4,939.4,km,our data
+albedo_guess,0.14,0.14,,rule we used
+H_example,22.0,22,,rule we used
+size_H22_m,141.4037617489543,141,m,our data
+ceres_H,3.34,3.34,,our data

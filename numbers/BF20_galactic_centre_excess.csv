@@ -1,0 +1,22 @@
+key,value,shown,unit,source
+radius,5.0,5,degrees,rule we used
+gc,15901.0,"15,901",,our data
+ac,2041.0,"2,041",,our data
+ratio,7.79078882900539,7.8,,our data
+gc_ruwe,1.6276945,1.63,,our data
+ac_ruwe,1.0549744,1.05,,our data
+all_ruwe,1.0648277,1.06,,our data
+gc_nocolour,33.18030312558958,33%,,our data
+all_nocolour,4.342217625829818,4%,,our data
+gc_ruwe_bad,65.86378215206591,66%,,our data
+all_ruwe_bad,22.40558204202838,22%,,our data
+lmc_l,280.47,280.5,degrees,known science (Large Magellanic Cloud position)
+lmc_b,-32.89,-32.9,degrees,known science
+lmc,1881.0,"1,881",,our data
+lmc_mirror,1894.0,"1,894",,our data
+guide_gc,15895.0,"15,895",,Field Guide
+guide_ac,2040.0,"2,040",,Field Guide
+guide_ruwe,1.65,1.65,,Field Guide
+guide_nocolour,34.0,34%,,Field Guide
+guide_lmc,1594.0,"1,594",,Field Guide
+guide_lmc_mirror,1587.0,"1,587",,Field Guide

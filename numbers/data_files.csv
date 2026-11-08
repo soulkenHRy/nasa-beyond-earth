@@ -1,0 +1,8 @@
+part,file,rows,columns,CSV size (MB)
+A,jpl_small_bodies_asteroids_comets.csv,1582869,29,256.8
+B,extras_close_approaches_1900-2200.csv,120071,14,19.8
+C,extras_fireballs.csv,1074,9,0.1
+D,nasa_omni_solar_wind_storms_5min_2010-2026.csv,1766880,14,138.7
+E,gaia_dr3_stars_within_500_light_years.csv,1165165,21,314.4
+F,nasa_exoplanet_archive_confirmed_planets.csv,6451,25,1.4
+G,moon_craters_robbins_lro_1.3M.csv,1296796,10,102.0

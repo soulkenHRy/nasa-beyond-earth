@@ -1,0 +1,46 @@
+key,value,shown,unit,source
+albedo_rows_all,138481.0,"138,481",,our data
+bright_cut,0.15,0.15,,rule we used
+z1_lo,1.8,1.8,AU,rule we used
+z1_hi,2.5,2.5,AU,rule we used
+z1_n,30533.0,"30,533",,our data
+z1_bright,17265.0,"17,265",,our data
+z1_pct,56.545377132938135,57%,,our data
+z1_pct1,56.545377132938135,56.5%,,our data
+z1_median,0.192,0.192,,our data
+z2_lo,2.5,2.5,AU,rule we used
+z2_hi,2.82,2.82,AU,rule we used
+z2_n,45910.0,"45,910",,our data
+z2_bright,16842.0,"16,842",,our data
+z2_pct,36.68481812241342,37%,,our data
+z2_pct1,36.68481812241342,36.7%,,our data
+z2_median,0.086,0.086,,our data
+z3_lo,2.82,2.82,AU,rule we used
+z3_hi,3.3,3.3,AU,rule we used
+z3_n,57211.0,"57,211",,our data
+z3_bright,8331.0,"8,331",,our data
+z3_pct,14.561884952194507,15%,,our data
+z3_pct1,14.561884952194507,14.6%,,our data
+z3_median,0.066,0.066,,our data
+z4_lo,3.3,3.3,AU,rule we used
+z4_hi,3.6,3.6,AU,rule we used
+z4_n,1071.0,"1,071",,our data
+z4_bright,29.0,29,,our data
+z4_pct,2.707749766573296,3%,,our data
+z4_pct1,2.707749766573296,2.7%,,our data
+z4_median,0.056,0.056,,our data
+zone_rows,134725.0,"134,725",,our data
+guide_z1_pct,56.482789622399174,56%,,our data
+guide_z4_pct,1.7155110793423873,2%,,our data
+spike_lo,1.9,1.90,AU,our data
+spike_hi,1.95,1.95,AU,our data
+spike_median,0.542,0.54,,our data
+spike_n,266.0,266,,our data
+guide_spike_median,0.57,0.57,,Field Guide
+vesta_a,2.361,2.36,AU,our data
+vesta_albedo,0.4228,0.42,,our data
+ceres_a,2.766,2.77,AU,our data
+ceres_albedo,0.09,0.09,,our data
+hygiea_a,3.151,3.15,AU,our data
+hygiea_albedo,0.0717,0.07,,our data
+measured_share,8.77015630997488,9%,,our data

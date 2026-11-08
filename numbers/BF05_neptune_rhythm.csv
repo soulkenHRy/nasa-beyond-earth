@@ -1,0 +1,29 @@
+key,value,shown,unit,source
+lo,30.0,30,AU,rule we used
+hi,60.0,60,AU,rule we used
+rows_kept,6947.0,"6,947",,our data
+band_lo,39.2,39.2,AU,rule we used
+band_hi,39.7,39.7,AU,rule we used
+band_count,586.0,586,,our data
+left_lo,38.7,38.7,AU,rule we used
+left_hi,39.2,39.2,AU,rule we used
+left_count,170.0,170,,our data
+right_lo,39.7,39.7,AU,rule we used
+right_hi,40.2,40.2,AU,rule we used
+right_count,157.0,157,,our data
+kb_lo,42.0,42,AU,rule we used
+kb_hi,48.0,48,AU,rule we used
+kb_count,3777.0,"3,777",,our data
+far_lo,48.0,48,AU,rule we used
+far_hi,60.0,60,AU,rule we used
+far_count,1118.0,"1,118",,our data
+band_vs_sides,3.5840978593272173,3.6,,our data
+guide_kb,3777.0,"3,777",,Field Guide
+band_period,248.0,248,years,our data
+neptune_period,164.8,164.8,years,known science
+neptune_a,30.07,30,AU,"known science (Neptune's distance from the Sun, rounded)"
+period_ratio,1.5048543689320388,1.50,,our data
+pluto_a,39.59,39.59,AU,our data
+pluto_per,249.0,249,years,our data
+pluto_e,0.2518,0.25,,our data
+all_objects_count,601.0,601,,our data
