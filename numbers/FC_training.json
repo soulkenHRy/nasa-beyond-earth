@@ -1,0 +1,18 @@
+{
+ "trained_at": "2026-11-08 14:47 UTC",
+ "xgboost": "3.4.1",
+ "data_first": "2010-01-01 00:00:00",
+ "data_last": "2026-10-18 23:55:00",
+ "train": "2010-01-01 to 2021-12-31",
+ "validation": "2022-01-01 to 2022-12-31",
+ "test": "2023-01-01 to 2026-10-18",
+ "every": {
+  "train": 12,
+  "val": 6,
+  "test": 3
+ },
+ "inputs": 74,
+ "regressors": 48,
+ "classifiers": 4,
+ "minutes": 7.9
+}

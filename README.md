@@ -11,10 +11,11 @@ Contents
    2  How a number gets from a CSV file to the screen
    3  The math
    4  Results
-   5  Figures
-   6  Running it
-   7  Caveats
-   8  Files
+   5  Forecasts
+   6  Figures
+   7  Running it
+   8  Caveats
+   9  Files
       References
 ```
 
@@ -282,7 +283,52 @@ One line each. The full text, with a chart and an animation for every result, is
 31. Most craters are nearly round, and the stretched ones lean one way. Middle stretch: 1.12, only 12% longer than wide. More than 1.5: 2.1% of craters; more than 2: 0.22%.
 32. More craters per square kilometre toward the poles. Per area: the north pole band has 3.0 times as many as the equator; the south pole band 1.8 times.
 
-## 5. Figures
+## 5. Forecasts
+
+The fourth page of the app, Predictions, forecasts six measurements of the solar wind and of Earth's magnetic field,
+from 5 minutes to 24 hours ahead, and the chance of a geomagnetic storm in the next 6 or 24 hours. The code is in
+`forecast/`. The models are trained once (`python -m forecast.train`, 8 minutes here) and the
+page and a small HTTP API (`uvicorn forecast.api:app`) only read them.
+
+The baseline is persistence, $\hat y_{t+h} = y_t$: tomorrow looks like today. The model learns the change instead
+of the value,
+
+$$\hat y_{t+h} = y_t + f_h(\mathbf{x}_t),$$
+
+where $f_h$ is a gradient-boosted tree ensemble (XGBoost) and $\mathbf{x}_t$ holds 74 numbers
+built only from readings at $t$ or before: recent values, means and spreads of speed, field, density, pressure,
+SYM-H and AE, and the driving term $v B_s$ with $B_s = \max(0, -B_z)$. The years are split in time: train
+2010-01-01 to 2021-12-31, validation 2022-01-01 to 2022-12-31, test 2023-01-01 to 2026-10-18, with one day left out at each
+edge so that no answer leaks across. Every score below is from the test years. Skill is
+$1 - \text{RMSE}_\text{model}/\text{RMSE}_\text{persistence}$.
+
+| measurement (unit) | RMSE 1 h (persistence) | skill 1 h | RMSE 24 h (persistence) | skill 24 h |
+|---|---|---|---|---|
+| wind speed (km/s) | 19.1 (19.8) | 3% | 69.9 (82.2) | 15% |
+| field strength (nT) | 1.32 (1.29) | -3% | 3.71 (4.51) | 18% |
+| Bz (nT) | 3.23 (3.68) | 12% | 4.19 (5.74) | 27% |
+| density (per cm³) | 2.56 (2.72) | 6% | 4.85 (6.76) | 28% |
+| pressure (nPa) | 1.23 (1.29) | 5% | 2.17 (2.85) | 24% |
+| SYM-H (nT) | 5.71 (6.77) | 16% | 21.9 (26.9) | 19% |
+
+A storm start time is labelled 1 when $\min_{t \lt s \le t+H} \mathrm{SYMH}(s) \le \theta$, with $\theta$ = -50 nT
+(storm) or -100 nT (strong storm). The classifier flags a storm when its chance passes the line with the best
+$F_1$ on the validation year. Persistence here means "a storm now means a storm soon".
+
+| event | storms in test (%) | precision | recall | F1 (persistence) | PR-AUC |
+|---|---|---|---|---|---|
+| Storm (SYM-H ≤ -50 nT) within 6 h | 12.2 | 0.86 | 0.75 | 0.80 (0.72) | 0.90 |
+| Storm (SYM-H ≤ -50 nT) within 24 h | 20.4 | 0.72 | 0.63 | 0.67 (0.51) | 0.78 |
+| Strong storm (SYM-H ≤ -100 nT) within 6 h | 2.1 | 0.84 | 0.56 | 0.67 (0.68) | 0.77 |
+| Strong storm (SYM-H ≤ -100 nT) within 24 h | 4.4 | 0.50 | 0.47 | 0.49 (0.41) | 0.51 |
+
+Three things the scores say plainly. First, at the shortest horizons the model is worse than persistence for field strength at 5 min, 15 min, 30 min and 1 h (skill -17.6% to -2.6%); density at 5 min and 15 min (skill -5.3% to -1.4%); pressure at 5 min and 30 min (skill -2.9% to -0.5%). Over a few minutes the value now is very hard to beat, so use persistence there. Second, the field direction $B_z$ is close to unpredictable beyond a few hours
+($R^2$ = 0.01 at 6 hours); the model beats persistence there mainly by predicting the
+average. Third, the 80% intervals were set on 2022, a quiet year, and in the stormier test years they held
+between 74% and 80% of the time. Not tried yet: LightGBM and recurrent
+networks.
+
+## 6. Figures
 
 ![Figure 1](charts/A05_a_histogram_1.7-5.5AU.png)
 
@@ -298,7 +344,7 @@ turn (section 3.7).
 
 **Figure 3.** Moon craters at least $D$ wide, both axes on a log scale. A straight line is a power law (section 3.10).
 
-## 6. Running it
+## 7. Running it
 
 ```
 python3 -m venv .venv
@@ -306,7 +352,9 @@ python3 -m venv .venv
 .venv/bin/streamlit run app.py            # then open http://localhost:8501
 ```
 
-The app has three pages: Home, Findings (the 32 results with a chart and an animation each) and Charts. It only
+The app has four pages: Home, Findings (the 32 results with a chart and an animation each), Charts and
+Predictions. For the forecasts, train the models once with `.venv/bin/python -m forecast.train` (they are not in
+git; the page shows the saved test scores without them). It only
 reads `numbers/`, `charts/`, `animations/` and `FINDINGS.md`, which are all in the repository. The animations are
 plain HTML files, so they also open on their own in any browser.
 
@@ -324,7 +372,7 @@ project folder and run, from `notebooks/`:
 
 `check_app.py`, run from the project folder, opens every page of the app without a browser and fails on any error.
 
-## 7. Caveats
+## 8. Caveats
 
 * Most counts here are counts of what was found, not of what is there. The discovery, close-pass and planet results
   (findings 4, 8, 9, 23 and 26) say as much about telescopes as about space.
@@ -337,11 +385,12 @@ project folder and run, from `notebooks/`:
 * We compared our numbers with the datathon's field guide. In 12 places they differ, and
   `FINDINGS.md` says so in a line that starts with "Note".
 
-## 8. Files
+## 9. Files
 
 ```
-app.py                     the Streamlit app (Home, Findings, Charts)
-app_pages/                 the three pages
+app.py                     the Streamlit app (Home, Findings, Charts, Predictions)
+app_pages/                 the four pages
+forecast/                  the forecasts: features, training, the service the page uses, the HTTP API
 check_app.py               opens every page without a browser, fails on any error
 FINDINGS.md                the 32 results in plain words (notebooks/make_findings.py)
 notebooks/                 one analysis script per part (BF_A ... BF_G), with the notebook next to it,

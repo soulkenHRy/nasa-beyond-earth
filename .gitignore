@@ -9,3 +9,6 @@ NASA Beyond Earth-*/
 data_cache/
 
 .streamlit/secrets.toml
+
+# trained forecast models (rebuild: python -m forecast.train)
+forecast/models/

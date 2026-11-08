@@ -18,4 +18,12 @@ b_10_100,1.8906737132113405,1.89,,"log10 of the ratio, numbers/BF30_size_rule.cs
 b_100_1000,2.0198083933535527,2.02,,"log10 of the ratio, numbers/BF30_size_rule.csv"
 sw_from,0.0,2010-01-01,date,data_cache/space_weather.parquet
 sw_to,0.0,2026-10-18,date,data_cache/space_weather.parquet
+fc_minutes,7.9,8,minutes,numbers/FC_training.json
+fc_inputs,74.0,74,,numbers/FC_training.json
+fc_train,0.0,2010-01-01 to 2021-12-31,dates,numbers/FC_training.json
+fc_val,0.0,2022-01-01 to 2022-12-31,dates,numbers/FC_training.json
+fc_test,0.0,2023-01-01 to 2026-10-18,dates,numbers/FC_training.json
+fc_bz_r2_6h,0.012720690641085608,0.01,,numbers/FC_regression_scores.csv
+fc_cov_min,74.37539024368795,74,%,numbers/FC_regression_scores.csv
+fc_cov_max,79.67270453701103,80,%,numbers/FC_regression_scores.csv
 n_guide_diff,12.0,12,,numbers/BF_guide_differences.csv (rows)

@@ -88,6 +88,19 @@ def readme_numbers(files: pd.DataFrame) -> None:
         old = table("RD_readme")
         add("sw_from", 0, old["sw_from"], "date", "data_cache/space_weather.parquet")
         add("sw_to", 0, old["sw_to"], "date", "data_cache/space_weather.parquet")
+    tr_meta = json.loads((NUM / "FC_training.json").read_text())
+    add("fc_minutes", tr_meta["minutes"], f"{tr_meta['minutes']:.0f}", "minutes", "numbers/FC_training.json")
+    add("fc_inputs", tr_meta["inputs"], str(tr_meta["inputs"]), "", "numbers/FC_training.json")
+    for k in ("train", "val", "test"):
+        txt = tr_meta["validation" if k == "val" else k]
+        add(f"fc_{k}", 0, txt, "dates", "numbers/FC_training.json")
+    reg = pd.read_csv(NUM / "FC_regression_scores.csv")
+    bz6 = float(reg[(reg["target"] == "bz_gsm_nT") & (reg["horizon"] == "6 h")]["r2"].iloc[0])
+    add("fc_bz_r2_6h", bz6, f"{bz6:.2f}", "", "numbers/FC_regression_scores.csv")
+    add("fc_cov_min", reg["interval_coverage_pct"].min(), f"{reg['interval_coverage_pct'].min():.0f}", "%",
+        "numbers/FC_regression_scores.csv")
+    add("fc_cov_max", reg["interval_coverage_pct"].max(), f"{reg['interval_coverage_pct'].max():.0f}", "%",
+        "numbers/FC_regression_scores.csv")
     nd = len(pd.read_csv(NUM / "BF_guide_differences.csv"))
     add("n_guide_diff", nd, str(nd), "", "numbers/BF_guide_differences.csv (rows)")
     pd.DataFrame(rows).to_csv(NUM / "RD_readme.csv", index=False)
@@ -107,10 +120,11 @@ Contents
    2  How a number gets from a CSV file to the screen
    3  The math
    4  Results
-   5  Figures
-   6  Running it
-   7  Caveats
-   8  Files
+   5  Forecasts
+   6  Figures
+   7  Running it
+   8  Caveats
+   9  Files
       References
 ```
 
@@ -319,7 +333,40 @@ One line each. The full text, with a chart and an animation for every result, is
 
 <<RESULTS>>
 
-## 5. Figures
+## 5. Forecasts
+
+The fourth page of the app, Predictions, forecasts six measurements of the solar wind and of Earth's magnetic field,
+from 5 minutes to 24 hours ahead, and the chance of a geomagnetic storm in the next 6 or 24 hours. The code is in
+`forecast/`. The models are trained once (`python -m forecast.train`, <<RD_readme.fc_minutes>> minutes here) and the
+page and a small HTTP API (`uvicorn forecast.api:app`) only read them.
+
+The baseline is persistence, $\hat y_{t+h} = y_t$: tomorrow looks like today. The model learns the change instead
+of the value,
+
+$$\hat y_{t+h} = y_t + f_h(\mathbf{x}_t),$$
+
+where $f_h$ is a gradient-boosted tree ensemble (XGBoost) and $\mathbf{x}_t$ holds <<RD_readme.fc_inputs>> numbers
+built only from readings at $t$ or before: recent values, means and spreads of speed, field, density, pressure,
+SYM-H and AE, and the driving term $v B_s$ with $B_s = \max(0, -B_z)$. The years are split in time: train
+<<RD_readme.fc_train>>, validation <<RD_readme.fc_val>>, test <<RD_readme.fc_test>>, with one day left out at each
+edge so that no answer leaks across. Every score below is from the test years. Skill is
+$1 - \text{RMSE}_\text{model}/\text{RMSE}_\text{persistence}$.
+
+<<FC_REG_TABLE>>
+
+A storm start time is labelled 1 when $\min_{t \lt s \le t+H} \mathrm{SYMH}(s) \le \theta$, with $\theta$ = -50 nT
+(storm) or -100 nT (strong storm). The classifier flags a storm when its chance passes the line with the best
+$F_1$ on the validation year. Persistence here means "a storm now means a storm soon".
+
+<<FC_EVENT_TABLE>>
+
+Three things the scores say plainly. First, <<FC_WORSE>> Second, the field direction $B_z$ is close to unpredictable beyond a few hours
+($R^2$ = <<RD_readme.fc_bz_r2_6h>> at 6 hours); the model beats persistence there mainly by predicting the
+average. Third, the 80% intervals were set on 2022, a quiet year, and in the stormier test years they held
+between <<RD_readme.fc_cov_min>>% and <<RD_readme.fc_cov_max>>% of the time. Not tried yet: LightGBM and recurrent
+networks.
+
+## 6. Figures
 
 ![Figure 1](charts/A05_a_histogram_1.7-5.5AU.png)
 
@@ -335,7 +382,7 @@ turn (section 3.7).
 
 **Figure 3.** Moon craters at least $D$ wide, both axes on a log scale. A straight line is a power law (section 3.10).
 
-## 6. Running it
+## 7. Running it
 
 ```
 python3 -m venv .venv
@@ -343,7 +390,9 @@ python3 -m venv .venv
 .venv/bin/streamlit run app.py            # then open http://localhost:8501
 ```
 
-The app has three pages: Home, Findings (the 32 results with a chart and an animation each) and Charts. It only
+The app has four pages: Home, Findings (the 32 results with a chart and an animation each), Charts and
+Predictions. For the forecasts, train the models once with `.venv/bin/python -m forecast.train` (they are not in
+git; the page shows the saved test scores without them). It only
 reads `numbers/`, `charts/`, `animations/` and `FINDINGS.md`, which are all in the repository. The animations are
 plain HTML files, so they also open on their own in any browser.
 
@@ -361,7 +410,7 @@ project folder and run, from `notebooks/`:
 
 `check_app.py`, run from the project folder, opens every page of the app without a browser and fails on any error.
 
-## 7. Caveats
+## 8. Caveats
 
 * Most counts here are counts of what was found, not of what is there. The discovery, close-pass and planet results
   (findings 4, 8, 9, 23 and 26) say as much about telescopes as about space.
@@ -374,11 +423,12 @@ project folder and run, from `notebooks/`:
 * We compared our numbers with the datathon's field guide. In <<RD_readme.n_guide_diff>> places they differ, and
   `FINDINGS.md` says so in a line that starts with "Note".
 
-## 8. Files
+## 9. Files
 
 ```
-app.py                     the Streamlit app (Home, Findings, Charts)
-app_pages/                 the three pages
+app.py                     the Streamlit app (Home, Findings, Charts, Predictions)
+app_pages/                 the four pages
+forecast/                  the forecasts: features, training, the service the page uses, the HTTP API
 check_app.py               opens every page without a browser, fails on any error
 FINDINGS.md                the 32 results in plain words (notebooks/make_findings.py)
 notebooks/                 one analysis script per part (BF_A ... BF_G), with the notebook next to it,
@@ -442,6 +492,46 @@ def results_block() -> str:
         parts = [ks[i].rstrip(".") for i in PICK.get(int(k), [0]) if i < len(ks)]
         out.append(f"{e['n']}. {e['title']}. " + ". ".join(parts) + ".")
     return "\n".join(out).strip()
+
+
+def fc_tables() -> tuple[str, str]:
+    reg = pd.read_csv(NUM / "FC_regression_scores.csv")
+    names = {"speed_km_s": "wind speed", "bt_nT": "field strength", "bz_gsm_nT": "Bz", "density_cm3": "density",
+             "pressure_nPa": "pressure", "sym_h_nT": "SYM-H"}
+    lines = ["| measurement (unit) | RMSE 1 h (persistence) | skill 1 h | RMSE 24 h (persistence) | skill 24 h |",
+             "|---|---|---|---|---|"]
+    for t in reg["target"].unique():
+        r1 = reg[(reg["target"] == t) & (reg["horizon"] == "1 h")].iloc[0]
+        r24 = reg[(reg["target"] == t) & (reg["horizon"] == "24 h")].iloc[0]
+        g = lambda v: f"{v:.3g}"  # noqa: E731
+        lines.append(f"| {names.get(t, t)} ({r1['unit']}) | {g(r1['rmse'])} ({g(r1['rmse_persistence'])}) | "
+                     f"{r1['skill_rmse_pct']:.0f}% | {g(r24['rmse'])} ({g(r24['rmse_persistence'])}) | "
+                     f"{r24['skill_rmse_pct']:.0f}% |")
+    ev = pd.read_csv(NUM / "FC_event_scores.csv")
+    el = ["| event | storms in test (%) | precision | recall | F1 (persistence) | PR-AUC |", "|---|---|---|---|---|---|"]
+    for _, r in ev.iterrows():
+        el.append(f"| {r['name']} | {r['base_rate_pct']:.1f} | {r['precision']:.2f} | {r['recall']:.2f} | "
+                  f"{r['f1']:.2f} ({r['f1_persistence']:.2f}) | {r['pr_auc']:.2f} |")
+    return "\n".join(lines), "\n".join(el)
+
+
+def fc_worse() -> str:
+    """Where the model does not beat persistence on the test years, in words."""
+    reg = pd.read_csv(NUM / "FC_regression_scores.csv")
+    names = {"speed_km_s": "wind speed", "bt_nT": "field strength", "bz_gsm_nT": "Bz", "density_cm3": "density",
+             "pressure_nPa": "pressure", "sym_h_nT": "SYM-H"}
+    bad = reg[reg["skill_rmse_pct"] <= 0]
+    if bad.empty:
+        return "the model beats persistence at every horizon."
+    parts = []
+    for t, g in bad.groupby("target", sort=False):
+        hs = " and ".join([", ".join(g["horizon"].iloc[:-1])] + [g["horizon"].iloc[-1]]) if len(g) > 1 else \
+            g["horizon"].iloc[0]
+        mn, mx = g["skill_rmse_pct"].min(), g["skill_rmse_pct"].max()
+        rng = f"skill {mn:.1f}%" if len(g) == 1 else f"skill {mn:.1f}% to {mx:.1f}%"
+        parts.append(f"{names.get(t, t)} at {hs} ({rng})")
+    return ("at the shortest horizons the model is worse than persistence for " + "; ".join(parts)
+            + ". Over a few minutes the value now is very hard to beat, so use persistence there.")
 
 
 def data_block(files: pd.DataFrame) -> str:
@@ -515,6 +605,8 @@ def main() -> None:
     example = ",".join(f'"{v}"' if "," in str(v) else str(v) for v in row.fillna("").tolist())
     md = (TEMPLATE.replace("<<DATE>>", f"{date.today():%B %Y}").replace("<<DATA_TABLE>>", data_block(files))
           .replace("<<RESULTS>>", results_block()).replace("<<ROW_EXAMPLE>>", example))
+    reg_t, ev_t = fc_tables()
+    md = md.replace("<<FC_REG_TABLE>>", reg_t).replace("<<FC_EVENT_TABLE>>", ev_t).replace("<<FC_WORSE>>", fc_worse())
     md = fill(md)
     left = re.findall(r"<<[^>]+>>", md)
     assert not left, left

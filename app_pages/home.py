@@ -19,7 +19,7 @@ st.markdown(
     "Earth, fireballs, space weather, stars, planets around other stars and Moon craters. Every number on these pages "
     "was worked out by code and saved in the `numbers/` folder; nobody typed a number by hand.")
 
-c1, c2 = st.columns(2, gap="large")
+c1, c2, c3 = st.columns(3, gap="large")
 with c1:
     with st.container(border=True):
         st.markdown(f"### 📋 Findings\n{n_find} things we found, in plain words. Each part starts with **Meet the data** "
@@ -30,6 +30,11 @@ with c2:
     with st.container(border=True):
         st.markdown(f"### 🖼️ Charts\nAll {n_png} charts and all {n_anim} animations in one place, by part.")
         st.page_link("app_pages/charts.py", label="Open the Charts", icon="🖼️")
+with c3:
+    with st.container(border=True):
+        st.markdown("### 🛰️ Predictions\nForecasts of the solar wind, the magnetic field and geomagnetic storms from "
+                    "the 5-minute space-weather file, made by models tested on 2023 onward, with their scores.")
+        st.page_link("app_pages/predictions.py", label="Open the Predictions", icon="🛰️")
 
 st.divider()
 SECTION_OF = {"asteroids": "A", "close_approaches": "B", "fireballs": "C", "space_weather": "D", "stars": "E",
