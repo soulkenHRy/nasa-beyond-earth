@@ -1,0 +1,17 @@
+key,value,shown,unit,source
+params,151277313.0,"151,277,313",,counted from the model weights
+params_m,151.277313,151,million,counted from the model weights
+card_params_m,200.0,200,million,the model card (its README.md) says about 200M
+weights_mb,605.156676,605,MB,size of model.safetensors
+image_px,224.0,224,pixels,models/galaxy-clip-finetuned/config.json
+patch_px,32.0,32,pixels,models/galaxy-clip-finetuned/config.json
+patches_side,7.0,7,,image_px / patch_px
+patches,49.0,49,,patches_side squared
+embed_dim,512.0,512,numbers,models/galaxy-clip-finetuned/config.json
+scale,99.82820892333984,99.8,,"exp(logit_scale), read from the model weights"
+n_labels,10.0,10,,galaxy/clip.py DEFAULT_LABELS
+check_n,10.0,10,,numbers/GC_check.csv
+check_right,8.0,8,,numbers/GC_check.csv
+check_two_fit,3.0,3,,numbers/GC_check.csv
+sim_lo,0.18645082414150238,0.2,,smallest similarity in the check (all labels)
+sim_hi,0.30821648240089417,0.3,,largest similarity in the check (all labels)

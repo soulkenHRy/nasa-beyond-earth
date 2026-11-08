@@ -150,10 +150,11 @@ Contents
    3  The math explained in very simple English
    4  Results
    5  Forecasts
-   6  Figures
-   7  Running it
-   8  Caveats
-   9  Files
+   6  Galaxy pictures
+   7  Figures
+   8  Running it
+   9  Caveats
+  10  Files
       References
 ```
 
@@ -175,7 +176,7 @@ stored in `numbers/`. None of them is typed by hand.
 
 <<DATA_TABLE>>
 
-The CSV files add up to about <<RD_readme.raw_mb>> MB, so they are not in this repository (see section 6).
+The CSV files add up to about <<RD_readme.raw_mb>> MB, so they are not in this repository (see section 8).
 
 ## 2. How a number gets from a CSV file to the screen
 
@@ -768,7 +769,73 @@ average. Third, the 80% intervals were set on 2022, a quiet year, and in the sto
 between <<RD_readme.fc_cov_min>>% and <<RD_readme.fc_cov_max>>% of the time. Not tried yet: LightGBM and recurrent
 networks.
 
-## 6. Figures
+## 6. Galaxy pictures
+
+The fifth page of the app, Galaxies, reads pictures. You upload a picture of a galaxy and an AI model says which kind
+of galaxy it looks like, as a ranked list with a score for each kind. The same works from the terminal:
+
+```
+.venv/bin/python -m galaxy.classify picture.jpg
+```
+
+**What is this about?**
+
+Galaxies come in a few main shapes: round and smooth, spiral, spiral with a bar across the middle, seen edge-on like
+a plate from the side, or messy because two of them are crashing into each other. Galaxy Zoo asked volunteers to sort
+pictures like these by eye. Here a computer model does it.
+
+The model is Galaxy-CLIP (`juppy44/galaxy-clip-finetuned` on Hugging Face). Michael Jupp made it from OpenAI's CLIP
+(Radford et al. 2021) by training it further on galaxy pictures paired with descriptions. We do not train it at all;
+we only use it. It is "zero-shot": nobody gave it our list of kinds as fixed boxes. It compares the picture with each
+description and ranks them.
+
+**How does it work?**
+
+The model has two halves. One turns a picture into a list of <<GC_model.embed_dim>> numbers. The other turns a short
+sentence, like "barred spiral galaxy", into <<GC_model.embed_dim>> numbers too. They were trained together, so that a
+picture and a sentence about the same thing get lists that point the same way.
+
+First the picture is cut to a square around its middle, shrunk to <<GC_model.image_px>> by <<GC_model.image_px>>
+pixels and split into <<GC_model.patches_side>> by <<GC_model.patches_side>> = <<GC_model.patches>> tiles of
+<<GC_model.patch_px>> by <<GC_model.patch_px>> pixels, which the model reads a bit like the words of a sentence.
+
+To compare the picture's list $\mathbf{a}$ with a label's list $\mathbf{b}$ we use the cosine similarity:
+
+$$s = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}$$
+
+You don't need to memorize it. It is 1 when the two lists point the same way and 0 when they have nothing to do with
+each other. For this model the values are small, between about <<GC_model.sim_lo>> and <<GC_model.sim_hi>>, so only
+the order matters.
+
+The match score turns the similarities into shares that add up to 100%:
+
+$$p_i = \frac{e^{k s_i}}{\sum_j e^{k s_j}}$$
+
+where $k$ = <<GC_model.scale>> is a number the model learned. The shares depend on the list: change the labels and
+the percentages change.
+
+The labels to start with are the <<GC_model.n_labels>> classes of Galaxy10 DECaLS (Leung and Bovy 2019), galaxy
+pictures sorted by Galaxy Zoo volunteers (Walmsley et al. 2022): <<GC_LABELS>>. On the page you can type your own.
+
+**What did we find?**
+
+The model's own page says no formal test has been done, and our data files have no galaxy pictures with known
+answers, so we cannot give an accuracy. To check that it works we tried <<GC_model.check_n>> well-known galaxies,
+with pictures from the DESI Legacy Imaging Surveys sky viewer (Dey et al. 2019), using `python -m galaxy.check`:
+
+<<GC_TABLE>>
+
+Its first choice fitted <<GC_model.check_right>> of the <<GC_model.check_n>>. For <<GC_model.check_two_fit>> of them
+two classes fit, and the table lists both. <<GC_MISSES>> We picked the Galaxy10 wording after trying it, and a longer
+wording, on these same pictures, so this shows that the model runs and makes sense, not how good it is.
+
+Note: the model's page says about <<GC_model.card_params_m>> million parameters; the file has <<GC_model.params>>,
+the size of CLIP ViT-B/32.
+
+**The main idea:** The model does not know galaxy kinds as fixed boxes. It compares the picture with each sentence
+you give it and ranks the sentences by how well they match.
+
+## 7. Figures
 
 ![Figure 1](charts/A05_a_histogram_1.7-5.5AU.png)
 
@@ -784,17 +851,27 @@ turn (section 3.7).
 
 **Figure 3.** Moon craters at least $D$ wide, both axes on a log scale. A straight line is a power law (section 3.10).
 
-## 7. Running it
+## 8. Running it
 
 ```
 python3 -m venv .venv
+.venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu   # the small CPU build
 .venv/bin/pip install -r requirements.txt
 .venv/bin/streamlit run app.py            # then open http://localhost:8501
 ```
 
-The app has four pages: Home, Findings (the 32 results with a chart and an animation each), Charts and
-Predictions (pick a day, get the storm chance). For the forecasts, train the models once with
-`.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily` (they are not in git). It only
+The app has five pages: Home, Findings (the 32 results with a chart and an animation each), Charts, Predictions
+(pick a day, get the storm chance) and Galaxies (upload a galaxy picture). For the forecasts, train the models once
+with `.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily` (they are not in git). For the
+galaxy pictures, download the model once (about <<GC_model.weights_mb>> MB, not in git):
+
+```
+.venv/bin/hf download juppy44/galaxy-clip-finetuned --local-dir models/galaxy-clip-finetuned
+.venv/bin/python -m galaxy.classify picture.jpg     # the same as the page, in the terminal
+.venv/bin/python -m galaxy.check                    # the ten-galaxy check of section 6
+```
+
+The model is read from that folder only; nothing is downloaded while the app runs. It
 reads `numbers/`, `charts/`, `animations/` and `FINDINGS.md`, which are all in the repository. The animations are
 plain HTML files, so they also open on their own in any browser.
 
@@ -812,7 +889,7 @@ project folder and run, from `notebooks/`:
 
 `check_app.py`, run from the project folder, opens every page of the app without a browser and fails on any error.
 
-## 8. Caveats
+## 9. Caveats
 
 * Most counts here are counts of what was found, not of what is there. The discovery, close-pass and planet results
   (findings 4, 8, 9, 23 and 26) say as much about telescopes as about space.
@@ -824,13 +901,17 @@ project folder and run, from `notebooks/`:
   globe, it says so on screen.
 * We compared our numbers with the datathon's field guide. In <<RD_readme.n_guide_diff>> places they differ, and
   `FINDINGS.md` says so in a line that starts with "Note".
+* The galaxy model always picks one of the labels it is given, even for a picture that is not a galaxy. It learned
+  from descriptions written by another AI model, not by astronomers, and its own page says it has not been tested.
 
-## 9. Files
+## 10. Files
 
 ```
-app.py                     the Streamlit app (Home, Findings, Charts, Predictions)
-app_pages/                 the four pages
+app.py                     the Streamlit app (Home, Findings, Charts, Predictions, Galaxies)
+app_pages/                 the five pages
 forecast/                  the forecasts: features, training, the service the page uses, the HTTP API
+galaxy/                    the galaxy pictures: the model (clip.py), the terminal command, the ten-galaxy check
+models/                    the Galaxy-CLIP model, downloaded once (not in git)
 check_app.py               opens every page without a browser, fails on any error
 FINDINGS.md                the 32 results in plain words (notebooks/make_findings.py)
 notebooks/                 one analysis script per part (BF_A ... BF_G), with the notebook next to it,
@@ -844,6 +925,7 @@ requirements.txt           the Python packages
 
 ## References
 
+* Dey, A. et al. (2019). Overview of the DESI Legacy Imaging Surveys. The Astronomical Journal 157, 168.
 * Ester, M., Kriegel, H.-P., Sander, J. and Xu, X. (1996). A density-based algorithm for discovering clusters in
   large spatial databases with noise. Proceedings of KDD-96, 226-231.
 * Fischer, D. A. and Valenti, J. (2005). The planet-metallicity correlation. The Astrophysical Journal 622, 1102-1117.
@@ -852,19 +934,28 @@ requirements.txt           the Python packages
 * Gaia Collaboration, Vallenari, A. et al. (2023). Gaia Data Release 3: Summary of the content and survey
   properties. Astronomy and Astrophysics 674, A1.
 * Gonzalez, W. D. et al. (1994). What is a geomagnetic storm? Journal of Geophysical Research 99, 5771-5792.
+* Jupp, M. (2026). Galaxy-CLIP: domain-adapted vision-language model for galaxy morphology. Hugging Face,
+  juppy44/galaxy-clip-finetuned.
 * King, J. H. and Papitashvili, N. E. (2005). Solar wind spatial scales in and comparisons of hourly Wind and ACE
   plasma and magnetic field data. Journal of Geophysical Research 110, A02104.
 * Kirkwood, D. (1867). Meteoric Astronomy. J. B. Lippincott, Philadelphia.
+* Leung, H. W. and Bovy, J. (2019). Deep learning of multi-element abundances from high-resolution spectroscopic
+  data. Monthly Notices of the Royal Astronomical Society 483, 3255-3277 (astroNN, home of the Galaxy10 data sets).
 * Mazeh, T., Holczer, T. and Faigler, S. (2016). Dearth of short-period Neptunian exoplanets: a desert in period-mass
   and period-radius planes. Astronomy and Astrophysics 589, A75.
 * Pravec, P. and Harris, A. W. (2000). Fast and slow rotation of asteroids. Icarus 148, 12-20.
+* Radford, A. et al. (2021). Learning transferable visual models from natural language supervision. Proceedings of
+  the 38th International Conference on Machine Learning, PMLR 139, 8748-8763.
 * Robbins, S. J. (2019). A new global database of lunar impact craters >1-2 km: 1. Crater locations and sizes,
   comparisons with published databases, and global analysis. Journal of Geophysical Research: Planets 124, 871-892.
 * Russell, C. T. and McPherron, R. L. (1973). Semiannual variation of geomagnetic activity. Journal of Geophysical
   Research 78, 92-108.
+* Walmsley, M. et al. (2022). Galaxy Zoo DECaLS: detailed visual morphology measurements from volunteers and deep
+  learning for 314,000 galaxies. Monthly Notices of the Royal Astronomical Society 509, 3966-3988.
 
 Data: JPL Small-Body Database and CNEOS (asteroids, close approaches, fireballs), NASA OMNIWeb (solar wind), ESA Gaia
-DR3 (stars), NASA Exoplanet Archive (planets), Robbins (2019) via the LRO mission (Moon craters).
+DR3 (stars), NASA Exoplanet Archive (planets), Robbins (2019) via the LRO mission (Moon craters). The pictures for
+the galaxy check are DESI Legacy Imaging Surveys and SDSS images from the Legacy Surveys sky viewer.
 
 Corrections welcome: open an issue.
 """
@@ -908,6 +999,34 @@ def day_table() -> str:
     lines.append(f"For the next day, \"a storm today if there was one yesterday\" is right {100 * p['precision_persistence']:.0f}% "
                  f"of the time and catches {100 * p['recall_persistence']:.0f}% of storm days.")
     return "\n".join(lines)
+
+
+def galaxy_table() -> str:
+    """The ten-galaxy check (numbers/GC_check.csv, written by python -m galaxy.check)."""
+    d = pd.read_csv(NUM / "GC_check.csv")
+    lines = ["| galaxy | what it is | class that fits | the model's first choice | match | fits |",
+             "|---|---|---|---|---|---|"]
+    for _, r in d.iterrows():
+        lines.append(f"| {r['galaxy']} | {r['what_it_is']} | {r['expected']} | {r['first_choice']} | "
+                     f"{r['first_match_pct']:.0f}% | {'yes' if r['right'] else 'no'} |")
+    return "\n".join(lines)
+
+
+def galaxy_misses() -> str:
+    """One sentence on each first choice that did not fit, from numbers/GC_check.csv."""
+    d = pd.read_csv(NUM / "GC_check.csv")
+    miss = d[~d["right"]]
+    if miss.empty:
+        return ""
+    parts = [f"{r['galaxy']} ({r['what_it_is']}) came out as \"{r['first_choice']}\" ({r['first_match_pct']:.0f}%), "
+             f"with \"{r['second_choice']}\" next ({r['second_match_pct']:.0f}%)" for _, r in miss.iterrows()]
+    return "The misses: " + "; ".join(parts) + "."
+
+
+def galaxy_labels() -> str:
+    sys.path.insert(0, str(ROOT))
+    from galaxy.clip import DEFAULT_LABELS
+    return ", ".join(f'"{lab}"' for lab in DEFAULT_LABELS)
 
 
 def fc_tables() -> tuple[str, str]:
@@ -1025,6 +1144,8 @@ def main() -> None:
     reg_t, ev_t = fc_tables()
     md = md.replace("<<FC_REG_TABLE>>", reg_t).replace("<<FC_EVENT_TABLE>>", ev_t).replace("<<FC_WORSE>>", fc_worse())
     md = md.replace("<<FC_DAY_TABLE>>", day_table())
+    md = (md.replace("<<GC_TABLE>>", galaxy_table()).replace("<<GC_MISSES>>", galaxy_misses())
+          .replace("<<GC_LABELS>>", galaxy_labels()))
     md = fill(md)
     left = re.findall(r"<<[^>]+>>", md)
     assert not left, left

@@ -3,7 +3,7 @@
 __pycache__/
 *.pyc
 
-# the raw NASA files (about 800 MB) and the Parquet copies made from them; see README, section 6
+# the raw NASA files (about 800 MB) and the Parquet copies made from them; see README, section 8
 NASA Beyond Earth/
 NASA Beyond Earth-*/
 data_cache/
@@ -12,3 +12,7 @@ data_cache/
 
 # trained forecast models (rebuild: python -m forecast.train)
 forecast/models/
+
+# the Galaxy-CLIP model, about 605 MB
+# (download: hf download juppy44/galaxy-clip-finetuned --local-dir models/galaxy-clip-finetuned)
+models/galaxy-clip-finetuned/

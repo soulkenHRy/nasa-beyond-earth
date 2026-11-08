@@ -1,0 +1,11 @@
+galaxy,what_it_is,expected,first_choice,first_match_pct,first_similarity,second_choice,second_match_pct,right,ra,dec,layer
+M87,giant elliptical,round smooth galaxy,round smooth galaxy,74.8,0.26,in-between round smooth galaxy,9.4,True,187.7059,12.3911,ls-dr9
+NGC 4565,"spiral seen edge-on, with a bulge",edge-on galaxy with bulge,edge-on galaxy with bulge,69.3,0.308,edge-on galaxy without bulge,30.2,True,189.0866,25.9877,ls-dr9
+NGC 1300,barred spiral,barred spiral galaxy,barred spiral galaxy,59.7,0.267,unbarred loose spiral galaxy,17.1,True,49.9208,-19.4111,ls-dr9
+NGC 4676,"the Mice, two galaxies merging",merging galaxies or disturbed galaxy,merging galaxies,70.6,0.291,edge-on galaxy with bulge,10.7,True,191.5428,30.7286,sdss
+M101,"spiral with open arms, seen face-on",unbarred loose spiral galaxy,unbarred loose spiral galaxy,36.9,0.258,round smooth galaxy,28.7,True,210.8023,54.349,sdss
+M51,spiral with open arms and a small companion,unbarred loose spiral galaxy or merging galaxies,unbarred loose spiral galaxy,46.9,0.259,barred spiral galaxy,30.2,True,202.4696,47.1952,sdss
+NGC 3115,lens-shaped galaxy seen edge-on,edge-on galaxy with bulge or cigar-shaped smooth galaxy,edge-on galaxy with bulge,64.7,0.29,edge-on galaxy without bulge,21.2,True,151.3083,-7.7186,ls-dr9
+NGC 4244,"thin spiral seen edge-on, almost no bulge",edge-on galaxy without bulge,edge-on galaxy with bulge,51.2,0.297,edge-on galaxy without bulge,45.6,False,184.3736,37.8071,sdss
+NGC 4449,irregular galaxy,disturbed galaxy,disturbed galaxy,72.7,0.28,unbarred loose spiral galaxy,14.6,True,187.0463,44.0936,sdss
+NGC 4414,"spiral with short, tightly wound arms",unbarred tight spiral galaxy,disturbed galaxy,38.5,0.274,unbarred loose spiral galaxy,25.8,False,186.6129,31.2235,sdss

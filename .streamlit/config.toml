@@ -7,6 +7,9 @@ textColor = "#0b0b0b"
 
 [server]
 headless = true
+# Check the app's own files for changes by polling. The default watcher (watchdog, inotify) watches the whole
+# folder, overflows on the thousands of files torch and transformers put in .venv, and then re-scans in a loop.
+fileWatcherType = "poll"
 
 [browser]
 gatherUsageStats = false

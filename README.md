@@ -12,10 +12,11 @@ Contents
    3  The math explained in very simple English
    4  Results
    5  Forecasts
-   6  Figures
-   7  Running it
-   8  Caveats
-   9  Files
+   6  Galaxy pictures
+   7  Figures
+   8  Running it
+   9  Caveats
+  10  Files
       References
 ```
 
@@ -45,7 +46,7 @@ stored in `numbers/`. None of them is typed by hand.
 | F | `nasa_exoplanet_archive_confirmed_planets.csv` | NASA Exoplanet Archive | 6,451 | 25 | 1.4 |
 | G | `moon_craters_robbins_lro_1.3M.csv` | Robbins lunar crater database | 1,296,796 | 10 | 102.0 |
 
-The CSV files add up to about 833 MB, so they are not in this repository (see section 6).
+The CSV files add up to about 833 MB, so they are not in this repository (see section 8).
 
 ## 2. How a number gets from a CSV file to the screen
 
@@ -712,7 +713,84 @@ average. Third, the 80% intervals were set on 2022, a quiet year, and in the sto
 between 74% and 80% of the time. Not tried yet: LightGBM and recurrent
 networks.
 
-## 6. Figures
+## 6. Galaxy pictures
+
+The fifth page of the app, Galaxies, reads pictures. You upload a picture of a galaxy and an AI model says which kind
+of galaxy it looks like, as a ranked list with a score for each kind. The same works from the terminal:
+
+```
+.venv/bin/python -m galaxy.classify picture.jpg
+```
+
+**What is this about?**
+
+Galaxies come in a few main shapes: round and smooth, spiral, spiral with a bar across the middle, seen edge-on like
+a plate from the side, or messy because two of them are crashing into each other. Galaxy Zoo asked volunteers to sort
+pictures like these by eye. Here a computer model does it.
+
+The model is Galaxy-CLIP (`juppy44/galaxy-clip-finetuned` on Hugging Face). Michael Jupp made it from OpenAI's CLIP
+(Radford et al. 2021) by training it further on galaxy pictures paired with descriptions. We do not train it at all;
+we only use it. It is "zero-shot": nobody gave it our list of kinds as fixed boxes. It compares the picture with each
+description and ranks them.
+
+**How does it work?**
+
+The model has two halves. One turns a picture into a list of 512 numbers. The other turns a short
+sentence, like "barred spiral galaxy", into 512 numbers too. They were trained together, so that a
+picture and a sentence about the same thing get lists that point the same way.
+
+First the picture is cut to a square around its middle, shrunk to 224 by 224
+pixels and split into 7 by 7 = 49 tiles of
+32 by 32 pixels, which the model reads a bit like the words of a sentence.
+
+To compare the picture's list $\mathbf{a}$ with a label's list $\mathbf{b}$ we use the cosine similarity:
+
+$$s = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}$$
+
+You don't need to memorize it. It is 1 when the two lists point the same way and 0 when they have nothing to do with
+each other. For this model the values are small, between about 0.2 and 0.3, so only
+the order matters.
+
+The match score turns the similarities into shares that add up to 100%:
+
+$$p_i = \frac{e^{k s_i}}{\sum_j e^{k s_j}}$$
+
+where $k$ = 99.8 is a number the model learned. The shares depend on the list: change the labels and
+the percentages change.
+
+The labels to start with are the 10 classes of Galaxy10 DECaLS (Leung and Bovy 2019), galaxy
+pictures sorted by Galaxy Zoo volunteers (Walmsley et al. 2022): "disturbed galaxy", "merging galaxies", "round smooth galaxy", "in-between round smooth galaxy", "cigar-shaped smooth galaxy", "barred spiral galaxy", "unbarred tight spiral galaxy", "unbarred loose spiral galaxy", "edge-on galaxy without bulge", "edge-on galaxy with bulge". On the page you can type your own.
+
+**What did we find?**
+
+The model's own page says no formal test has been done, and our data files have no galaxy pictures with known
+answers, so we cannot give an accuracy. To check that it works we tried 10 well-known galaxies,
+with pictures from the DESI Legacy Imaging Surveys sky viewer (Dey et al. 2019), using `python -m galaxy.check`:
+
+| galaxy | what it is | class that fits | the model's first choice | match | fits |
+|---|---|---|---|---|---|
+| M87 | giant elliptical | round smooth galaxy | round smooth galaxy | 75% | yes |
+| NGC 4565 | spiral seen edge-on, with a bulge | edge-on galaxy with bulge | edge-on galaxy with bulge | 69% | yes |
+| NGC 1300 | barred spiral | barred spiral galaxy | barred spiral galaxy | 60% | yes |
+| NGC 4676 | the Mice, two galaxies merging | merging galaxies or disturbed galaxy | merging galaxies | 71% | yes |
+| M101 | spiral with open arms, seen face-on | unbarred loose spiral galaxy | unbarred loose spiral galaxy | 37% | yes |
+| M51 | spiral with open arms and a small companion | unbarred loose spiral galaxy or merging galaxies | unbarred loose spiral galaxy | 47% | yes |
+| NGC 3115 | lens-shaped galaxy seen edge-on | edge-on galaxy with bulge or cigar-shaped smooth galaxy | edge-on galaxy with bulge | 65% | yes |
+| NGC 4244 | thin spiral seen edge-on, almost no bulge | edge-on galaxy without bulge | edge-on galaxy with bulge | 51% | no |
+| NGC 4449 | irregular galaxy | disturbed galaxy | disturbed galaxy | 73% | yes |
+| NGC 4414 | spiral with short, tightly wound arms | unbarred tight spiral galaxy | disturbed galaxy | 38% | no |
+
+Its first choice fitted 8 of the 10. For 3 of them
+two classes fit, and the table lists both. The misses: NGC 4244 (thin spiral seen edge-on, almost no bulge) came out as "edge-on galaxy with bulge" (51%), with "edge-on galaxy without bulge" next (46%); NGC 4414 (spiral with short, tightly wound arms) came out as "disturbed galaxy" (38%), with "unbarred loose spiral galaxy" next (26%). We picked the Galaxy10 wording after trying it, and a longer
+wording, on these same pictures, so this shows that the model runs and makes sense, not how good it is.
+
+Note: the model's page says about 200 million parameters; the file has 151,277,313,
+the size of CLIP ViT-B/32.
+
+**The main idea:** The model does not know galaxy kinds as fixed boxes. It compares the picture with each sentence
+you give it and ranks the sentences by how well they match.
+
+## 7. Figures
 
 ![Figure 1](charts/A05_a_histogram_1.7-5.5AU.png)
 
@@ -728,17 +806,27 @@ turn (section 3.7).
 
 **Figure 3.** Moon craters at least $D$ wide, both axes on a log scale. A straight line is a power law (section 3.10).
 
-## 7. Running it
+## 8. Running it
 
 ```
 python3 -m venv .venv
+.venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu   # the small CPU build
 .venv/bin/pip install -r requirements.txt
 .venv/bin/streamlit run app.py            # then open http://localhost:8501
 ```
 
-The app has four pages: Home, Findings (the 32 results with a chart and an animation each), Charts and
-Predictions (pick a day, get the storm chance). For the forecasts, train the models once with
-`.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily` (they are not in git). It only
+The app has five pages: Home, Findings (the 32 results with a chart and an animation each), Charts, Predictions
+(pick a day, get the storm chance) and Galaxies (upload a galaxy picture). For the forecasts, train the models once
+with `.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily` (they are not in git). For the
+galaxy pictures, download the model once (about 605 MB, not in git):
+
+```
+.venv/bin/hf download juppy44/galaxy-clip-finetuned --local-dir models/galaxy-clip-finetuned
+.venv/bin/python -m galaxy.classify picture.jpg     # the same as the page, in the terminal
+.venv/bin/python -m galaxy.check                    # the ten-galaxy check of section 6
+```
+
+The model is read from that folder only; nothing is downloaded while the app runs. It
 reads `numbers/`, `charts/`, `animations/` and `FINDINGS.md`, which are all in the repository. The animations are
 plain HTML files, so they also open on their own in any browser.
 
@@ -756,7 +844,7 @@ project folder and run, from `notebooks/`:
 
 `check_app.py`, run from the project folder, opens every page of the app without a browser and fails on any error.
 
-## 8. Caveats
+## 9. Caveats
 
 * Most counts here are counts of what was found, not of what is there. The discovery, close-pass and planet results
   (findings 4, 8, 9, 23 and 26) say as much about telescopes as about space.
@@ -768,13 +856,17 @@ project folder and run, from `notebooks/`:
   globe, it says so on screen.
 * We compared our numbers with the datathon's field guide. In 12 places they differ, and
   `FINDINGS.md` says so in a line that starts with "Note".
+* The galaxy model always picks one of the labels it is given, even for a picture that is not a galaxy. It learned
+  from descriptions written by another AI model, not by astronomers, and its own page says it has not been tested.
 
-## 9. Files
+## 10. Files
 
 ```
-app.py                     the Streamlit app (Home, Findings, Charts, Predictions)
-app_pages/                 the four pages
+app.py                     the Streamlit app (Home, Findings, Charts, Predictions, Galaxies)
+app_pages/                 the five pages
 forecast/                  the forecasts: features, training, the service the page uses, the HTTP API
+galaxy/                    the galaxy pictures: the model (clip.py), the terminal command, the ten-galaxy check
+models/                    the Galaxy-CLIP model, downloaded once (not in git)
 check_app.py               opens every page without a browser, fails on any error
 FINDINGS.md                the 32 results in plain words (notebooks/make_findings.py)
 notebooks/                 one analysis script per part (BF_A ... BF_G), with the notebook next to it,
@@ -788,6 +880,7 @@ requirements.txt           the Python packages
 
 ## References
 
+* Dey, A. et al. (2019). Overview of the DESI Legacy Imaging Surveys. The Astronomical Journal 157, 168.
 * Ester, M., Kriegel, H.-P., Sander, J. and Xu, X. (1996). A density-based algorithm for discovering clusters in
   large spatial databases with noise. Proceedings of KDD-96, 226-231.
 * Fischer, D. A. and Valenti, J. (2005). The planet-metallicity correlation. The Astrophysical Journal 622, 1102-1117.
@@ -796,18 +889,27 @@ requirements.txt           the Python packages
 * Gaia Collaboration, Vallenari, A. et al. (2023). Gaia Data Release 3: Summary of the content and survey
   properties. Astronomy and Astrophysics 674, A1.
 * Gonzalez, W. D. et al. (1994). What is a geomagnetic storm? Journal of Geophysical Research 99, 5771-5792.
+* Jupp, M. (2026). Galaxy-CLIP: domain-adapted vision-language model for galaxy morphology. Hugging Face,
+  juppy44/galaxy-clip-finetuned.
 * King, J. H. and Papitashvili, N. E. (2005). Solar wind spatial scales in and comparisons of hourly Wind and ACE
   plasma and magnetic field data. Journal of Geophysical Research 110, A02104.
 * Kirkwood, D. (1867). Meteoric Astronomy. J. B. Lippincott, Philadelphia.
+* Leung, H. W. and Bovy, J. (2019). Deep learning of multi-element abundances from high-resolution spectroscopic
+  data. Monthly Notices of the Royal Astronomical Society 483, 3255-3277 (astroNN, home of the Galaxy10 data sets).
 * Mazeh, T., Holczer, T. and Faigler, S. (2016). Dearth of short-period Neptunian exoplanets: a desert in period-mass
   and period-radius planes. Astronomy and Astrophysics 589, A75.
 * Pravec, P. and Harris, A. W. (2000). Fast and slow rotation of asteroids. Icarus 148, 12-20.
+* Radford, A. et al. (2021). Learning transferable visual models from natural language supervision. Proceedings of
+  the 38th International Conference on Machine Learning, PMLR 139, 8748-8763.
 * Robbins, S. J. (2019). A new global database of lunar impact craters >1-2 km: 1. Crater locations and sizes,
   comparisons with published databases, and global analysis. Journal of Geophysical Research: Planets 124, 871-892.
 * Russell, C. T. and McPherron, R. L. (1973). Semiannual variation of geomagnetic activity. Journal of Geophysical
   Research 78, 92-108.
+* Walmsley, M. et al. (2022). Galaxy Zoo DECaLS: detailed visual morphology measurements from volunteers and deep
+  learning for 314,000 galaxies. Monthly Notices of the Royal Astronomical Society 509, 3966-3988.
 
 Data: JPL Small-Body Database and CNEOS (asteroids, close approaches, fireballs), NASA OMNIWeb (solar wind), ESA Gaia
-DR3 (stars), NASA Exoplanet Archive (planets), Robbins (2019) via the LRO mission (Moon craters).
+DR3 (stars), NASA Exoplanet Archive (planets), Robbins (2019) via the LRO mission (Moon craters). The pictures for
+the galaxy check are DESI Legacy Imaging Surveys and SDSS images from the Legacy Surveys sky viewer.
 
 Corrections welcome: open an issue.

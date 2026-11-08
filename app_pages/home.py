@@ -19,7 +19,7 @@ st.markdown(
     "Earth, fireballs, space weather, stars, planets around other stars and Moon craters. Every number on these pages "
     "was worked out by code and saved in the `numbers/` folder; nobody typed a number by hand.")
 
-c1, c2, c3 = st.columns(3, gap="large")
+c1, c2, c3, c4 = st.columns(4, gap="large")
 with c1:
     with st.container(border=True):
         st.markdown(f"### 📋 Findings\n{n_find} things we found, in plain words. Each part starts with **Meet the data** "
@@ -35,6 +35,11 @@ with c3:
         st.markdown("### 🛰️ Predictions\nPick a day and get the chance of a geomagnetic storm on it, worked out "
                     "only from the data before that day.")
         st.page_link("app_pages/predictions.py", label="Open the Predictions", icon="🛰️")
+with c4:
+    with st.container(border=True):
+        st.markdown("### 🌌 Galaxies\nUpload a picture of a galaxy. An AI model that reads pictures says which kind "
+                    "of galaxy it looks like: spiral, barred, round, edge-on, merging ...")
+        st.page_link("app_pages/galaxies.py", label="Open the Galaxies", icon="🌌")
 
 st.divider()
 SECTION_OF = {"asteroids": "A", "close_approaches": "B", "fireballs": "C", "space_weather": "D", "stars": "E",

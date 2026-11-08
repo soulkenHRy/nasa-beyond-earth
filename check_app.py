@@ -1,8 +1,9 @@
 """Open every page of the Streamlit app headlessly and report any error.
 
 Usage (from the project folder):  .venv/bin/python check_app.py
-Exit code 0 = every page loaded with no exception. The four pages: Home, Findings (opened once per part, each with its
-animations), Charts (pictures and animations) and Predictions (forecasts). The animations are web pages shown in a frame (iframe). To check
+Exit code 0 = every page loaded with no exception. The five pages: Home, Findings (opened once per part, each with its
+animations), Charts (pictures and animations), Predictions (forecasts) and Galaxies (opened without a picture; the
+upload itself can't be done here, so it is checked in a real browser). The animations are web pages shown in a frame (iframe). To check
 that they really play in a browser, run notebooks/check_space_anims.py.
 """
 import json
@@ -30,7 +31,7 @@ def count(at, kind: str) -> int:
 runs = [("app_pages/home.py", None, None), ("app_pages/findings.py", None, None)] + \
        [("app_pages/findings.py", p, None) for p in parts] + \
        [("app_pages/charts.py", None, None), ("app_pages/charts.py", None, "Animations"),
-        ("app_pages/predictions.py", None, None)]
+        ("app_pages/predictions.py", None, None), ("app_pages/galaxies.py", None, None)]
 failed = 0
 for page, part, radio in runs:
     t0 = time.time()
