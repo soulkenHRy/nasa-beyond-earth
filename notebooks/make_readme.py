@@ -101,6 +101,11 @@ def readme_numbers(files: pd.DataFrame) -> None:
         "numbers/FC_regression_scores.csv")
     add("fc_cov_max", reg["interval_coverage_pct"].max(), f"{reg['interval_coverage_pct'].max():.0f}", "%",
         "numbers/FC_regression_scores.csv")
+    dd = pd.read_csv(NUM / "FC_daily_scores.csv")
+    sp = float(dd["base_rate_pct"].iloc[0])
+    add("day_storm_pct", sp, f"{sp:.1f}", "%", "numbers/FC_daily_scores.csv")
+    clim_to = str(pd.read_csv(NUM / "FC_daily_climatology.csv")["to"].iloc[0])
+    add("day_test", 0, f"{tr_meta['test'][:10]} to {clim_to}", "dates", "numbers/FC_training.json, FC_daily_climatology.csv")
     nd = len(pd.read_csv(NUM / "BF_guide_differences.csv"))
     add("n_guide_diff", nd, str(nd), "", "numbers/BF_guide_differences.csv (rows)")
     pd.DataFrame(rows).to_csv(NUM / "RD_readme.csv", index=False)
@@ -335,10 +340,30 @@ One line each. The full text, with a chart and an animation for every result, is
 
 ## 5. Forecasts
 
-The fourth page of the app, Predictions, forecasts six measurements of the solar wind and of Earth's magnetic field,
-from 5 minutes to 24 hours ahead, and the chance of a geomagnetic storm in the next 6 or 24 hours. The code is in
-`forecast/`. The models are trained once (`python -m forecast.train`, <<RD_readme.fc_minutes>> minutes here) and the
-page and a small HTTP API (`uvicorn forecast.api:app`) only read them.
+The fourth page of the app, Predictions, asks for one thing: a day. It answers with the chance of a geomagnetic
+storm on that day (SYM-H at or below -50 nT at some time in the day), using only data from before the day.
+
+* Next day, and any past day (to check it against what happened): the 5-minute storm model below, run at the
+  last reading before midnight.
+* 2 to 90 days ahead: one small XGBoost model per lead time $L$, fed daily summaries up to day $D-L$: recent
+  storm counts, the share of storm days in the last year, the time of year, and the days one solar turn (27 days)
+  before $D$, which is the echo of section 3.7.
+* Further ahead: only the share of storm days in that calendar month over the last solar cycle. It is not a
+  forecast of the day, and the page says so.
+
+The test days are <<RD_readme.day_test>> (SYM-H stops there); <<RD_readme.day_storm_pct>>% of them had a storm.
+
+<<FC_DAY_TABLE>>
+
+The next-day forecast is useful. Beyond that the chances are only a little better than the usual rate (the
+Brier skill compares the squared error of the chances with always giving the training years' storm rate), so the
+page only says "higher" or "lower than usual" there. Storms that come from clouds thrown out by the Sun cannot be
+seen in the solar wind days ahead; only the 27-day echo of fast wind gives some warning.
+
+The engine underneath also forecasts six measurements of the solar wind and of Earth's magnetic field, 5 minutes
+to 24 hours ahead. The code is in `forecast/`. The models are trained once (`python -m forecast.train`,
+<<RD_readme.fc_minutes>> minutes here, then `python -m forecast.daily`) and the page and a small HTTP API
+(`uvicorn forecast.api:app`) only read them.
 
 The baseline is persistence, $\hat y_{t+h} = y_t$: tomorrow looks like today. The model learns the change instead
 of the value,
@@ -391,8 +416,8 @@ python3 -m venv .venv
 ```
 
 The app has four pages: Home, Findings (the 32 results with a chart and an animation each), Charts and
-Predictions. For the forecasts, train the models once with `.venv/bin/python -m forecast.train` (they are not in
-git; the page shows the saved test scores without them). It only
+Predictions (pick a day, get the storm chance). For the forecasts, train the models once with
+`.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily` (they are not in git). It only
 reads `numbers/`, `charts/`, `animations/` and `FINDINGS.md`, which are all in the repository. The animations are
 plain HTML files, so they also open on their own in any browser.
 
@@ -492,6 +517,20 @@ def results_block() -> str:
         parts = [ks[i].rstrip(".") for i in PICK.get(int(k), [0]) if i < len(ks)]
         out.append(f"{e['n']}. {e['title']}. " + ". ".join(parts) + ".")
     return "\n".join(out).strip()
+
+
+def day_table() -> str:
+    d = pd.read_csv(NUM / "FC_daily_scores.csv")
+    lines = ["| days ahead | model | right when it says storm | storm days caught | PR-AUC | Brier skill |",
+             "|---|---|---|---|---|---|"]
+    for _, r in d.iterrows():
+        lines.append(f"| {int(r['lead_days'])} | {r['model']} | {100 * r['precision']:.0f}% | {100 * r['recall']:.0f}% | "
+                     f"{r['pr_auc']:.2f} | {r['brier_skill_pct']:.0f}% |")
+    p = d[d["lead_days"] == 1].iloc[0]
+    lines.append("")
+    lines.append(f"For the next day, \"a storm today if there was one yesterday\" is right {100 * p['precision_persistence']:.0f}% "
+                 f"of the time and catches {100 * p['recall_persistence']:.0f}% of storm days.")
+    return "\n".join(lines)
 
 
 def fc_tables() -> tuple[str, str]:
@@ -607,6 +646,7 @@ def main() -> None:
           .replace("<<RESULTS>>", results_block()).replace("<<ROW_EXAMPLE>>", example))
     reg_t, ev_t = fc_tables()
     md = md.replace("<<FC_REG_TABLE>>", reg_t).replace("<<FC_EVENT_TABLE>>", ev_t).replace("<<FC_WORSE>>", fc_worse())
+    md = md.replace("<<FC_DAY_TABLE>>", day_table())
     md = fill(md)
     left = re.findall(r"<<[^>]+>>", md)
     assert not left, left

@@ -26,4 +26,6 @@ fc_test,0.0,2023-01-01 to 2026-10-18,dates,numbers/FC_training.json
 fc_bz_r2_6h,0.012720690641085608,0.01,,numbers/FC_regression_scores.csv
 fc_cov_min,74.37539024368795,74,%,numbers/FC_regression_scores.csv
 fc_cov_max,79.67270453701103,80,%,numbers/FC_regression_scores.csv
+day_storm_pct,20.379839298758217,20.4,%,numbers/FC_daily_scores.csv
+day_test,0.0,2023-01-01 to 2026-09-30,dates,"numbers/FC_training.json, FC_daily_climatology.csv"
 n_guide_diff,12.0,12,,numbers/BF_guide_differences.csv (rows)

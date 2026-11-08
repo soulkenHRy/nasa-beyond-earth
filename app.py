@@ -7,7 +7,7 @@ Four pages:
   Home         what this is and the seven data files
   Findings     the 32 findings (same words as FINDINGS.md), each with its chart and an animation with a Play button
   Charts       every chart and every animation in one place
-  Predictions  space-weather forecasts (forecast/, models trained by forecast/train.py)
+  Predictions  pick a day, get the chance of a geomagnetic storm on it (forecast/)
 Every number comes from code in the notebooks (numbers/*.csv). The earlier pages are kept in old/app_pages/.
 """
 import streamlit as st

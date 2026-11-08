@@ -25,6 +25,9 @@ def main() -> None:
         ("/api/forecast/events/history", {"min_severity": "Intense"}),
         ("/api/forecast/events/unusual", {"days": 30}),
         ("/api/forecast/models/performance", None),
+        ("/api/forecast/day", {"date": "2024-05-11"}),
+        ("/api/forecast/day", {"date": "2026-11-08"}),
+        ("/api/forecast/day", {"date": "2031-07-01"}),
         ("/api/forecast/dataset", None),
         ("/api/forecast/predictions", {"variable": "nope", "horizon": "1 h", "start": day, "end": last}),
     ]

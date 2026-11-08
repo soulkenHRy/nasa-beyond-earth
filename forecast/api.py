@@ -107,6 +107,20 @@ def unusual(days: int = Query(30, ge=1, le=365)):
     return {"days": days, "readings": clean(S.unusual(days))}
 
 
+@app.get("/api/forecast/day")
+def day(date: str):
+    """The storm forecast for one day (forecast/daily.py)."""
+    from . import daily
+    need(models=True)
+    if not daily.ready():
+        raise HTTPException(503, "Daily models are not trained yet: run  python -m forecast.daily")
+    try:
+        ts = pd.Timestamp(date)
+    except (ValueError, TypeError):
+        raise HTTPException(400, f"Not a date: {date!r} (use YYYY-MM-DD)") from None
+    return clean(daily.forecast_day(ts))
+
+
 @app.get("/api/forecast/models/performance")
 def performance():
     p = S.performance()

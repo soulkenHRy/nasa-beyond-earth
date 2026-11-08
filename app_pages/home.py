@@ -32,8 +32,8 @@ with c2:
         st.page_link("app_pages/charts.py", label="Open the Charts", icon="🖼️")
 with c3:
     with st.container(border=True):
-        st.markdown("### 🛰️ Predictions\nForecasts of the solar wind, the magnetic field and geomagnetic storms from "
-                    "the 5-minute space-weather file, made by models tested on 2023 onward, with their scores.")
+        st.markdown("### 🛰️ Predictions\nPick a day and get the chance of a geomagnetic storm on it, worked out "
+                    "only from the data before that day.")
         st.page_link("app_pages/predictions.py", label="Open the Predictions", icon="🛰️")
 
 st.divider()

@@ -285,10 +285,41 @@ One line each. The full text, with a chart and an animation for every result, is
 
 ## 5. Forecasts
 
-The fourth page of the app, Predictions, forecasts six measurements of the solar wind and of Earth's magnetic field,
-from 5 minutes to 24 hours ahead, and the chance of a geomagnetic storm in the next 6 or 24 hours. The code is in
-`forecast/`. The models are trained once (`python -m forecast.train`, 8 minutes here) and the
-page and a small HTTP API (`uvicorn forecast.api:app`) only read them.
+The fourth page of the app, Predictions, asks for one thing: a day. It answers with the chance of a geomagnetic
+storm on that day (SYM-H at or below -50 nT at some time in the day), using only data from before the day.
+
+* Next day, and any past day (to check it against what happened): the 5-minute storm model below, run at the
+  last reading before midnight.
+* 2 to 90 days ahead: one small XGBoost model per lead time $L$, fed daily summaries up to day $D-L$: recent
+  storm counts, the share of storm days in the last year, the time of year, and the days one solar turn (27 days)
+  before $D$, which is the echo of section 3.7.
+* Further ahead: only the share of storm days in that calendar month over the last solar cycle. It is not a
+  forecast of the day, and the page says so.
+
+The test days are 2023-01-01 to 2026-09-30 (SYM-H stops there); 20.4% of them had a storm.
+
+| days ahead | model | right when it says storm | storm days caught | PR-AUC | Brier skill |
+|---|---|---|---|---|---|
+| 1 | 5-minute model | 75% | 63% | 0.79 | 48% |
+| 2 | daily model | 30% | 73% | 0.42 | 15% |
+| 3 | daily model | 23% | 86% | 0.31 | 9% |
+| 7 | daily model | 26% | 58% | 0.29 | 7% |
+| 14 | daily model | 22% | 94% | 0.25 | 4% |
+| 27 | daily model | 35% | 34% | 0.31 | 8% |
+| 60 | daily model | 22% | 66% | 0.24 | 4% |
+| 90 | daily model | 22% | 89% | 0.23 | 4% |
+
+For the next day, "a storm today if there was one yesterday" is right 59% of the time and catches 59% of storm days.
+
+The next-day forecast is useful. Beyond that the chances are only a little better than the usual rate (the
+Brier skill compares the squared error of the chances with always giving the training years' storm rate), so the
+page only says "higher" or "lower than usual" there. Storms that come from clouds thrown out by the Sun cannot be
+seen in the solar wind days ahead; only the 27-day echo of fast wind gives some warning.
+
+The engine underneath also forecasts six measurements of the solar wind and of Earth's magnetic field, 5 minutes
+to 24 hours ahead. The code is in `forecast/`. The models are trained once (`python -m forecast.train`,
+8 minutes here, then `python -m forecast.daily`) and the page and a small HTTP API
+(`uvicorn forecast.api:app`) only read them.
 
 The baseline is persistence, $\hat y_{t+h} = y_t$: tomorrow looks like today. The model learns the change instead
 of the value,
@@ -353,8 +384,8 @@ python3 -m venv .venv
 ```
 
 The app has four pages: Home, Findings (the 32 results with a chart and an animation each), Charts and
-Predictions. For the forecasts, train the models once with `.venv/bin/python -m forecast.train` (they are not in
-git; the page shows the saved test scores without them). It only
+Predictions (pick a day, get the storm chance). For the forecasts, train the models once with
+`.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily` (they are not in git). It only
 reads `numbers/`, `charts/`, `animations/` and `FINDINGS.md`, which are all in the repository. The animations are
 plain HTML files, so they also open on their own in any browser.
 
