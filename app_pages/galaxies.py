@@ -25,10 +25,27 @@ st.title("Galaxy pictures")
 st.markdown("Upload a picture of a galaxy. An AI model that reads pictures compares it with kinds of galaxy and "
             "ranks them by how well they match.")
 
-problems = G.missing()
+problems = G.packages_missing()
 if problems:
     st.info("This page needs:\n\n" + "\n".join(f"* {p}" for p in problems))
     st.stop()
+
+
+@st.cache_resource(show_spinner="Getting the galaxy model from Hugging Face (only the first time, about a minute) ...")
+def fetch_model() -> bool:
+    G.fetch()
+    return True
+
+
+if G.files_missing():                       # a copy without the model folder, such as the hosted app
+    try:
+        fetch_model()
+    except Exception as err:                # no internet, or Hugging Face is down
+        st.error(f"Could not get the galaxy model ({type(err).__name__}). On your own computer run: `{G.DOWNLOAD}`")
+        st.stop()
+    if G.files_missing():
+        st.error(f"The galaxy model is still missing. On your own computer run: `{G.DOWNLOAD}`")
+        st.stop()
 
 
 @st.cache_resource(show_spinner="Loading the galaxy model (only the first time, a few seconds) ...")

@@ -10,7 +10,8 @@ data_cache/
 
 .streamlit/secrets.toml
 
-# trained forecast models (rebuild: python -m forecast.train)
+# trained forecast models (rebuild: python -m forecast.train). The current ones and data_cache/space_weather.parquet
+# were added with git add -f so the hosted app can make forecasts; new files here stay out of git.
 forecast/models/
 
 # the Galaxy-CLIP model, about 605 MB

@@ -862,7 +862,8 @@ python3 -m venv .venv
 
 The app has five pages: Home, Findings (the 32 results with a chart and an animation each), Charts, Predictions
 (pick a day, get the storm chance) and Galaxies (upload a galaxy picture). For the forecasts, train the models once
-with `.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily` (they are not in git). For the
+with `.venv/bin/python -m forecast.train` and then `.venv/bin/python -m forecast.daily`; the trained models and the space-weather file they read are in the repository,
+so this is only needed to retrain them. For the
 galaxy pictures, download the model once (about <<GC_model.weights_mb>> MB, not in git):
 
 ```
@@ -871,7 +872,8 @@ galaxy pictures, download the model once (about <<GC_model.weights_mb>> MB, not 
 .venv/bin/python -m galaxy.check                    # the ten-galaxy check of section 6
 ```
 
-The model is read from that folder only; nothing is downloaded while the app runs. It
+The app reads the model from that folder. A copy of the app without the folder, such as a hosted one, downloads it
+there once, pinned to the same version. It
 reads `numbers/`, `charts/`, `animations/` and `FINDINGS.md`, which are all in the repository. The animations are
 plain HTML files, so they also open on their own in any browser.
 
@@ -912,6 +914,7 @@ app_pages/                 the five pages
 forecast/                  the forecasts: features, training, the service the page uses, the HTTP API
 galaxy/                    the galaxy pictures: the model (clip.py), the terminal command, the ten-galaxy check
 models/                    the Galaxy-CLIP model, downloaded once (not in git)
+data_cache/                the space-weather file the forecasts read (the other Parquet copies are not in git)
 check_app.py               opens every page without a browser, fails on any error
 FINDINGS.md                the 32 results in plain words (notebooks/make_findings.py)
 notebooks/                 one analysis script per part (BF_A ... BF_G), with the notebook next to it,

@@ -1,0 +1,550 @@
+{
+ "features": [
+  "speed_km_s",
+  "speed_km_s_lag3",
+  "speed_km_s_lag12",
+  "speed_km_s_lag36",
+  "speed_km_s_mean12",
+  "speed_km_s_mean36",
+  "speed_km_s_mean144",
+  "speed_km_s_std36",
+  "bt_nT",
+  "bt_nT_lag3",
+  "bt_nT_lag12",
+  "bt_nT_lag36",
+  "bt_nT_mean12",
+  "bt_nT_mean36",
+  "bt_nT_mean144",
+  "bt_nT_std36",
+  "bz_gsm_nT",
+  "bz_gsm_nT_lag3",
+  "bz_gsm_nT_lag12",
+  "bz_gsm_nT_lag36",
+  "bz_gsm_nT_mean12",
+  "bz_gsm_nT_mean36",
+  "bz_gsm_nT_mean144",
+  "bz_gsm_nT_std36",
+  "by_gsm_nT",
+  "by_gsm_nT_lag3",
+  "by_gsm_nT_lag12",
+  "by_gsm_nT_lag36",
+  "by_gsm_nT_mean12",
+  "by_gsm_nT_mean36",
+  "by_gsm_nT_mean144",
+  "by_gsm_nT_std36",
+  "density_cm3",
+  "density_cm3_lag3",
+  "density_cm3_lag12",
+  "density_cm3_lag36",
+  "density_cm3_mean12",
+  "density_cm3_mean36",
+  "density_cm3_mean144",
+  "density_cm3_std36",
+  "pressure_nPa",
+  "pressure_nPa_lag3",
+  "pressure_nPa_lag12",
+  "pressure_nPa_lag36",
+  "pressure_nPa_mean12",
+  "pressure_nPa_mean36",
+  "pressure_nPa_mean144",
+  "pressure_nPa_std36",
+  "sym_h_nT",
+  "sym_h_nT_lag3",
+  "sym_h_nT_lag12",
+  "sym_h_nT_lag36",
+  "sym_h_nT_mean12",
+  "sym_h_nT_mean36",
+  "sym_h_nT_mean144",
+  "sym_h_nT_std36",
+  "ae_nT",
+  "ae_nT_lag3",
+  "ae_nT_lag12",
+  "ae_nT_lag36",
+  "ae_nT_mean12",
+  "ae_nT_mean36",
+  "ae_nT_mean144",
+  "ae_nT_std36",
+  "bz_min36",
+  "v_bs",
+  "v_bs_mean12",
+  "v_bs_mean72",
+  "sym_h_min288",
+  "sym_h_change12",
+  "doy_sin",
+  "doy_cos",
+  "ut_sin",
+  "ut_cos"
+ ],
+ "regressors": {
+  "speed_km_s|5 min": {
+   "file": "reg_speed_km_s_1.ubj",
+   "target": "speed_km_s",
+   "horizon": "5 min",
+   "steps": 1,
+   "best_iteration": 165,
+   "lo": -7.743085838854313,
+   "hi": 7.9831097148358765
+  },
+  "speed_km_s|15 min": {
+   "file": "reg_speed_km_s_3.ubj",
+   "target": "speed_km_s",
+   "horizon": "15 min",
+   "steps": 3,
+   "best_iteration": 215,
+   "lo": -12.086229281425494,
+   "hi": 12.923233637809743
+  },
+  "speed_km_s|30 min": {
+   "file": "reg_speed_km_s_6.ubj",
+   "target": "speed_km_s",
+   "horizon": "30 min",
+   "steps": 6,
+   "best_iteration": 294,
+   "lo": -15.423502130508426,
+   "hi": 15.675816555023165
+  },
+  "speed_km_s|1 h": {
+   "file": "reg_speed_km_s_12.ubj",
+   "target": "speed_km_s",
+   "horizon": "1 h",
+   "steps": 12,
+   "best_iteration": 265,
+   "lo": -19.177199692726127,
+   "hi": 19.80608613729479
+  },
+  "speed_km_s|3 h": {
+   "file": "reg_speed_km_s_36.ubj",
+   "target": "speed_km_s",
+   "horizon": "3 h",
+   "steps": 36,
+   "best_iteration": 159,
+   "lo": -28.050567183494564,
+   "hi": 29.198475542068493
+  },
+  "speed_km_s|6 h": {
+   "file": "reg_speed_km_s_72.ubj",
+   "target": "speed_km_s",
+   "horizon": "6 h",
+   "steps": 72,
+   "best_iteration": 69,
+   "lo": -37.24727185249334,
+   "hi": 38.797056503295906
+  },
+  "speed_km_s|12 h": {
+   "file": "reg_speed_km_s_144.ubj",
+   "target": "speed_km_s",
+   "horizon": "12 h",
+   "steps": 144,
+   "best_iteration": 54,
+   "lo": -50.07468467235563,
+   "hi": 57.13844200134277
+  },
+  "speed_km_s|24 h": {
+   "file": "reg_speed_km_s_288.ubj",
+   "target": "speed_km_s",
+   "horizon": "24 h",
+   "steps": 288,
+   "best_iteration": 47,
+   "lo": -64.68528976440429,
+   "hi": 87.56665473937993
+  },
+  "bt_nT|5 min": {
+   "file": "reg_bt_nT_1.ubj",
+   "target": "bt_nT",
+   "horizon": "5 min",
+   "steps": 1,
+   "best_iteration": 10,
+   "lo": -0.22993348501622624,
+   "hi": 0.23572846062481334
+  },
+  "bt_nT|15 min": {
+   "file": "reg_bt_nT_3.ubj",
+   "target": "bt_nT",
+   "horizon": "15 min",
+   "steps": 3,
+   "best_iteration": 57,
+   "lo": -0.40525299277156557,
+   "hi": 0.46800968274474125
+  },
+  "bt_nT|30 min": {
+   "file": "reg_bt_nT_6.ubj",
+   "target": "bt_nT",
+   "horizon": "30 min",
+   "steps": 6,
+   "best_iteration": 29,
+   "lo": -0.5913775193691251,
+   "hi": 0.6711755371093746
+  },
+  "bt_nT|1 h": {
+   "file": "reg_bt_nT_12.ubj",
+   "target": "bt_nT",
+   "horizon": "1 h",
+   "steps": 12,
+   "best_iteration": 33,
+   "lo": -0.7441844328641888,
+   "hi": 0.9425046622157095
+  },
+  "bt_nT|3 h": {
+   "file": "reg_bt_nT_36.ubj",
+   "target": "bt_nT",
+   "horizon": "3 h",
+   "steps": 36,
+   "best_iteration": 21,
+   "lo": -1.140829820893705,
+   "hi": 1.5636113071441646
+  },
+  "bt_nT|6 h": {
+   "file": "reg_bt_nT_72.ubj",
+   "target": "bt_nT",
+   "horizon": "6 h",
+   "steps": 72,
+   "best_iteration": 20,
+   "lo": -1.4236683142185216,
+   "hi": 2.234655112981795
+  },
+  "bt_nT|12 h": {
+   "file": "reg_bt_nT_144.ubj",
+   "target": "bt_nT",
+   "horizon": "12 h",
+   "steps": 144,
+   "best_iteration": 73,
+   "lo": -1.6031657791137695,
+   "hi": 3.1449737334251404
+  },
+  "bt_nT|24 h": {
+   "file": "reg_bt_nT_288.ubj",
+   "target": "bt_nT",
+   "horizon": "24 h",
+   "steps": 288,
+   "best_iteration": 35,
+   "lo": -1.5360769078135483,
+   "hi": 4.149315478563311
+  },
+  "bz_gsm_nT|5 min": {
+   "file": "reg_bz_gsm_nT_1.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "5 min",
+   "steps": 1,
+   "best_iteration": 13,
+   "lo": -1.1329659584164622,
+   "hi": 1.140161980390549
+  },
+  "bz_gsm_nT|15 min": {
+   "file": "reg_bz_gsm_nT_3.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "15 min",
+   "steps": 3,
+   "best_iteration": 26,
+   "lo": -2.0323994708657263,
+   "hi": 2.032262795090675
+  },
+  "bz_gsm_nT|30 min": {
+   "file": "reg_bz_gsm_nT_6.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "30 min",
+   "steps": 6,
+   "best_iteration": 31,
+   "lo": -2.6418105679750443,
+   "hi": 2.68057577252388
+  },
+  "bz_gsm_nT|1 h": {
+   "file": "reg_bz_gsm_nT_12.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "1 h",
+   "steps": 12,
+   "best_iteration": 69,
+   "lo": -3.150158537387848,
+   "hi": 3.1958226068615923
+  },
+  "bz_gsm_nT|3 h": {
+   "file": "reg_bz_gsm_nT_36.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "3 h",
+   "steps": 36,
+   "best_iteration": 54,
+   "lo": -3.788440260887146,
+   "hi": 3.8194267845153806
+  },
+  "bz_gsm_nT|6 h": {
+   "file": "reg_bz_gsm_nT_72.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "6 h",
+   "steps": 72,
+   "best_iteration": 199,
+   "lo": -4.053399965286254,
+   "hi": 3.8953295242786408
+  },
+  "bz_gsm_nT|12 h": {
+   "file": "reg_bz_gsm_nT_144.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "12 h",
+   "steps": 144,
+   "best_iteration": 102,
+   "lo": -4.134530164718628,
+   "hi": 4.091343468666077
+  },
+  "bz_gsm_nT|24 h": {
+   "file": "reg_bz_gsm_nT_288.ubj",
+   "target": "bz_gsm_nT",
+   "horizon": "24 h",
+   "steps": 288,
+   "best_iteration": 67,
+   "lo": -4.117779859066009,
+   "hi": 4.1442055997848515
+  },
+  "density_cm3|5 min": {
+   "file": "reg_density_cm3_1.ubj",
+   "target": "density_cm3",
+   "horizon": "5 min",
+   "steps": 1,
+   "best_iteration": 12,
+   "lo": -0.473691714964807,
+   "hi": 0.4798357231914996
+  },
+  "density_cm3|15 min": {
+   "file": "reg_density_cm3_3.ubj",
+   "target": "density_cm3",
+   "horizon": "15 min",
+   "steps": 3,
+   "best_iteration": 12,
+   "lo": -0.6913390848040585,
+   "hi": 0.7027427192330359
+  },
+  "density_cm3|30 min": {
+   "file": "reg_density_cm3_6.ubj",
+   "target": "density_cm3",
+   "horizon": "30 min",
+   "steps": 6,
+   "best_iteration": 10,
+   "lo": -0.8992193744182584,
+   "hi": 0.8972000186443332
+  },
+  "density_cm3|1 h": {
+   "file": "reg_density_cm3_12.ubj",
+   "target": "density_cm3",
+   "horizon": "1 h",
+   "steps": 12,
+   "best_iteration": 14,
+   "lo": -1.1922740850001579,
+   "hi": 1.1666565256118802
+  },
+  "density_cm3|3 h": {
+   "file": "reg_density_cm3_36.ubj",
+   "target": "density_cm3",
+   "horizon": "3 h",
+   "steps": 36,
+   "best_iteration": 19,
+   "lo": -1.8768498062193393,
+   "hi": 1.8802241555452326
+  },
+  "density_cm3|6 h": {
+   "file": "reg_density_cm3_72.ubj",
+   "target": "density_cm3",
+   "horizon": "6 h",
+   "steps": 72,
+   "best_iteration": 46,
+   "lo": -2.3847624254226694,
+   "hi": 2.659397283554077
+  },
+  "density_cm3|12 h": {
+   "file": "reg_density_cm3_144.ubj",
+   "target": "density_cm3",
+   "horizon": "12 h",
+   "steps": 144,
+   "best_iteration": 35,
+   "lo": -2.5980430274009705,
+   "hi": 3.662126523494725
+  },
+  "density_cm3|24 h": {
+   "file": "reg_density_cm3_288.ubj",
+   "target": "density_cm3",
+   "horizon": "24 h",
+   "steps": 288,
+   "best_iteration": 37,
+   "lo": -2.805220274448395,
+   "hi": 4.48945287799836
+  },
+  "pressure_nPa|5 min": {
+   "file": "reg_pressure_nPa_1.ubj",
+   "target": "pressure_nPa",
+   "horizon": "5 min",
+   "steps": 1,
+   "best_iteration": 7,
+   "lo": -0.18760712962597625,
+   "hi": 0.18854103254619992
+  },
+  "pressure_nPa|15 min": {
+   "file": "reg_pressure_nPa_3.ubj",
+   "target": "pressure_nPa",
+   "horizon": "15 min",
+   "steps": 3,
+   "best_iteration": 18,
+   "lo": -0.2779813012853265,
+   "hi": 0.2777473498731849
+  },
+  "pressure_nPa|30 min": {
+   "file": "reg_pressure_nPa_6.ubj",
+   "target": "pressure_nPa",
+   "horizon": "30 min",
+   "steps": 6,
+   "best_iteration": 37,
+   "lo": -0.3744795126914978,
+   "hi": 0.33697613379359304
+  },
+  "pressure_nPa|1 h": {
+   "file": "reg_pressure_nPa_12.ubj",
+   "target": "pressure_nPa",
+   "horizon": "1 h",
+   "steps": 12,
+   "best_iteration": 19,
+   "lo": -0.4905206965804099,
+   "hi": 0.44222914591431617
+  },
+  "pressure_nPa|3 h": {
+   "file": "reg_pressure_nPa_36.ubj",
+   "target": "pressure_nPa",
+   "horizon": "3 h",
+   "steps": 36,
+   "best_iteration": 39,
+   "lo": -0.7494816464185715,
+   "hi": 0.6586469100713722
+  },
+  "pressure_nPa|6 h": {
+   "file": "reg_pressure_nPa_72.ubj",
+   "target": "pressure_nPa",
+   "horizon": "6 h",
+   "steps": 72,
+   "best_iteration": 39,
+   "lo": -0.915597831249237,
+   "hi": 0.9307658456563951
+  },
+  "pressure_nPa|12 h": {
+   "file": "reg_pressure_nPa_144.ubj",
+   "target": "pressure_nPa",
+   "horizon": "12 h",
+   "steps": 144,
+   "best_iteration": 41,
+   "lo": -0.9945562278851866,
+   "hi": 1.3206888041496296
+  },
+  "pressure_nPa|24 h": {
+   "file": "reg_pressure_nPa_288.ubj",
+   "target": "pressure_nPa",
+   "horizon": "24 h",
+   "steps": 288,
+   "best_iteration": 46,
+   "lo": -1.0191875514388085,
+   "hi": 1.5630128495693207
+  },
+  "sym_h_nT|5 min": {
+   "file": "reg_sym_h_nT_1.ubj",
+   "target": "sym_h_nT",
+   "horizon": "5 min",
+   "steps": 1,
+   "best_iteration": 145,
+   "lo": -1.0872138649225236,
+   "hi": 1.0758261144161225
+  },
+  "sym_h_nT|15 min": {
+   "file": "reg_sym_h_nT_3.ubj",
+   "target": "sym_h_nT",
+   "horizon": "15 min",
+   "steps": 3,
+   "best_iteration": 101,
+   "lo": -2.1352880015969276,
+   "hi": 2.2352118641138077
+  },
+  "sym_h_nT|30 min": {
+   "file": "reg_sym_h_nT_6.ubj",
+   "target": "sym_h_nT",
+   "horizon": "30 min",
+   "steps": 6,
+   "best_iteration": 140,
+   "lo": -3.0524173222482203,
+   "hi": 3.275371611118316
+  },
+  "sym_h_nT|1 h": {
+   "file": "reg_sym_h_nT_12.ubj",
+   "target": "sym_h_nT",
+   "horizon": "1 h",
+   "steps": 12,
+   "best_iteration": 237,
+   "lo": -4.34380441904068,
+   "hi": 4.7923995554447165
+  },
+  "sym_h_nT|3 h": {
+   "file": "reg_sym_h_nT_36.ubj",
+   "target": "sym_h_nT",
+   "horizon": "3 h",
+   "steps": 36,
+   "best_iteration": 91,
+   "lo": -7.785356760025024,
+   "hi": 8.811049485206604
+  },
+  "sym_h_nT|6 h": {
+   "file": "reg_sym_h_nT_72.ubj",
+   "target": "sym_h_nT",
+   "horizon": "6 h",
+   "steps": 72,
+   "best_iteration": 85,
+   "lo": -9.778931427001952,
+   "hi": 11.190285748243332
+  },
+  "sym_h_nT|12 h": {
+   "file": "reg_sym_h_nT_144.ubj",
+   "target": "sym_h_nT",
+   "horizon": "12 h",
+   "steps": 144,
+   "best_iteration": 70,
+   "lo": -12.139011693000793,
+   "hi": 13.222666919231415
+  },
+  "sym_h_nT|24 h": {
+   "file": "reg_sym_h_nT_288.ubj",
+   "target": "sym_h_nT",
+   "horizon": "24 h",
+   "steps": 288,
+   "best_iteration": 92,
+   "lo": -15.930857467651366,
+   "hi": 14.019062972068786
+  }
+ },
+ "classifiers": {
+  "storm_6h": {
+   "file": "clf_storm_6h.ubj",
+   "threshold": -50,
+   "hours": 6,
+   "name": "Storm (SYM-H \u2264 -50 nT) within 6 h",
+   "steps": 72,
+   "best_iteration": 240,
+   "decision_threshold": 0.3993471562862396
+  },
+  "storm_24h": {
+   "file": "clf_storm_24h.ubj",
+   "threshold": -50,
+   "hours": 24,
+   "name": "Storm (SYM-H \u2264 -50 nT) within 24 h",
+   "steps": 288,
+   "best_iteration": 33,
+   "decision_threshold": 0.23266442120075226
+  },
+  "strong_6h": {
+   "file": "clf_strong_6h.ubj",
+   "threshold": -100,
+   "hours": 6,
+   "name": "Strong storm (SYM-H \u2264 -100 nT) within 6 h",
+   "steps": 72,
+   "best_iteration": 13,
+   "decision_threshold": 0.1550624519586563
+  },
+  "strong_24h": {
+   "file": "clf_strong_24h.ubj",
+   "threshold": -100,
+   "hours": 24,
+   "name": "Strong storm (SYM-H \u2264 -100 nT) within 24 h",
+   "steps": 288,
+   "best_iteration": 36,
+   "decision_threshold": 0.09118421375751495
+  }
+ }
+}

@@ -17,6 +17,7 @@ import importlib.util
 import io
 import json
 import os
+import tempfile
 from functools import lru_cache
 from pathlib import Path
 
@@ -25,6 +26,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 MODEL_DIR = Path(os.environ.get("GALAXY_CLIP_DIR") or ROOT / "models" / "galaxy-clip-finetuned")
 HF_NAME = "juppy44/galaxy-clip-finetuned"
+REVISION = "111c09edb0aa5ea0898288fbc9d5a4cce972db5e"   # the version downloaded on 2026-11-08
 DOWNLOAD = f"hf download {HF_NAME} --local-dir models/galaxy-clip-finetuned"
 FILES = ("config.json", "model.safetensors", "processor_config.json", "tokenizer.json", "tokenizer_config.json")
 PICTURE_TYPES = ["jpg", "jpeg", "png", "webp", "gif", "bmp", "tif", "tiff"]
@@ -45,16 +47,41 @@ DEFAULT_LABELS = [
 ]
 
 
+def packages_missing() -> list[str]:
+    return [f"the Python package `{mod}`: `.venv/bin/pip install {pip}`"
+            for mod, pip in (("torch", "torch --index-url https://download.pytorch.org/whl/cpu"),
+                             ("transformers", "transformers"), ("PIL", "pillow"))
+            if importlib.util.find_spec(mod) is None]
+
+
+def files_missing() -> list[str]:
+    return [f for f in FILES if not (MODEL_DIR / f).is_file()]
+
+
 def missing() -> list[str]:
     """What still has to be installed or downloaded before the model can run; empty when it is ready."""
-    out = [f"the Python package `{mod}`: `.venv/bin/pip install {pip}`"
-           for mod, pip in (("torch", "torch --index-url https://download.pytorch.org/whl/cpu"),
-                            ("transformers", "transformers"), ("PIL", "pillow"))
-           if importlib.util.find_spec(mod) is None]
-    gone = [f for f in FILES if not (MODEL_DIR / f).is_file()]
+    out = packages_missing()
+    gone = files_missing()
     if gone:
         out.append(f"the model files in `{MODEL_DIR}` ({', '.join(gone)}): `{DOWNLOAD}`")
     return out
+
+
+def fetch() -> None:
+    """Download the model files once, pinned to REVISION, for a copy of the app that does not have them (such as
+    the hosted one). A computer that already has the folder never calls this. Only the safetensors weights and the
+    config and tokenizer files are fetched; no code."""
+    global MODEL_DIR
+    from huggingface_hub import snapshot_download
+
+    for target in (MODEL_DIR, Path(tempfile.gettempdir()) / "galaxy-clip-finetuned"):
+        try:
+            snapshot_download(HF_NAME, revision=REVISION, local_dir=target, allow_patterns=list(FILES))
+        except OSError:                                  # the app folder is read-only: use the temp folder
+            continue
+        MODEL_DIR = target
+        info.cache_clear()
+        return
 
 
 def ready() -> bool:
